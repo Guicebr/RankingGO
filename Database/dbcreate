@@ -1,0 +1,11 @@
+import mysql.connector
+from CREDENTIALS import conf
+
+
+def main():
+    conn = mysql.connector.connect(host=conf.host, database=conf.database, user=conf.user,
+                                   password=conf.password)
+
+
+if __name__ == '__main__':
+    main()

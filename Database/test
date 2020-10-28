@@ -1,0 +1,18 @@
+insert into users(nick,tgid) values("Pablo",23);
+insert into users(nick,tgid) values("Guille",50);
+insert into users(nick,tgid) values("Pablo",43);
+insert into users(nick,tgid) values("Pablo",23);
+
+
+
+try
+    dbconnect()
+        insert into users(nick,tgid) values ("Guille",50);
+        insert into ranking(personid,type,amount) values (1,1,50);
+        insert into ranking(personid,type,amount) values (2,1,50);
+        insert into ranking(personid,type,amount) values (4,1,50);
+except db:
+    db
+finally
+    close()
+

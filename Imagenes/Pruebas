@@ -1,0 +1,107 @@
+ficheros = ['nickphotoesmi8.jpg', 'nickphotoen8t.jpg', 'nickphotoes8t.jpg', 'nickphotnesiphone11max.jpg']
+
+nickphotoesmi8.jpg -> Wicisian 11553.6 86378 76221 73903573
+nickphotoen8t.jpg -> S1ckwhale 4308.4 33002 26436 28392720
+nickphotoes8t.jpg -> S1ckwhale 4315.0 33002 26439 28395879
+nickphotnesiphone11max.jpg -> PabloLuis94 11679.4 66012 57970 47208821
+
+#PSM 3###################################################################
+img = cv.medianBlur(img, 3)
+img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 11, 3)
+img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+d = pytesseract.image_to_data(img, output_type=Output.DICT, config="--psm 3")
+
+nickphotoesmi8.jpg -> 11553.6 86378 76221 73903573
+11553.6 86378 76221 73903573 OK
+
+nickphotoen8t.jpg -> 4308.4 33002 26436 28392720
+4308.4 33002 26436 28392720 OK
+
+nickphotoes8t.jpg -> 4315.0 33002 26439 28395879
+4315.0 33002 26439 0 NOK
+
+nickphotnesiphone11max.jpg -> 11679.4 66012 57970 47208821
+11679.4 66012 57970 47208821 OK
+
+#PSM 6###################################################################
+img = cv.medianBlur(img, 3)
+img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 11, 3)
+img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+d = pytesseract.image_to_data(img, output_type=Output.DICT, config="--psm 6")
+
+nickphotoesmi8.jpg -> 11553.6 86378 76221 73903573
+11553.6 86378 2 73903573 NOK -NO detecta pokeparadas
+
+nickphotoen8t.jpg -> 4308.4 33002 26436 28392720
+4308.4 33002 26436 28392720 OK
+
+nickphotoes8t.jpg -> 4315.0 33002 26439 28395879
+4315.0 33002 26439 28395879 OK
+
+nickphotnesiphone11max.jpg -> 11679.4 66012 57970 47208821
+1 8 57970 47208821 NOK -Salen dos números en el OCR de Distancia y coge siempre el primero
+
+#PSM 1###################################################################
+img = cv.medianBlur(img, 3)
+img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 11, 3)
+img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+d = pytesseract.image_to_data(img, output_type=Output.DICT, config="--psm 1")
+
+nickphotoesmi8.jpg -> 11553.6 86378 76221 73903573
+11553.6 86378 76221 73903573 OK
+
+nickphotoen8t.jpg -> 4308.4 33002 26436 28392720
+4308.4 33002 26436 28392720 OK
+
+nickphotoes8t.jpg -> 4315.0 33002 26439 28395879
+4315.0 33002 26439 0 NOK -Solo decteta el número
+
+nickphotnesiphone11max.jpg -> 11679.4 66012 57970 47208821
+11679.4 66012 57970 47208821 OK
+
+#PSM 3- EXP ALTER PSM1###################################################################
+img = cv.medianBlur(img, 3)
+img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 11, 3)
+img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+d = pytesseract.image_to_data(img, output_type=Output.DICT, config="--psm 3")
+
+nickphotoesmi8.jpg -> 11553.6 86378 76221 73903573
+11553.6 86378 76221 73903573 OK
+
+nickphotoen8t.jpg -> 4308.4 33002 26436 28392720
+4308.4 33002 26436 28392720 OK
+
+nickphotoes8t.jpg -> 4315.0 33002 26439 28395879
+4315.0 33002 26439 0 NOK
+
+nickphotnesiphone11max.jpg -> 11679.4 66012 57970 47208821
+11679.4 66012 57970 47208821
+
+
+#PSM 3- EXP ALTER PSM1 WITH NICK###################################################################
+img = cv.medianBlur(img, 3)
+img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 11, 3)
+img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+d = pytesseract.image_to_data(img, output_type=Output.DICT, config="--psm 3")
+
+nickphotoesmi8.jpg -> Wicisian 11553.6 86378 76221 73903573
+Wicisian 100% 11553.6 86378 76221 73903573 OK
+
+nickphotoen8t.jpg -> S1ckwhale 4308.4 33002 26436 28392720
+S1ckwhale 89% 4308.4 33002 26436 28392720 OK
+
+nickphotoes8t.jpg -> S1ckwhale 4315.0 33002 26439 28395879
+S1ckwhale 89% 4315.0 33002 26439 0 NOK
+
+nickphotnesiphone11max.jpg -> PabloLuis94 11679.4 66012 57970 47208821
+PabloLuis94 100% 11679.4 66012 57970 47208821
+
+#EXP with data_patter ############################################################################
+nickphotoesmi8.jpg -> 73903573
+73903573 OK
+nickphotoen8t.jpg -> 28392720
+28392720 OK
+nickphotoes8t.jpg -> 28395879
+28395879 OK
+nickphotnesiphone11max.jpg -> 47208821
+47208821 OK
