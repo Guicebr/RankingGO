@@ -98,7 +98,7 @@ except:
 
 print("Busqueda Exp")
 try:
-    #exp = visionocr.ocr_type(d, "totalxp")
+    #experience = visionocr.ocr_type(d, "totalxp")
     exp = None
     if exp is None:
         print("try2")

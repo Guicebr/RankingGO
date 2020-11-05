@@ -42,10 +42,10 @@ NICK, NICK_VAL = range(2)
 def start(update, context):
     """Send a message when the command /start is issued."""
 
-    reply_keyboard = [['/registro', '/cancel', '/exp']]
+    reply_keyboard = [['/registro', '/cancel', '/experience']]
     text = 'Hi! My name is RankingGo Bot. ' \
            'Send /register to register in my database.\n\n' \
-           'Send /exp num to save your experience.\n\n' \
+           'Send /experience num to save your experience.\n\n' \
            'Send /cancel to stop talking to me.\n\n'
     update.message.reply_text(text, reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
 
@@ -54,7 +54,7 @@ def help_command(update, context):
     """Send a message when the command /help is issued."""
     text = 'Help!' \
            'Send /registro to register in my database.\n\n' \
-           'Send /exp num to save your experience.\n\n' \
+           'Send /experience num to save your experience.\n\n' \
            'Send /cancel to stop talking to me.\n\n'
     update.message.reply_text(text)
 
@@ -105,7 +105,7 @@ def nick(update, context):
 
 
 def nickval(update, context):
-    #reply_keyboard = [['/registro', '/cancel', '/exp']]
+    #reply_keyboard = [['/registro', '/cancel', '/experience']]
     #message = update.message
 
     user = update.message.from_user
@@ -156,7 +156,7 @@ def main():
     dp.add_handler(CommandHandler("help", help_command))
 
     # command
-    dp.add_handler(CommandHandler("exp", experience))
+    dp.add_handler(CommandHandler("experience", experience))
 
     # on noncommand i.e message - echo the message on Telegram
     # dp.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))

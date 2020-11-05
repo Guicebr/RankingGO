@@ -35,57 +35,19 @@ def ocr_register(photo_file, nick):
     ocr_data = pytesseract.image_to_data(img, output_type=Output.DICT, config="--psm 3")
 
     logger.info("OCR Start")
-    try:
-        if nickOCR(ocr_data, nick):
-            nickname = nick
-        else:
-            nickname = "Nick no válido"
-        logger.info("Nickname %s", nickname)
-    except:
-        #print("Nick No valido")
-        logger.info("Nick No valido")
 
+    nickname = ocrRegister_Nick(nick, ocr_data)
 
-    try:
-        distance = ocr_type(ocr_data, "jogger")[-1]
-        distance = float(str(distance[0:len(distance) - 1]) + "." + str(str(distance[len(distance) - 1:])))
-        #print(distance)
-        logger.info("Distance %s", distance)
-    except:
-        #print("Not distance or not value")
-        logger.info("Not distance or not value")
+    distance = ocrRegister_Distance(distance, ocr_data)
 
+    pokemon = ocrRegister_Pokemon(ocr_data, pokemon)
 
-    try:
-        pokemon = ocr_type(ocr_data, "collector")[-1]
-        logger.info("Pokemon %s", pokemon)
-    except:
-        logger.info("Pokemon cannot be obtained")
+    pokestops = ocrRegister_Pokestops(ocr_data, pokestops)
 
+    exp = ocrRegister_Experience(exp, img, ocr_data)
 
-    try:
-        pokestops = ocr_type(ocr_data, "backpaker")[-1]
-        #print(pokestops)
-        logger.info("Pokestops %s", pokestops)
-    except:
-        logger.info("Pokestops cannot be obtained")
-
-    try:
-        exp = ocr_type(ocr_data, "totalxp")
-        #print(exp, len(exp))
-        if len(exp) == 0:
-            logger.info("Obtaining Exp with Data_pattern")
-            exp = str(ocr_pattern(img, data_p['totalxp'])[-1])
-        else:
-            exp = str(exp[-1])
-
-        #print("Exp", exp)
-        logger.info("Experience %s", exp)
-    except:
-        logger.warning("Exp cannot be obtained")
-
-    #print(nickname, distance, pokemon, pokestops, exp)
-    logger.info("nickname, distance, pokemon, pokestops, exp %s, %s, %s, %s, %s", nickname, distance, pokemon, pokestops, exp)
+    #print(nickname, distance, pokemon, pokestops, experience)
+    logger.info("nickname, distance, pokemon, pokestops, experience %s, %s, %s, %s, %s", nickname, distance, pokemon, pokestops, exp)
     #os.remove(filepath)
 
     ret = {"nick": nickname,
@@ -97,6 +59,68 @@ def ocr_register(photo_file, nick):
     print("ocr_registro return ", str(ret))
 
     return ret
+
+
+def ocrRegister_Experience(exp, img, ocr_data):
+    try:
+        exp = ocr_type(ocr_data, "totalxp")
+        # print(experience, len(experience))
+        if len(exp) == 0:
+            logger.info("Obtaining Exp with Data_pattern")
+            exp = str(ocr_pattern(img, data_p['totalxp'])[-1])
+        else:
+            exp = str(exp[-1])
+
+        # print("Exp", experience)
+        logger.info("Experience %s", exp)
+    except:
+        logger.warning("Exp cannot be obtained")
+    return exp
+
+
+def ocrRegister_Pokestops(ocr_data, pokestops):
+    try:
+        pokestops = ocr_type(ocr_data, "backpaker")[-1]
+        # print(pokestops)
+        logger.info("Pokestops %s", pokestops)
+    except:
+        logger.info("Pokestops cannot be obtained")
+    return pokestops
+
+
+def ocrRegister_Pokemon(ocr_data, pokemon):
+    try:
+        pokemon = ocr_type(ocr_data, "collector")[-1]
+        logger.info("Pokemon %s", pokemon)
+    except:
+        logger.info("Pokemon cannot be obtained")
+    return pokemon
+
+
+def ocrRegister_Distance(distance, ocr_data):
+    try:
+        distance = ocr_type(ocr_data, "jogger")[-1]
+        distance = float(str(distance[0:len(distance) - 1]) + "." + str(str(distance[len(distance) - 1:])))
+        # print(distance)
+        logger.info("Distance %s", distance)
+    except:
+        # print("Not distance or not value")
+        logger.info("Not distance or not value")
+    return distance
+
+
+def ocrRegister_Nick(nick, ocr_data):
+    try:
+        if nickOCR(ocr_data, nick):
+            nickname = nick
+        else:
+            nickname = "Nick no válido"
+        logger.info("Nickname %s", nickname)
+    except:
+        # print("Nick No valido")
+        logger.info("Nick No valido")
+    return nickname
+
 
 def nickOCR(ocr_data, nick):
     # Declare variables
