@@ -53,14 +53,15 @@ def ocr_register(photo_file, nick):
 
 
 def ocrRegister_Experience(ocr_data, img):
+    exp = None
     try:
         exp = ocr_type(ocr_data, "totalxp")
         # print(experience, len(experience))
         if len(exp) == 0:
             logger.info("Obtaining Exp with Data_pattern")
-            exp = str(ocr_pattern(img, data_p['totalxp'])[-1])
+            exp = str(np.max(ocr_pattern(img, data_p['totalxp'])))
         else:
-            exp = str(exp[-1])
+            exp = str(np.max(exp))
 
         # print("Exp", experience)
         logger.info("Experience %s", exp)
@@ -70,48 +71,47 @@ def ocrRegister_Experience(ocr_data, img):
 
 
 def ocrRegister_Pokestops(ocr_data):
+    pokestops = None
     try:
         pokestops = ocr_type(ocr_data, "backpaker")[-1]
-        # print(pokestops)
         logger.info("Pokestops %s", pokestops)
-    except:
+    except IndexError:
         logger.info("Pokestops cannot be obtained")
     return pokestops
 
 
 def ocrRegister_Pokemon(ocr_data):
+    pokemon = None
     try:
         pokemon = ocr_type(ocr_data, "collector")[-1]
         logger.info("Pokemon %s", pokemon)
-    except:
+    except IndexError:
         logger.info("Pokemon cannot be obtained")
     return pokemon
 
 
 def ocrRegister_Distance(ocr_data):
+    distance = None
     try:
         distance = ocr_type(ocr_data, "jogger")[-1]
         distance = float(str(distance[0:len(distance) - 1]) + "." + str(str(distance[len(distance) - 1:])))
-        # print(distance)
         logger.info("Distance %s", distance)
-    except:
-        # print("Not distance or not value")
+    except IndexError:
         logger.info("Not distance or not value")
     return distance
 
 
 def ocrRegister_Nick(nick, ocr_data):
-    try:
-        np_text = np.array(ocr_data['text'])
+    nickname = None
+    np_text = np.array(ocr_data['text'])
 
-        if arraycmp_string(np_text, nick):
-            nickname = nick
-        else:
-            nickname = None
-            logger.info("Nickname %s", nickname)
-    except:
-        # print("Nick No valido")
+    if arraycmp_string(np_text, nick) and nick is not None:
+        nickname = nick
+    else:
+        nickname = None
         logger.info("Nick No valido")
+
+    logger.info("Nickname %s", nickname)
     return nickname
 
 
@@ -173,8 +173,8 @@ def ocr_type(ocr_data, type):
         logger.info("Ocr_Type %s Result OK %s.", type, ret)
 
         return ret
-    except:
-        # print("OCR_TYPE Error to get num of " + str(type))
+
+    except IndexError:
         logger.info("Ocr_Type Error %s Result NOK %s.", type, str(dist))
         return None
 
