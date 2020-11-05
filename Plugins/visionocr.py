@@ -7,6 +7,7 @@ import cv2 as cv
 from Plugins import common_func as c_func
 from Modelo.TypeRanking import typeranking as tr
 from Modelo.TypeRanking import datapattern as data_p
+from Modelo.UserData import UserData
 
 from pytesseract import pytesseract
 from pytesseract import Output
@@ -21,7 +22,8 @@ logger = logging.getLogger(__name__)
 RATIO_NICK = 80
 
 def ocr_register(photo_file, nick):
-    nickname, exp, distance, pokestops, pokemon = range(5)
+
+    user = UserData()
 
     filepath = os.path.expanduser('~') + '/' + str(photo_file.file_id)
     #print(filepath)
@@ -36,32 +38,21 @@ def ocr_register(photo_file, nick):
 
     logger.info("OCR Start")
 
-    nickname = ocrRegister_Nick(nick, ocr_data)
+    user.data["nick"] = ocrRegister_Nick(nick, ocr_data)
+    user.data["jogger"] = ocrRegister_Distance(ocr_data)
+    user.data["collector"] = ocrRegister_Pokemon(ocr_data)
+    user.data["backpaker"] = ocrRegister_Pokestops(ocr_data)
+    user.data["totalxp"] = ocrRegister_Experience(ocr_data, img)
 
-    distance = ocrRegister_Distance(distance, ocr_data)
-
-    pokemon = ocrRegister_Pokemon(ocr_data, pokemon)
-
-    pokestops = ocrRegister_Pokestops(ocr_data, pokestops)
-
-    exp = ocrRegister_Experience(exp, img, ocr_data)
-
-    #print(nickname, distance, pokemon, pokestops, experience)
-    logger.info("nickname, distance, pokemon, pokestops, experience %s, %s, %s, %s, %s", nickname, distance, pokemon, pokestops, exp)
+    logger.info("User Data Register %s", str(user))
     #os.remove(filepath)
 
-    ret = {"nick": nickname,
-           "jogger": distance,
-           "collector": pokemon,
-           "backpaker": pokestops,
-           "totalxp": exp}
+    print("ocr_registro return ", str(user))
 
-    print("ocr_registro return ", str(ret))
-
-    return ret
+    return str(user)
 
 
-def ocrRegister_Experience(exp, img, ocr_data):
+def ocrRegister_Experience(ocr_data, img):
     try:
         exp = ocr_type(ocr_data, "totalxp")
         # print(experience, len(experience))
@@ -78,7 +69,7 @@ def ocrRegister_Experience(exp, img, ocr_data):
     return exp
 
 
-def ocrRegister_Pokestops(ocr_data, pokestops):
+def ocrRegister_Pokestops(ocr_data):
     try:
         pokestops = ocr_type(ocr_data, "backpaker")[-1]
         # print(pokestops)
@@ -88,7 +79,7 @@ def ocrRegister_Pokestops(ocr_data, pokestops):
     return pokestops
 
 
-def ocrRegister_Pokemon(ocr_data, pokemon):
+def ocrRegister_Pokemon(ocr_data):
     try:
         pokemon = ocr_type(ocr_data, "collector")[-1]
         logger.info("Pokemon %s", pokemon)
@@ -97,7 +88,7 @@ def ocrRegister_Pokemon(ocr_data, pokemon):
     return pokemon
 
 
-def ocrRegister_Distance(distance, ocr_data):
+def ocrRegister_Distance(ocr_data):
     try:
         distance = ocr_type(ocr_data, "jogger")[-1]
         distance = float(str(distance[0:len(distance) - 1]) + "." + str(str(distance[len(distance) - 1:])))
@@ -111,24 +102,17 @@ def ocrRegister_Distance(distance, ocr_data):
 
 def ocrRegister_Nick(nick, ocr_data):
     try:
-        if nickOCR(ocr_data, nick):
+        np_text = np.array(ocr_data['text'])
+
+        if arraycmp_string(np_text, nick):
             nickname = nick
         else:
-            nickname = "Nick no válido"
-        logger.info("Nickname %s", nickname)
+            nickname = None
+            logger.info("Nickname %s", nickname)
     except:
         # print("Nick No valido")
         logger.info("Nick No valido")
     return nickname
-
-
-def nickOCR(ocr_data, nick):
-    # Declare variables
-    ret = False
-    np_text = np.array(ocr_data['text'])
-
-    ret = arraycmp_string(np_text, nick)
-    return ret
 
 
 def ocr_type(ocr_data, type):
