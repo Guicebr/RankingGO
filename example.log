@@ -1401,3 +1401,50 @@ ID: 13922907
 2020-10-28 12:11:05,240 - Plugins.visionocr - INFO - Ocr_Type backpaker Result OK ['76221'].
 2020-10-28 12:11:05,240 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ start.
 2020-10-28 12:11:05,909 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ Result OK ['86378', '76221', '73903573'].
+2020-11-16 13:46:32,897 - apscheduler.scheduler - INFO - Scheduler started
+2020-11-16 13:47:00,247 - __main__ - INFO - Inicio Registro: GuillermoCS
+ID: 13922907
+2020-11-16 13:47:04,614 - __main__ - INFO - Nombre GuillermoCS: Nick Wicisian
+2020-11-16 13:47:33,492 - __main__ - INFO - Error OCR nickval
+2020-11-16 13:48:45,258 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2020-11-16 13:48:45,258 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2020-11-16 13:48:56,159 - apscheduler.scheduler - INFO - Scheduler started
+2020-11-16 13:49:00,238 - __main__ - INFO - Inicio Registro: GuillermoCS
+ID: 13922907
+2020-11-16 13:49:04,093 - __main__ - INFO - Nombre GuillermoCS: Nick Wicisian
+2020-11-16 13:49:09,172 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/pytesseract/pytesseract.py", line 349, in get_tesseract_version
+    subprocess.check_output(
+  File "/usr/lib/python3.8/subprocess.py", line 411, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+  File "/usr/lib/python3.8/subprocess.py", line 489, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/lib/python3.8/subprocess.py", line 854, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.8/subprocess.py", line 1702, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'tesseract'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/conversationhandler.py", line 487, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "main.py", line 118, in nickval
+    ocr_text = visionocr.ocr_register(photo_file, context.user_data["nick"])
+  File "/home/guillermocs/PycharmProjects/RankingGO/Plugins/visionocr.py", line 37, in ocr_register
+    ocr_data = pytesseract.image_to_data(img, output_type=Output.DICT, config="--psm 3")
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/pytesseract/pytesseract.py", line 456, in image_to_data
+    if get_tesseract_version() < '3.05':
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/pytesseract/pytesseract.py", line 142, in wrapper
+    wrapper._result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/pytesseract/pytesseract.py", line 359, in get_tesseract_version
+    raise TesseractNotFoundError()
+pytesseract.pytesseract.TesseractNotFoundError: tesseract is not installed or it's not in your PATH. See README file for more information.
+2020-11-16 13:50:44,357 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2020-11-16 13:50:44,358 - apscheduler.scheduler - INFO - Scheduler has been shut down

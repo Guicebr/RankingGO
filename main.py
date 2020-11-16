@@ -14,10 +14,13 @@ bot.
 """
 
 import logging
+
 import telegram
+from telegram import Update
 from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove)
 from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters,
-                          ConversationHandler)
+                          ConversationHandler, CallbackContext)
+
 from CREDENTIALS import BOT_TOKEN
 
 from Database.dbhelper import DBHelper
@@ -111,16 +114,16 @@ def nickval(update, context):
     user = update.message.from_user
     photo_file = update.message.photo[-1].get_file()
 
-    try:
-        ocr_text = visionocr.ocr_register(photo_file, context.user_data["nick"])
-        context.user_data["ocr_text"] = ocr_text
-        print("ocr_return nickval ", str(ocr_text))
+#try:
+    ocr_text = visionocr.ocr_register(photo_file, context.user_data["nick"])
+    context.user_data["ocr_text"] = ocr_text
+    print("ocr_return nickval ", str(ocr_text))
 
-        personid = dbconn.add_user(ocr_text[nick], user.id)
-        text = "Nickval " + ocr_text[nick] + str(ocr_text)
-        update.message.reply_text(text)
-    except:
-        logger.info("Error OCR nickval")
+    personid = dbconn.add_user(ocr_text[nick], user.id)
+    text = "Nickval " + ocr_text[nick] + str(ocr_text)
+    update.message.reply_text(text)
+#except:
+    logger.info("Error OCR nickval")
 
     return ConversationHandler.END
 
