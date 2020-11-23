@@ -44,6 +44,11 @@ def ocr_register(photo_file, nick):
     user.data["backpaker"] = ocrRegister_Pokestops(ocr_data)
     user.data["totalxp"] = ocrRegister_Experience(ocr_data, img)
 
+    print("Pattern", str(data_p['totalxp']))
+    ocr_pattern_data = ocr_pattern(ocr_pattern(img, str(data_p['totalxp'])))
+
+    print("ocr_pattern_data", ocr_pattern_data)
+    logger.info("Ocr_pattern_data %s", str(ocr_pattern_data))
     logger.info("User Data Register %s", str(user))
     #os.remove(filepath)
 
@@ -54,19 +59,20 @@ def ocr_register(photo_file, nick):
 
 def ocrRegister_Experience(ocr_data, img):
     exp = None
-    try:
-        exp = ocr_type(ocr_data, "totalxp")
-        # print(experience, len(experience))
-        if len(exp) == 0:
-            logger.info("Obtaining Exp with Data_pattern")
-            exp = str(np.max(ocr_pattern(img, data_p['totalxp'])))
-        else:
-            exp = str(np.max(exp))
+    #try:
+    exp = ocr_type(ocr_data, "totalxp")
+    arr_to_nums = np.vectorize(int)
 
-        # print("Exp", experience)
-        logger.info("Experience %s", exp)
-    except:
-        logger.warning("Exp cannot be obtained")
+    # print(experience, len(experience))
+    if len(exp) == 0:
+        logger.info("Obtaining Exp with Data_pattern")
+        exp = str(np.max(arr_to_nums(ocr_pattern(img, data_p['totalxp']))))
+    else:
+        exp = str(np.max(arr_to_nums(exp)))
+
+    logger.info("Experience %s", exp)
+    #except:
+    #    logger.warning("Exp cannot be obtained")
     return exp
 
 
@@ -91,18 +97,22 @@ def ocrRegister_Pokemon(ocr_data):
 
 
 def ocrRegister_Distance(ocr_data):
-    distance = None
-    try:
-        distance = ocr_type(ocr_data, "jogger")[-1]
+
+    distance = ocr_type(ocr_data, "jogger")
+
+    if len(distance) == 1:
+        distance = str(distance[0])
         distance = float(str(distance[0:len(distance) - 1]) + "." + str(str(distance[len(distance) - 1:])))
         logger.info("Distance %s", distance)
-    except IndexError:
+    else:
+        distance = None
         logger.info("Not distance or not value")
+
     return distance
 
 
 def ocrRegister_Nick(nick, ocr_data):
-    nickname = None
+
     np_text = np.array(ocr_data['text'])
 
     if arraycmp_string(np_text, nick) and nick is not None:

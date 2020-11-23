@@ -22,6 +22,11 @@ img = cv.medianBlur(img, 3)
 ##img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_MEAN_C, cv.THRESH_BINARY, 11, 2)
 img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 11, 3)
 img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+
+visionocr.ocr_register(img, nick[sel_img])
+
+exit
+
 d = pytesseract.image_to_data(img, output_type=Output.DICT, config="--psm 3")
 
 # a = pytesseract.image_to_boxes(img, output_type=Output.DICT)

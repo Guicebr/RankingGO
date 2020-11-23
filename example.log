@@ -1448,3 +1448,1098 @@ Traceback (most recent call last):
 pytesseract.pytesseract.TesseractNotFoundError: tesseract is not installed or it's not in your PATH. See README file for more information.
 2020-11-16 13:50:44,357 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
 2020-11-16 13:50:44,358 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2020-11-16 13:54:28,990 - apscheduler.scheduler - INFO - Scheduler started
+2020-11-16 13:54:37,733 - __main__ - INFO - Inicio Registro: GuillermoCS
+ID: 13922907
+2020-11-16 13:54:41,451 - __main__ - INFO - Nombre GuillermoCS: Nick Wicisian
+2020-11-16 13:54:47,189 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/pytesseract/pytesseract.py", line 349, in get_tesseract_version
+    subprocess.check_output(
+  File "/usr/lib/python3.8/subprocess.py", line 411, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+  File "/usr/lib/python3.8/subprocess.py", line 489, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/lib/python3.8/subprocess.py", line 854, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.8/subprocess.py", line 1702, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'tesseract'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/conversationhandler.py", line 487, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "main.py", line 118, in nickval
+    ocr_text = visionocr.ocr_register(photo_file, context.user_data["nick"])
+  File "/home/guillermocs/PycharmProjects/RankingGO/Plugins/visionocr.py", line 37, in ocr_register
+    ocr_data = pytesseract.image_to_data(img, output_type=Output.DICT, config="--psm 3")
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/pytesseract/pytesseract.py", line 456, in image_to_data
+    if get_tesseract_version() < '3.05':
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/pytesseract/pytesseract.py", line 142, in wrapper
+    wrapper._result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/pytesseract/pytesseract.py", line 359, in get_tesseract_version
+    raise TesseractNotFoundError()
+pytesseract.pytesseract.TesseractNotFoundError: tesseract is not installed or it's not in your PATH. See README file for more information.
+2020-11-16 13:55:16,545 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2020-11-16 13:55:16,545 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2020-11-16 13:58:26,430 - Plugins.visionocr - INFO - Ocr_Type jogger start.
+2020-11-16 13:58:26,430 - root - INFO - ['Distance', 'walked', 'Distancia', 'caminando', 'km']
+2020-11-16 13:58:26,430 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-16 13:58:26,431 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-16 13:58:26,431 - root - INFO - t,b,l (array([50]),) ['Distancia'] [10.] [1.] [1.]
+2020-11-16 13:58:26,431 - root - INFO - t,b,l (array([51]),) ['caminando'] [10. 10.] [1. 1.] [1. 1.]
+2020-11-16 13:58:26,432 - root - INFO - t,b,l (array([53]),) ['km'] [10. 10. 10.] [1. 1. 1.] [1. 1. 1.]
+2020-11-16 13:58:26,432 - Plugins.visionocr - INFO - Salida ['' 'a?' 'Distancia' 'caminando' '11,553,6' 'km']
+2020-11-16 13:58:26,432 - Plugins.visionocr - INFO - Ocr_Type jogger Result OK ['115536'].
+2020-11-16 13:58:26,433 - Plugins.visionocr - INFO - Ocr_Type collector start.
+2020-11-16 13:58:26,433 - root - INFO - ['Pokémon', 'Caught', 'atrapados']
+2020-11-16 13:58:26,433 - root - INFO - t,b,l (array([55]),) ['Pokémon'] [10.] [2.] [1.]
+2020-11-16 13:58:26,434 - root - INFO - t,b,l (array([], dtype=int64),) [] [10.] [2.] [1.]
+2020-11-16 13:58:26,434 - root - INFO - t,b,l (array([56]),) ['atrapados'] [10. 10.] [2. 2.] [1. 1.]
+2020-11-16 13:58:26,434 - Plugins.visionocr - INFO - Salida ['' 'Pokémon' 'atrapados' '86.378']
+2020-11-16 13:58:26,435 - Plugins.visionocr - INFO - Ocr_Type collector Result OK ['86378'].
+2020-11-16 13:58:26,435 - Plugins.visionocr - INFO - Ocr_Type backpaker start.
+2020-11-16 13:58:26,435 - root - INFO - ['Pokéstops', 'Pokeparadas', 'visited', 'visitadas', 'Poképaradas']
+2020-11-16 13:58:26,435 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-16 13:58:26,435 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-16 13:58:26,435 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-16 13:58:26,435 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-16 13:58:26,436 - root - INFO - t,b,l (array([59]),) ['Poképaradas'] [10.] [3.] [1.]
+2020-11-16 13:58:26,436 - Plugins.visionocr - INFO - Salida ['' 'Poképaradas' 'visy' '76.221']
+2020-11-16 13:58:26,436 - Plugins.visionocr - INFO - Ocr_Type backpaker Result OK ['76221'].
+2020-11-16 13:58:26,436 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ start.
+2020-11-16 13:58:26,990 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ Result OK ['86378', '76221', '73903573'].
+2020-11-23 10:40:26,102 - apscheduler.scheduler - INFO - Scheduler started
+2020-11-23 10:40:39,330 - __main__ - INFO - Inicio Registro: GuillermoCS
+ID: 13922907
+2020-11-23 10:40:45,591 - __main__ - INFO - Nombre GuillermoCS: Nick Wicisian
+2020-11-23 10:47:43,363 - Plugins.visionocr - INFO - OCR Start
+2020-11-23 10:47:43,364 - Plugins.visionocr - INFO - Wicisian cmp Wicisian == 100
+
+2020-11-23 10:47:43,364 - Plugins.visionocr - INFO - Nickname Wicisian
+2020-11-23 10:47:43,364 - Plugins.visionocr - INFO - Ocr_Type jogger start.
+2020-11-23 10:47:43,365 - root - INFO - ['Distance', 'walked', 'Distancia', 'caminando', 'km']
+2020-11-23 10:47:43,365 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 10:47:43,365 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 10:47:43,366 - root - INFO - t,b,l (array([53]),) ['Distancia'] [11.] [1.] [1.]
+2020-11-23 10:47:43,366 - root - INFO - t,b,l (array([54]),) ['caminando'] [11. 11.] [1. 1.] [1. 1.]
+2020-11-23 10:47:43,366 - root - INFO - t,b,l (array([56]),) ['km'] [11. 11. 11.] [1. 1. 1.] [1. 1. 1.]
+2020-11-23 10:47:43,367 - Plugins.visionocr - INFO - Salida ['' 'Distancia' 'caminando' '11,553,6' 'km']
+2020-11-23 10:47:43,368 - Plugins.visionocr - INFO - Ocr_Type jogger Result OK ['115536'].
+2020-11-23 10:47:43,368 - Plugins.visionocr - INFO - Distance 11553.6
+2020-11-23 10:47:43,368 - Plugins.visionocr - INFO - Ocr_Type collector start.
+2020-11-23 10:47:43,368 - root - INFO - ['Pokémon', 'Caught', 'atrapados']
+2020-11-23 10:47:43,368 - root - INFO - t,b,l (array([58]),) ['Pokémon'] [11.] [2.] [1.]
+2020-11-23 10:47:43,368 - root - INFO - t,b,l (array([], dtype=int64),) [] [11.] [2.] [1.]
+2020-11-23 10:47:43,369 - root - INFO - t,b,l (array([59]),) ['atrapados'] [11. 11.] [2. 2.] [1. 1.]
+2020-11-23 10:47:43,369 - Plugins.visionocr - INFO - Salida ['' 'Pokémon' 'atrapados' '86.378']
+2020-11-23 10:47:43,369 - Plugins.visionocr - INFO - Ocr_Type collector Result OK ['86378'].
+2020-11-23 10:47:43,369 - Plugins.visionocr - INFO - Pokemon 86378
+2020-11-23 10:47:43,369 - Plugins.visionocr - INFO - Ocr_Type backpaker start.
+2020-11-23 10:47:43,369 - root - INFO - ['Pokéstops', 'Pokeparadas', 'visited', 'visitadas', 'Poképaradas']
+2020-11-23 10:47:43,369 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 10:47:43,369 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 10:47:43,370 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 10:47:43,370 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 10:47:43,370 - root - INFO - t,b,l (array([62]),) ['Poképaradas'] [11.] [3.] [1.]
+2020-11-23 10:47:43,370 - Plugins.visionocr - INFO - Salida ['' 'Poképaradas' 'vis;' '76.221']
+2020-11-23 10:47:43,370 - Plugins.visionocr - INFO - Ocr_Type backpaker Result OK ['76221'].
+2020-11-23 10:47:43,370 - Plugins.visionocr - INFO - Pokestops 76221
+2020-11-23 10:47:43,370 - Plugins.visionocr - INFO - Ocr_Type totalxp start.
+2020-11-23 10:47:43,370 - root - INFO - ['XP', 'PX', 'XP:', 'PX:']
+2020-11-23 10:47:43,371 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 10:47:43,371 - root - INFO - t,b,l (array([68]),) ['PX'] [11.] [4.] [1.]
+2020-11-23 10:47:43,371 - root - INFO - t,b,l (array([], dtype=int64),) [] [11.] [4.] [1.]
+2020-11-23 10:47:43,371 - root - INFO - t,b,l (array([], dtype=int64),) [] [11.] [4.] [1.]
+2020-11-23 10:47:43,372 - Plugins.visionocr - INFO - Salida ['' 'Total' 'de' 'PX' '73.903.573.']
+2020-11-23 10:47:43,372 - Plugins.visionocr - INFO - Ocr_Type totalxp Result OK ['73903573'].
+2020-11-23 10:47:43,372 - Plugins.visionocr - WARNING - Exp cannot be obtained
+2020-11-23 10:47:43,372 - Plugins.visionocr - INFO - User Data Register {'nick': 'Wicisian', 'jogger': 11553.6, 'collector': '86378', 'backpaker': '76221', 'totalxp': array(['73903573'], dtype='<U11')}
+2020-11-23 10:47:43,372 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/conversationhandler.py", line 487, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "main.py", line 122, in nickval
+    personid = dbconn.add_user(ocr_text[nick], user.id)
+TypeError: string indices must be integers
+2020-11-23 10:57:19,216 - apscheduler.scheduler - INFO - Scheduler started
+2020-11-23 10:57:19,622 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:57:19,623 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:57:23,681 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:57:23,681 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:57:24,728 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:57:24,729 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:57:29,292 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:57:29,293 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:57:30,839 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:57:30,840 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:57:36,149 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:57:36,149 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:57:38,449 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:57:38,449 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:57:41,885 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:57:41,886 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:57:45,317 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:57:45,317 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:57:50,442 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:57:50,443 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:57:55,555 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:57:55,555 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:58:03,212 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:58:03,212 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:58:10,860 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:58:10,861 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:58:22,316 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:58:22,316 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:58:26,364 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:58:26,365 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:58:38,103 - __main__ - INFO - Inicio Registro: GuillermoCS
+ID: 13922907
+2020-11-23 10:58:41,258 - __main__ - INFO - Nombre GuillermoCS: Nick Wicisian
+2020-11-23 10:58:43,521 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:58:43,521 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:58:47,576 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:58:47,577 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:58:59,146 - Plugins.visionocr - INFO - OCR Start
+2020-11-23 10:58:59,146 - Plugins.visionocr - INFO - Wicisian cmp Wicisian == 100
+
+2020-11-23 10:58:59,146 - Plugins.visionocr - INFO - Nickname Wicisian
+2020-11-23 10:58:59,146 - Plugins.visionocr - INFO - Ocr_Type jogger start.
+2020-11-23 10:58:59,146 - root - INFO - ['Distance', 'walked', 'Distancia', 'caminando', 'km']
+2020-11-23 10:58:59,147 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 10:58:59,147 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 10:58:59,147 - root - INFO - t,b,l (array([53]),) ['Distancia'] [11.] [1.] [1.]
+2020-11-23 10:58:59,148 - root - INFO - t,b,l (array([54]),) ['caminando'] [11. 11.] [1. 1.] [1. 1.]
+2020-11-23 10:58:59,148 - root - INFO - t,b,l (array([56]),) ['km'] [11. 11. 11.] [1. 1. 1.] [1. 1. 1.]
+2020-11-23 10:58:59,148 - Plugins.visionocr - INFO - Salida ['' 'Distancia' 'caminando' '11,553,6' 'km']
+2020-11-23 10:58:59,149 - Plugins.visionocr - INFO - Ocr_Type jogger Result OK ['115536'].
+2020-11-23 10:58:59,149 - Plugins.visionocr - INFO - Distance 11553.6
+2020-11-23 10:58:59,149 - Plugins.visionocr - INFO - Ocr_Type collector start.
+2020-11-23 10:58:59,149 - root - INFO - ['Pokémon', 'Caught', 'atrapados']
+2020-11-23 10:58:59,149 - root - INFO - t,b,l (array([58]),) ['Pokémon'] [11.] [2.] [1.]
+2020-11-23 10:58:59,149 - root - INFO - t,b,l (array([], dtype=int64),) [] [11.] [2.] [1.]
+2020-11-23 10:58:59,150 - root - INFO - t,b,l (array([59]),) ['atrapados'] [11. 11.] [2. 2.] [1. 1.]
+2020-11-23 10:58:59,150 - Plugins.visionocr - INFO - Salida ['' 'Pokémon' 'atrapados' '86.378']
+2020-11-23 10:58:59,150 - Plugins.visionocr - INFO - Ocr_Type collector Result OK ['86378'].
+2020-11-23 10:58:59,150 - Plugins.visionocr - INFO - Pokemon 86378
+2020-11-23 10:58:59,150 - Plugins.visionocr - INFO - Ocr_Type backpaker start.
+2020-11-23 10:58:59,150 - root - INFO - ['Pokéstops', 'Pokeparadas', 'visited', 'visitadas', 'Poképaradas']
+2020-11-23 10:58:59,150 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 10:58:59,150 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 10:58:59,151 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 10:58:59,151 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 10:58:59,151 - root - INFO - t,b,l (array([62]),) ['Poképaradas'] [11.] [3.] [1.]
+2020-11-23 10:58:59,151 - Plugins.visionocr - INFO - Salida ['' 'Poképaradas' 'vis;' '76.221']
+2020-11-23 10:58:59,151 - Plugins.visionocr - INFO - Ocr_Type backpaker Result OK ['76221'].
+2020-11-23 10:58:59,151 - Plugins.visionocr - INFO - Pokestops 76221
+2020-11-23 10:58:59,151 - Plugins.visionocr - INFO - Ocr_Type totalxp start.
+2020-11-23 10:58:59,151 - root - INFO - ['XP', 'PX', 'XP:', 'PX:']
+2020-11-23 10:58:59,151 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 10:58:59,152 - root - INFO - t,b,l (array([68]),) ['PX'] [11.] [4.] [1.]
+2020-11-23 10:58:59,152 - root - INFO - t,b,l (array([], dtype=int64),) [] [11.] [4.] [1.]
+2020-11-23 10:58:59,152 - root - INFO - t,b,l (array([], dtype=int64),) [] [11.] [4.] [1.]
+2020-11-23 10:58:59,153 - Plugins.visionocr - INFO - Salida ['' 'Total' 'de' 'PX' '73.903.573.']
+2020-11-23 10:58:59,153 - Plugins.visionocr - INFO - Ocr_Type totalxp Result OK ['73903573'].
+2020-11-23 10:58:59,153 - Plugins.visionocr - WARNING - Exp cannot be obtained
+2020-11-23 10:58:59,153 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ start.
+2020-11-23 10:58:59,625 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ Result OK ['86378', '76221'].
+2020-11-23 10:58:59,625 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/conversationhandler.py", line 487, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 118, in nickval
+    ocr_text = visionocr.ocr_register(photo_file, context.user_data["nick"])
+  File "/home/guillermocs/PycharmProjects/RankingGO/Plugins/visionocr.py", line 47, in ocr_register
+    ocr_pattern_data = ocr_pattern(ocr_pattern(img, data_p['totalxp']))
+TypeError: ocr_pattern() missing 1 required positional argument: 'pattern'
+2020-11-23 10:59:13,267 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:59:13,267 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:59:17,312 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:59:17,313 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:59:55,850 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:59:55,851 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:59:59,897 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 10:59:59,897 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 11:00:29,986 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 11:00:29,987 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 11:00:34,034 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 11:00:34,034 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 11:01:04,121 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 11:01:04,121 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 11:01:08,167 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 11:01:08,167 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 11:01:38,253 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 11:01:38,253 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 11:01:42,307 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 11:01:42,307 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 11:01:52,178 - Plugins.visionocr - INFO - OCR Start
+2020-11-23 11:01:52,178 - Plugins.visionocr - INFO - Wicisian cmp Wicisian == 100
+
+2020-11-23 11:01:52,178 - Plugins.visionocr - INFO - Nickname Wicisian
+2020-11-23 11:01:52,178 - Plugins.visionocr - INFO - Ocr_Type jogger start.
+2020-11-23 11:01:52,178 - root - INFO - ['Distance', 'walked', 'Distancia', 'caminando', 'km']
+2020-11-23 11:01:52,179 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:01:52,179 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:01:52,179 - root - INFO - t,b,l (array([53]),) ['Distancia'] [11.] [1.] [1.]
+2020-11-23 11:01:52,179 - root - INFO - t,b,l (array([54]),) ['caminando'] [11. 11.] [1. 1.] [1. 1.]
+2020-11-23 11:01:52,180 - root - INFO - t,b,l (array([56]),) ['km'] [11. 11. 11.] [1. 1. 1.] [1. 1. 1.]
+2020-11-23 11:01:52,180 - Plugins.visionocr - INFO - Salida ['' 'Distancia' 'caminando' '11,553,6' 'km']
+2020-11-23 11:01:52,180 - Plugins.visionocr - INFO - Ocr_Type jogger Result OK ['115536'].
+2020-11-23 11:01:52,180 - Plugins.visionocr - INFO - Distance 11553.6
+2020-11-23 11:01:52,180 - Plugins.visionocr - INFO - Ocr_Type collector start.
+2020-11-23 11:01:52,180 - root - INFO - ['Pokémon', 'Caught', 'atrapados']
+2020-11-23 11:01:52,181 - root - INFO - t,b,l (array([58]),) ['Pokémon'] [11.] [2.] [1.]
+2020-11-23 11:01:52,181 - root - INFO - t,b,l (array([], dtype=int64),) [] [11.] [2.] [1.]
+2020-11-23 11:01:52,181 - root - INFO - t,b,l (array([59]),) ['atrapados'] [11. 11.] [2. 2.] [1. 1.]
+2020-11-23 11:01:52,182 - Plugins.visionocr - INFO - Salida ['' 'Pokémon' 'atrapados' '86.378']
+2020-11-23 11:01:52,182 - Plugins.visionocr - INFO - Ocr_Type collector Result OK ['86378'].
+2020-11-23 11:01:52,182 - Plugins.visionocr - INFO - Pokemon 86378
+2020-11-23 11:01:52,182 - Plugins.visionocr - INFO - Ocr_Type backpaker start.
+2020-11-23 11:01:52,182 - root - INFO - ['Pokéstops', 'Pokeparadas', 'visited', 'visitadas', 'Poképaradas']
+2020-11-23 11:01:52,182 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:01:52,182 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:01:52,182 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:01:52,182 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:01:52,183 - root - INFO - t,b,l (array([62]),) ['Poképaradas'] [11.] [3.] [1.]
+2020-11-23 11:01:52,183 - Plugins.visionocr - INFO - Salida ['' 'Poképaradas' 'vis;' '76.221']
+2020-11-23 11:01:52,183 - Plugins.visionocr - INFO - Ocr_Type backpaker Result OK ['76221'].
+2020-11-23 11:01:52,183 - Plugins.visionocr - INFO - Pokestops 76221
+2020-11-23 11:01:52,183 - Plugins.visionocr - INFO - Ocr_Type totalxp start.
+2020-11-23 11:01:52,183 - root - INFO - ['XP', 'PX', 'XP:', 'PX:']
+2020-11-23 11:01:52,183 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:01:52,184 - root - INFO - t,b,l (array([68]),) ['PX'] [11.] [4.] [1.]
+2020-11-23 11:01:52,184 - root - INFO - t,b,l (array([], dtype=int64),) [] [11.] [4.] [1.]
+2020-11-23 11:01:52,184 - root - INFO - t,b,l (array([], dtype=int64),) [] [11.] [4.] [1.]
+2020-11-23 11:01:52,184 - Plugins.visionocr - INFO - Salida ['' 'Total' 'de' 'PX' '73.903.573.']
+2020-11-23 11:01:52,184 - Plugins.visionocr - INFO - Ocr_Type totalxp Result OK ['73903573'].
+2020-11-23 11:01:52,184 - Plugins.visionocr - WARNING - Exp cannot be obtained
+2020-11-23 11:01:52,184 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ start.
+2020-11-23 11:01:52,662 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ Result OK ['86378', '76221'].
+2020-11-23 11:01:52,663 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/conversationhandler.py", line 487, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 118, in nickval
+    ocr_text = visionocr.ocr_register(photo_file, context.user_data["nick"])
+  File "/home/guillermocs/PycharmProjects/RankingGO/Plugins/visionocr.py", line 47, in ocr_register
+    ocr_pattern_data = ocr_pattern(ocr_pattern(img, data_p['totalxp']))
+TypeError: ocr_pattern() missing 1 required positional argument: 'pattern'
+2020-11-23 11:02:12,407 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 11:02:12,407 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 419, in _network_loop_retry
+    if not action_cb():
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/updater.py", line 373, in polling_action_cb
+    updates = self.bot.get_updates(self.last_update_id,
+  File "<decorator-gen-31>", line 2, in get_updates
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 2262, in get_updates
+    result = self._post('getUpdates', data, timeout=float(read_latency) + float(timeout),
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 325, in post
+    result = self._request_wrapper('POST', url,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 254, in _request_wrapper
+    raise Conflict(message)
+telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 11:02:14,206 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2020-11-23 11:02:14,207 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2020-11-23 11:02:16,515 - telegram.ext.updater - ERROR - Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2020-11-23 11:02:20,607 - telegram.ext.updater - WARNING - Exiting immediately!
+2020-11-23 11:02:24,073 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2020-11-23 11:02:24,074 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2020-11-23 11:02:28,766 - apscheduler.scheduler - INFO - Scheduler started
+2020-11-23 11:02:34,431 - __main__ - INFO - Inicio Registro: GuillermoCS
+ID: 13922907
+2020-11-23 11:02:38,730 - __main__ - INFO - Nombre GuillermoCS: Nick Wicisian
+2020-11-23 11:02:49,154 - Plugins.visionocr - INFO - OCR Start
+2020-11-23 11:02:49,154 - Plugins.visionocr - INFO - Wicisian cmp Wicisian == 100
+
+2020-11-23 11:02:49,154 - Plugins.visionocr - INFO - Nickname Wicisian
+2020-11-23 11:02:49,155 - Plugins.visionocr - INFO - Ocr_Type jogger start.
+2020-11-23 11:02:49,155 - root - INFO - ['Distance', 'walked', 'Distancia', 'caminando', 'km']
+2020-11-23 11:02:49,155 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:02:49,155 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:02:49,156 - root - INFO - t,b,l (array([63]),) ['Distancia'] [9.] [1.] [1.]
+2020-11-23 11:02:49,156 - root - INFO - t,b,l (array([64]),) ['caminando'] [9. 9.] [1. 1.] [1. 1.]
+2020-11-23 11:02:49,157 - root - INFO - t,b,l (array([66]),) ['km'] [9. 9. 9.] [1. 1. 1.] [1. 1. 1.]
+2020-11-23 11:02:49,157 - Plugins.visionocr - INFO - Salida ['' 'af' 'Distancia' 'caminando' '11.886,8' 'km']
+2020-11-23 11:02:49,157 - Plugins.visionocr - INFO - Ocr_Type jogger Result OK ['118868'].
+2020-11-23 11:02:49,157 - Plugins.visionocr - INFO - Distance 11886.8
+2020-11-23 11:02:49,157 - Plugins.visionocr - INFO - Ocr_Type collector start.
+2020-11-23 11:02:49,158 - root - INFO - ['Pokémon', 'Caught', 'atrapados']
+2020-11-23 11:02:49,158 - root - INFO - t,b,l (array([68]),) ['Pokémon'] [9.] [2.] [1.]
+2020-11-23 11:02:49,158 - root - INFO - t,b,l (array([], dtype=int64),) [] [9.] [2.] [1.]
+2020-11-23 11:02:49,159 - root - INFO - t,b,l (array([69]),) ['atrapados'] [9. 9.] [2. 2.] [1. 1.]
+2020-11-23 11:02:49,159 - Plugins.visionocr - INFO - Salida ['' 'Pokémon' 'atrapados' '88.334']
+2020-11-23 11:02:49,159 - Plugins.visionocr - INFO - Ocr_Type collector Result OK ['88334'].
+2020-11-23 11:02:49,159 - Plugins.visionocr - INFO - Pokemon 88334
+2020-11-23 11:02:49,159 - Plugins.visionocr - INFO - Ocr_Type backpaker start.
+2020-11-23 11:02:49,159 - root - INFO - ['Pokéstops', 'Pokeparadas', 'visited', 'visitadas', 'Poképaradas']
+2020-11-23 11:02:49,159 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:02:49,159 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:02:49,159 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:02:49,159 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:02:49,160 - root - INFO - t,b,l (array([72]),) ['Poképaradas'] [9.] [3.] [1.]
+2020-11-23 11:02:49,160 - Plugins.visionocr - INFO - Salida ['' 'Poképaradas' 'visi' '77.106']
+2020-11-23 11:02:49,160 - Plugins.visionocr - INFO - Ocr_Type backpaker Result OK ['77106'].
+2020-11-23 11:02:49,160 - Plugins.visionocr - INFO - Pokestops 77106
+2020-11-23 11:02:49,160 - Plugins.visionocr - INFO - Ocr_Type totalxp start.
+2020-11-23 11:02:49,160 - root - INFO - ['XP', 'PX', 'XP:', 'PX:']
+2020-11-23 11:02:49,160 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:02:49,161 - root - INFO - t,b,l (array([79]),) ['PX'] [9.] [4.] [1.]
+2020-11-23 11:02:49,161 - root - INFO - t,b,l (array([], dtype=int64),) [] [9.] [4.] [1.]
+2020-11-23 11:02:49,161 - root - INFO - t,b,l (array([], dtype=int64),) [] [9.] [4.] [1.]
+2020-11-23 11:02:49,161 - Plugins.visionocr - INFO - Salida ['' '@' 'Total' 'de' 'PX' '75.422.347']
+2020-11-23 11:02:49,162 - Plugins.visionocr - INFO - Ocr_Type totalxp Result OK ['75422347'].
+2020-11-23 11:02:49,162 - Plugins.visionocr - WARNING - Exp cannot be obtained
+2020-11-23 11:02:49,162 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ start.
+2020-11-23 11:02:49,830 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ Result OK ['118868', '88334', '77106', '75422347'].
+2020-11-23 11:02:49,830 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/conversationhandler.py", line 487, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 118, in nickval
+    ocr_text = visionocr.ocr_register(photo_file, context.user_data["nick"])
+  File "/home/guillermocs/PycharmProjects/RankingGO/Plugins/visionocr.py", line 47, in ocr_register
+    ocr_pattern_data = ocr_pattern(ocr_pattern(img, data_p['totalxp']))
+TypeError: ocr_pattern() missing 1 required positional argument: 'pattern'
+2020-11-23 11:05:05,440 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2020-11-23 11:05:05,440 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2020-11-23 11:05:09,853 - apscheduler.scheduler - INFO - Scheduler started
+2020-11-23 11:05:10,194 - __main__ - INFO - Inicio Registro: GuillermoCS
+ID: 13922907
+2020-11-23 11:05:13,027 - __main__ - INFO - Nombre GuillermoCS: Nick Wici
+2020-11-23 11:05:22,293 - Plugins.visionocr - INFO - OCR Start
+2020-11-23 11:05:22,293 - Plugins.visionocr - INFO - Nick No valido
+2020-11-23 11:05:22,293 - Plugins.visionocr - INFO - Nickname None
+2020-11-23 11:05:22,294 - Plugins.visionocr - INFO - Ocr_Type jogger start.
+2020-11-23 11:05:22,294 - root - INFO - ['Distance', 'walked', 'Distancia', 'caminando', 'km']
+2020-11-23 11:05:22,294 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:05:22,294 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:05:22,295 - root - INFO - t,b,l (array([63]),) ['Distancia'] [9.] [1.] [1.]
+2020-11-23 11:05:22,295 - root - INFO - t,b,l (array([64]),) ['caminando'] [9. 9.] [1. 1.] [1. 1.]
+2020-11-23 11:05:22,295 - root - INFO - t,b,l (array([66]),) ['km'] [9. 9. 9.] [1. 1. 1.] [1. 1. 1.]
+2020-11-23 11:05:22,296 - Plugins.visionocr - INFO - Salida ['' 'af' 'Distancia' 'caminando' '11.886,8' 'km']
+2020-11-23 11:05:22,296 - Plugins.visionocr - INFO - Ocr_Type jogger Result OK ['118868'].
+2020-11-23 11:05:22,296 - Plugins.visionocr - INFO - Distance 11886.8
+2020-11-23 11:05:22,296 - Plugins.visionocr - INFO - Ocr_Type collector start.
+2020-11-23 11:05:22,296 - root - INFO - ['Pokémon', 'Caught', 'atrapados']
+2020-11-23 11:05:22,296 - root - INFO - t,b,l (array([68]),) ['Pokémon'] [9.] [2.] [1.]
+2020-11-23 11:05:22,297 - root - INFO - t,b,l (array([], dtype=int64),) [] [9.] [2.] [1.]
+2020-11-23 11:05:22,297 - root - INFO - t,b,l (array([69]),) ['atrapados'] [9. 9.] [2. 2.] [1. 1.]
+2020-11-23 11:05:22,297 - Plugins.visionocr - INFO - Salida ['' 'Pokémon' 'atrapados' '88.334']
+2020-11-23 11:05:22,297 - Plugins.visionocr - INFO - Ocr_Type collector Result OK ['88334'].
+2020-11-23 11:05:22,297 - Plugins.visionocr - INFO - Pokemon 88334
+2020-11-23 11:05:22,297 - Plugins.visionocr - INFO - Ocr_Type backpaker start.
+2020-11-23 11:05:22,297 - root - INFO - ['Pokéstops', 'Pokeparadas', 'visited', 'visitadas', 'Poképaradas']
+2020-11-23 11:05:22,298 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:05:22,298 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:05:22,298 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:05:22,298 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:05:22,298 - root - INFO - t,b,l (array([72]),) ['Poképaradas'] [9.] [3.] [1.]
+2020-11-23 11:05:22,298 - Plugins.visionocr - INFO - Salida ['' 'Poképaradas' 'visi' '77.106']
+2020-11-23 11:05:22,299 - Plugins.visionocr - INFO - Ocr_Type backpaker Result OK ['77106'].
+2020-11-23 11:05:22,299 - Plugins.visionocr - INFO - Pokestops 77106
+2020-11-23 11:05:22,299 - Plugins.visionocr - INFO - Ocr_Type totalxp start.
+2020-11-23 11:05:22,299 - root - INFO - ['XP', 'PX', 'XP:', 'PX:']
+2020-11-23 11:05:22,299 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:05:22,299 - root - INFO - t,b,l (array([79]),) ['PX'] [9.] [4.] [1.]
+2020-11-23 11:05:22,299 - root - INFO - t,b,l (array([], dtype=int64),) [] [9.] [4.] [1.]
+2020-11-23 11:05:22,300 - root - INFO - t,b,l (array([], dtype=int64),) [] [9.] [4.] [1.]
+2020-11-23 11:05:22,300 - Plugins.visionocr - INFO - Salida ['' '@' 'Total' 'de' 'PX' '75.422.347']
+2020-11-23 11:05:22,300 - Plugins.visionocr - INFO - Ocr_Type totalxp Result OK ['75422347'].
+2020-11-23 11:05:22,300 - Plugins.visionocr - WARNING - Exp cannot be obtained
+2020-11-23 11:05:22,300 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ start.
+2020-11-23 11:05:22,969 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ Result OK ['118868', '88334', '77106', '75422347'].
+2020-11-23 11:05:22,969 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/conversationhandler.py", line 487, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 118, in nickval
+    ocr_text = visionocr.ocr_register(photo_file, context.user_data["nick"])
+  File "/home/guillermocs/PycharmProjects/RankingGO/Plugins/visionocr.py", line 48, in ocr_register
+    ocr_pattern_data = ocr_pattern(ocr_pattern(img, str(data_p['totalxp'])))
+TypeError: ocr_pattern() missing 1 required positional argument: 'pattern'
+2020-11-23 11:23:39,213 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2020-11-23 11:23:39,214 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2020-11-23 11:23:47,938 - apscheduler.scheduler - INFO - Scheduler started
+2020-11-23 11:23:51,514 - __main__ - INFO - Inicio Registro: GuillermoCS
+ID: 13922907
+2020-11-23 11:23:54,153 - __main__ - INFO - Nombre GuillermoCS: Nick Wici
+2020-11-23 11:24:36,339 - Plugins.visionocr - INFO - OCR Start
+2020-11-23 11:24:36,339 - Plugins.visionocr - INFO - Nick No valido
+2020-11-23 11:24:36,339 - Plugins.visionocr - INFO - Nickname None
+2020-11-23 11:24:36,339 - Plugins.visionocr - INFO - Ocr_Type jogger start.
+2020-11-23 11:24:36,339 - root - INFO - ['Distance', 'walked', 'Distancia', 'caminando', 'km']
+2020-11-23 11:24:36,339 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:24:36,340 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:24:36,340 - root - INFO - t,b,l (array([53]),) ['Distancia'] [11.] [1.] [1.]
+2020-11-23 11:24:36,341 - root - INFO - t,b,l (array([54]),) ['caminando'] [11. 11.] [1. 1.] [1. 1.]
+2020-11-23 11:24:36,341 - root - INFO - t,b,l (array([56]),) ['km'] [11. 11. 11.] [1. 1. 1.] [1. 1. 1.]
+2020-11-23 11:24:36,341 - Plugins.visionocr - INFO - Salida ['' 'Distancia' 'caminando' '11,553,6' 'km']
+2020-11-23 11:24:36,341 - Plugins.visionocr - INFO - Ocr_Type jogger Result OK ['115536'].
+2020-11-23 11:24:36,341 - Plugins.visionocr - INFO - Distance 11553.6
+2020-11-23 11:24:36,341 - Plugins.visionocr - INFO - Ocr_Type collector start.
+2020-11-23 11:24:36,341 - root - INFO - ['Pokémon', 'Caught', 'atrapados']
+2020-11-23 11:24:36,342 - root - INFO - t,b,l (array([58]),) ['Pokémon'] [11.] [2.] [1.]
+2020-11-23 11:24:36,342 - root - INFO - t,b,l (array([], dtype=int64),) [] [11.] [2.] [1.]
+2020-11-23 11:24:36,342 - root - INFO - t,b,l (array([59]),) ['atrapados'] [11. 11.] [2. 2.] [1. 1.]
+2020-11-23 11:24:36,343 - Plugins.visionocr - INFO - Salida ['' 'Pokémon' 'atrapados' '86.378']
+2020-11-23 11:24:36,343 - Plugins.visionocr - INFO - Ocr_Type collector Result OK ['86378'].
+2020-11-23 11:24:36,343 - Plugins.visionocr - INFO - Pokemon 86378
+2020-11-23 11:24:36,343 - Plugins.visionocr - INFO - Ocr_Type backpaker start.
+2020-11-23 11:24:36,343 - root - INFO - ['Pokéstops', 'Pokeparadas', 'visited', 'visitadas', 'Poképaradas']
+2020-11-23 11:24:36,343 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:24:36,343 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:24:36,343 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:24:36,343 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:24:36,344 - root - INFO - t,b,l (array([62]),) ['Poképaradas'] [11.] [3.] [1.]
+2020-11-23 11:24:36,344 - Plugins.visionocr - INFO - Salida ['' 'Poképaradas' 'vis;' '76.221']
+2020-11-23 11:24:36,344 - Plugins.visionocr - INFO - Ocr_Type backpaker Result OK ['76221'].
+2020-11-23 11:24:36,344 - Plugins.visionocr - INFO - Pokestops 76221
+2020-11-23 11:24:36,344 - Plugins.visionocr - INFO - Ocr_Type totalxp start.
+2020-11-23 11:24:36,344 - root - INFO - ['XP', 'PX', 'XP:', 'PX:']
+2020-11-23 11:24:36,344 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:24:36,345 - root - INFO - t,b,l (array([68]),) ['PX'] [11.] [4.] [1.]
+2020-11-23 11:24:36,345 - root - INFO - t,b,l (array([], dtype=int64),) [] [11.] [4.] [1.]
+2020-11-23 11:24:36,345 - root - INFO - t,b,l (array([], dtype=int64),) [] [11.] [4.] [1.]
+2020-11-23 11:24:36,345 - Plugins.visionocr - INFO - Salida ['' 'Total' 'de' 'PX' '73.903.573.']
+2020-11-23 11:24:36,345 - Plugins.visionocr - INFO - Ocr_Type totalxp Result OK ['73903573'].
+2020-11-23 11:24:36,346 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/conversationhandler.py", line 487, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 118, in nickval
+    ocr_text = visionocr.ocr_register(photo_file, context.user_data["nick"])
+  File "/home/guillermocs/PycharmProjects/RankingGO/Plugins/visionocr.py", line 45, in ocr_register
+    user.data["totalxp"] = ocrRegister_Experience(ocr_data, img)
+  File "/home/guillermocs/PycharmProjects/RankingGO/Plugins/visionocr.py", line 69, in ocrRegister_Experience
+    exp = str(np.max(exp))
+  File "<__array_function__ internals>", line 5, in amax
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/numpy/core/fromnumeric.py", line 2705, in amax
+    return _wrapreduction(a, np.maximum, 'max', axis, None, out,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/numpy/core/fromnumeric.py", line 87, in _wrapreduction
+    return ufunc.reduce(obj, axis, dtype, out, **passkwargs)
+TypeError: cannot perform reduce with flexible type
+2020-11-23 11:26:33,030 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2020-11-23 11:26:33,030 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2020-11-23 11:26:38,600 - apscheduler.scheduler - INFO - Scheduler started
+2020-11-23 11:26:50,623 - __main__ - INFO - Inicio Registro: GuillermoCS
+ID: 13922907
+2020-11-23 11:26:54,100 - __main__ - INFO - Nombre GuillermoCS: Nick Wicisian
+2020-11-23 11:27:07,849 - Plugins.visionocr - INFO - OCR Start
+2020-11-23 11:27:07,849 - Plugins.visionocr - INFO - Wicisian cmp Wicisian == 100
+
+2020-11-23 11:27:07,849 - Plugins.visionocr - INFO - Nickname Wicisian
+2020-11-23 11:27:07,850 - Plugins.visionocr - INFO - Ocr_Type jogger start.
+2020-11-23 11:27:07,850 - root - INFO - ['Distance', 'walked', 'Distancia', 'caminando', 'km']
+2020-11-23 11:27:07,850 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:27:07,850 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:27:07,851 - root - INFO - t,b,l (array([53]),) ['Distancia'] [11.] [1.] [1.]
+2020-11-23 11:27:07,851 - root - INFO - t,b,l (array([54]),) ['caminando'] [11. 11.] [1. 1.] [1. 1.]
+2020-11-23 11:27:07,851 - root - INFO - t,b,l (array([56]),) ['km'] [11. 11. 11.] [1. 1. 1.] [1. 1. 1.]
+2020-11-23 11:27:07,852 - Plugins.visionocr - INFO - Salida ['' 'Distancia' 'caminando' '11,553,6' 'km']
+2020-11-23 11:27:07,852 - Plugins.visionocr - INFO - Ocr_Type jogger Result OK ['115536'].
+2020-11-23 11:27:07,852 - Plugins.visionocr - INFO - Distance 11553.6
+2020-11-23 11:27:07,852 - Plugins.visionocr - INFO - Ocr_Type collector start.
+2020-11-23 11:27:07,852 - root - INFO - ['Pokémon', 'Caught', 'atrapados']
+2020-11-23 11:27:07,852 - root - INFO - t,b,l (array([58]),) ['Pokémon'] [11.] [2.] [1.]
+2020-11-23 11:27:07,853 - root - INFO - t,b,l (array([], dtype=int64),) [] [11.] [2.] [1.]
+2020-11-23 11:27:07,853 - root - INFO - t,b,l (array([59]),) ['atrapados'] [11. 11.] [2. 2.] [1. 1.]
+2020-11-23 11:27:07,853 - Plugins.visionocr - INFO - Salida ['' 'Pokémon' 'atrapados' '86.378']
+2020-11-23 11:27:07,853 - Plugins.visionocr - INFO - Ocr_Type collector Result OK ['86378'].
+2020-11-23 11:27:07,853 - Plugins.visionocr - INFO - Pokemon 86378
+2020-11-23 11:27:07,853 - Plugins.visionocr - INFO - Ocr_Type backpaker start.
+2020-11-23 11:27:07,853 - root - INFO - ['Pokéstops', 'Pokeparadas', 'visited', 'visitadas', 'Poképaradas']
+2020-11-23 11:27:07,853 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:27:07,854 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:27:07,854 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:27:07,854 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:27:07,854 - root - INFO - t,b,l (array([62]),) ['Poképaradas'] [11.] [3.] [1.]
+2020-11-23 11:27:07,854 - Plugins.visionocr - INFO - Salida ['' 'Poképaradas' 'vis;' '76.221']
+2020-11-23 11:27:07,854 - Plugins.visionocr - INFO - Ocr_Type backpaker Result OK ['76221'].
+2020-11-23 11:27:07,854 - Plugins.visionocr - INFO - Pokestops 76221
+2020-11-23 11:27:07,854 - Plugins.visionocr - INFO - Ocr_Type totalxp start.
+2020-11-23 11:27:07,855 - root - INFO - ['XP', 'PX', 'XP:', 'PX:']
+2020-11-23 11:27:07,855 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:27:07,855 - root - INFO - t,b,l (array([68]),) ['PX'] [11.] [4.] [1.]
+2020-11-23 11:27:07,855 - root - INFO - t,b,l (array([], dtype=int64),) [] [11.] [4.] [1.]
+2020-11-23 11:27:07,856 - root - INFO - t,b,l (array([], dtype=int64),) [] [11.] [4.] [1.]
+2020-11-23 11:27:07,856 - Plugins.visionocr - INFO - Salida ['' 'Total' 'de' 'PX' '73.903.573.']
+2020-11-23 11:27:07,856 - Plugins.visionocr - INFO - Ocr_Type totalxp Result OK ['73903573'].
+2020-11-23 11:27:07,856 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/conversationhandler.py", line 487, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "main.py", line 118, in nickval
+    ocr_text = visionocr.ocr_register(photo_file, context.user_data["nick"])
+  File "/home/guillermocs/PycharmProjects/RankingGO/Plugins/visionocr.py", line 45, in ocr_register
+    user.data["totalxp"] = ocrRegister_Experience(ocr_data, img)
+  File "/home/guillermocs/PycharmProjects/RankingGO/Plugins/visionocr.py", line 69, in ocrRegister_Experience
+    exp = str(np.max(exp))
+  File "<__array_function__ internals>", line 5, in amax
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/numpy/core/fromnumeric.py", line 2705, in amax
+    return _wrapreduction(a, np.maximum, 'max', axis, None, out,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/numpy/core/fromnumeric.py", line 87, in _wrapreduction
+    return ufunc.reduce(obj, axis, dtype, out, **passkwargs)
+TypeError: cannot perform reduce with flexible type
+2020-11-23 11:30:04,145 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2020-11-23 11:30:04,145 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2020-11-23 11:30:44,090 - apscheduler.scheduler - INFO - Scheduler started
+2020-11-23 11:30:48,834 - __main__ - INFO - Inicio Registro: GuillermoCS
+ID: 13922907
+2020-11-23 11:30:52,577 - __main__ - INFO - Nombre GuillermoCS: Nick Wicic
+2020-11-23 11:31:00,892 - Plugins.visionocr - INFO - OCR Start
+2020-11-23 11:31:00,892 - Plugins.visionocr - INFO - Nick No valido
+2020-11-23 11:31:00,893 - Plugins.visionocr - INFO - Nickname None
+2020-11-23 11:31:00,893 - Plugins.visionocr - INFO - Ocr_Type jogger start.
+2020-11-23 11:31:00,893 - root - INFO - ['Distance', 'walked', 'Distancia', 'caminando', 'km']
+2020-11-23 11:31:00,893 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:31:00,893 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:31:00,894 - root - INFO - t,b,l (array([52]),) ['Distancia'] [10.] [1.] [1.]
+2020-11-23 11:31:00,894 - root - INFO - t,b,l (array([53]),) ['caminando'] [10. 10.] [1. 1.] [1. 1.]
+2020-11-23 11:31:00,894 - root - INFO - t,b,l (array([55]),) ['km'] [10. 10. 10.] [1. 1. 1.] [1. 1. 1.]
+2020-11-23 11:31:00,895 - Plugins.visionocr - INFO - Salida ['' 'af' 'Distancia' 'caminando' '11,553,6' 'km']
+2020-11-23 11:31:00,895 - Plugins.visionocr - INFO - Ocr_Type jogger Result OK ['115536'].
+2020-11-23 11:31:00,895 - Plugins.visionocr - INFO - Distance 11553.6
+2020-11-23 11:31:00,895 - Plugins.visionocr - INFO - Ocr_Type collector start.
+2020-11-23 11:31:00,895 - root - INFO - ['Pokémon', 'Caught', 'atrapados']
+2020-11-23 11:31:00,895 - root - INFO - t,b,l (array([57]),) ['Pokémon'] [10.] [2.] [1.]
+2020-11-23 11:31:00,896 - root - INFO - t,b,l (array([], dtype=int64),) [] [10.] [2.] [1.]
+2020-11-23 11:31:00,896 - root - INFO - t,b,l (array([58]),) ['atrapados'] [10. 10.] [2. 2.] [1. 1.]
+2020-11-23 11:31:00,896 - Plugins.visionocr - INFO - Salida ['' 'Pokémon' 'atrapados' '86.378']
+2020-11-23 11:31:00,896 - Plugins.visionocr - INFO - Ocr_Type collector Result OK ['86378'].
+2020-11-23 11:31:00,896 - Plugins.visionocr - INFO - Pokemon 86378
+2020-11-23 11:31:00,896 - Plugins.visionocr - INFO - Ocr_Type backpaker start.
+2020-11-23 11:31:00,897 - root - INFO - ['Pokéstops', 'Pokeparadas', 'visited', 'visitadas', 'Poképaradas']
+2020-11-23 11:31:00,897 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:31:00,897 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:31:00,897 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:31:00,897 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:31:00,898 - root - INFO - t,b,l (array([61]),) ['Poképaradas'] [10.] [3.] [1.]
+2020-11-23 11:31:00,898 - Plugins.visionocr - INFO - Salida ['' 'Poképaradas' 'vis;' '76.221']
+2020-11-23 11:31:00,898 - Plugins.visionocr - INFO - Ocr_Type backpaker Result OK ['76221'].
+2020-11-23 11:31:00,898 - Plugins.visionocr - INFO - Pokestops 76221
+2020-11-23 11:31:00,898 - Plugins.visionocr - INFO - Ocr_Type totalxp start.
+2020-11-23 11:31:00,898 - root - INFO - ['XP', 'PX', 'XP:', 'PX:']
+2020-11-23 11:31:00,898 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-11-23 11:31:00,898 - root - INFO - t,b,l (array([68]),) ['Px'] [10.] [1.] [2.]
+2020-11-23 11:31:00,899 - root - INFO - t,b,l (array([], dtype=int64),) [] [10.] [1.] [2.]
+2020-11-23 11:31:00,899 - root - INFO - t,b,l (array([], dtype=int64),) [] [10.] [1.] [2.]
+2020-11-23 11:31:00,899 - Plugins.visionocr - INFO - Salida ['' '@' "Total'de" 'Px' '73,903,573.']
+2020-11-23 11:31:00,899 - Plugins.visionocr - INFO - Ocr_Type totalxp Result OK ['73903573'].
+2020-11-23 11:31:00,899 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/conversationhandler.py", line 487, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "main.py", line 118, in nickval
+    ocr_text = visionocr.ocr_register(photo_file, context.user_data["nick"])
+  File "/home/guillermocs/PycharmProjects/RankingGO/Plugins/visionocr.py", line 45, in ocr_register
+    user.data["totalxp"] = ocrRegister_Experience(ocr_data, img)
+  File "/home/guillermocs/PycharmProjects/RankingGO/Plugins/visionocr.py", line 69, in ocrRegister_Experience
+    exp = str(np.max(np.array(exp)))
+  File "<__array_function__ internals>", line 5, in amax
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/numpy/core/fromnumeric.py", line 2705, in amax
+    return _wrapreduction(a, np.maximum, 'max', axis, None, out,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/numpy/core/fromnumeric.py", line 87, in _wrapreduction
+    return ufunc.reduce(obj, axis, dtype, out, **passkwargs)
+TypeError: cannot perform reduce with flexible type
