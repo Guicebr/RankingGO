@@ -28,6 +28,7 @@ from Plugins.visionocr import *
 
 # Enable logging
 from Plugins import visionocr
+from Modelo.UserData import UserData
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO, filename='example.log')
@@ -36,7 +37,7 @@ logger = logging.getLogger(__name__)
 
 dbconn = DBHelper()
 
-NICK, NICK_VAL = range(2)
+REGISTER, NICK, NICK_VAL = range(3)
 
 #DEBUG = 1
 
@@ -116,12 +117,27 @@ def nickval(update, context):
     photo_file = update.message.photo[-1].get_file()
 
 #try:
-    ocr_text = visionocr.ocr_register(photo_file, nickctx)
-    context.user_data["ocr_text"] = ocr_text
-    print("ocr_return nickval ", str(ocr_text))
+    ocr_user = visionocr.ocr_register(photo_file, nickctx)
+    print("ocr_return nickval ", str(ocr_user))
+
+    context.user_data["ocr_user"] = ocr_user
+
+    #TODO: Si nick no valido comunicar al usuario y cancelar registro
+    if ocr_user.nick is None:
+        text = "Nick no válido"
+        update.message.reply_text(text)
+        return REGISTER
+
+    #TODO: Si nick valido comprobar si existe en la bd o no y obtener un userid
+
+
+    #TODO: Validacion por parte del usuario los datos obtenidos mediante OCR, cada uno.
+    #TODO: Insertar datos en la BD e indicar al Usuario
+
 
     #personid = dbconn.add_user(ocr_text[nick], user.id)
-    text = "Nickval " + ocr_text[nick] + str(ocr_text)
+
+    text = "Nickval " + ocr_user.nick + str(ocr_user)
     update.message.reply_text(text)
 #except:
     logger.info("Error OCR nickval")

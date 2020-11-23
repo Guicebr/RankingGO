@@ -38,11 +38,11 @@ def ocr_register(photo_file, nick):
 
     logger.info("OCR Start")
 
-    user.data["nick"] = ocrRegister_Nick(nick, ocr_data)
-    user.data["jogger"] = ocrRegister_Distance(ocr_data)
-    user.data["collector"] = ocrRegister_Pokemon(ocr_data)
-    user.data["backpaker"] = ocrRegister_Pokestops(ocr_data)
-    user.data["totalxp"] = ocrRegister_Experience(ocr_data, img)
+    user.nick = ocrRegister_Nick(nick, ocr_data)
+    user.jogger = ocrRegister_Distance(ocr_data)
+    user.collector = ocrRegister_Pokemon(ocr_data)
+    user.backpaker = ocrRegister_Pokestops(ocr_data)
+    user.totalxp = ocrRegister_Experience(ocr_data, img)
 
     print("Pattern", str(data_p['totalxp']))
     ocr_pattern_data = ocr_pattern(img, str(data_p['totalxp']))
@@ -54,7 +54,7 @@ def ocr_register(photo_file, nick):
 
     print("ocr_registro return ", str(user))
 
-    return str(user)
+    return user
 
 
 def ocrRegister_Experience(ocr_data, img):
