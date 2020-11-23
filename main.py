@@ -112,14 +112,15 @@ def nickval(update, context):
     #message = update.message
 
     user = update.message.from_user
+    nickctx = str(context.user_data["nick"])
     photo_file = update.message.photo[-1].get_file()
 
 #try:
-    ocr_text = visionocr.ocr_register(photo_file, context.user_data["nick"])
+    ocr_text = visionocr.ocr_register(photo_file, nickctx)
     context.user_data["ocr_text"] = ocr_text
     print("ocr_return nickval ", str(ocr_text))
 
-    personid = dbconn.add_user(ocr_text[nick], user.id)
+    #personid = dbconn.add_user(ocr_text[nick], user.id)
     text = "Nickval " + ocr_text[nick] + str(ocr_text)
     update.message.reply_text(text)
 #except:

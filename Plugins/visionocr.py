@@ -45,7 +45,7 @@ def ocr_register(photo_file, nick):
     user.data["totalxp"] = ocrRegister_Experience(ocr_data, img)
 
     print("Pattern", str(data_p['totalxp']))
-    ocr_pattern_data = ocr_pattern(ocr_pattern(img, str(data_p['totalxp'])))
+    ocr_pattern_data = ocr_pattern(img, str(data_p['totalxp']))
 
     print("ocr_pattern_data", ocr_pattern_data)
     logger.info("Ocr_pattern_data %s", str(ocr_pattern_data))
@@ -58,42 +58,52 @@ def ocr_register(photo_file, nick):
 
 
 def ocrRegister_Experience(ocr_data, img):
-    exp = None
-    #try:
-    exp = ocr_type(ocr_data, "totalxp")
-    arr_to_nums = np.vectorize(int)
 
-    # print(experience, len(experience))
-    if len(exp) == 0:
+    arr_to_nums = np.vectorize(int)
+    exp = ocr_type(ocr_data, "totalxp")
+
+    if len(exp) > 1 or len(exp) < 1:
         logger.info("Obtaining Exp with Data_pattern")
-        exp = str(np.max(arr_to_nums(ocr_pattern(img, data_p['totalxp']))))
+        try:
+            exp = str(np.max(arr_to_nums(ocr_pattern(img, data_p['totalxp']))))
+        except ValueError:
+            logger.error("Obtaining Exp with Data_pattern and Error with Empty Array")
+            return None
     else:
-        exp = str(np.max(arr_to_nums(exp)))
+        #len == 1
+        exp = str(exp[0])
 
     logger.info("Experience %s", exp)
-    #except:
-    #    logger.warning("Exp cannot be obtained")
     return exp
 
 
 def ocrRegister_Pokestops(ocr_data):
-    pokestops = None
-    try:
-        pokestops = ocr_type(ocr_data, "backpaker")[-1]
-        logger.info("Pokestops %s", pokestops)
-    except IndexError:
+
+    pokestops = ocr_type(ocr_data, "backpaker")
+
+    if len(pokestops) == 1:
+        pokestops = str(pokestops[0])
+    else:
         logger.info("Pokestops cannot be obtained")
+        return None
+
+    logger.info("Pokestops %s", pokestops)
     return pokestops
 
 
 def ocrRegister_Pokemon(ocr_data):
-    pokemon = None
-    try:
-        pokemon = ocr_type(ocr_data, "collector")[-1]
-        logger.info("Pokemon %s", pokemon)
-    except IndexError:
-        logger.info("Pokemon cannot be obtained")
+
+    pokemon = ocr_type(ocr_data, "collector")
+
+    if len(pokemon) == 1:
+        pokemon = str(pokemon[0])
+    else:
+        logger.info("Not pokemon or not value")
+        return None
+
+    logger.info("Pokemon %s", pokemon)
     return pokemon
+
 
 
 def ocrRegister_Distance(ocr_data):
@@ -105,8 +115,8 @@ def ocrRegister_Distance(ocr_data):
         distance = float(str(distance[0:len(distance) - 1]) + "." + str(str(distance[len(distance) - 1:])))
         logger.info("Distance %s", distance)
     else:
-        distance = None
         logger.info("Not distance or not value")
+        return None
 
     return distance
 
