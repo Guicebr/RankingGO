@@ -78,9 +78,25 @@ class DBHelper:
                 self.cursor.close()
                 print("MySQL cursor is closed")
 
-    def get_user(self, tgid):
+    def get_user_tgid(self, tgid):
         stmt = 'select * from users where tgid="%s"'
         args = (tgid, )
+        try:
+            self.cursor = self.conn.cursor()
+            self.cursor.execute(stmt % args)
+            self.conn.commit()
+
+        except MySQLdb.Error as e:
+            print("Error %s" % str(e))
+
+        finally:
+            if self.conn:
+                self.cursor.close()
+                print("MySQL cursor is closed")
+
+    def get_user_name(self, name):
+        stmt = 'select * from users where nick="%s"'
+        args = (name, )
         try:
             self.cursor = self.conn.cursor()
             self.cursor.execute(stmt % args)

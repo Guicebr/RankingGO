@@ -2908,3 +2908,5 @@ ID: 13922907
 2020-11-23 12:33:00,077 - Plugins.visionocr - INFO - Ocr_pattern_data ['118868', '88334', '77106', '75422347']
 2020-11-23 12:33:00,077 - Plugins.visionocr - INFO - User Data Register {Nick Wicisian, Jogger 11886.8, Collector 88334, Backpaker 77106, TotalXP 75422347 }
 2020-11-23 12:33:00,157 - __main__ - INFO - Error OCR nickval
+2020-11-23 12:52:52,882 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2020-11-23 12:52:52,883 - apscheduler.scheduler - INFO - Scheduler has been shut down
