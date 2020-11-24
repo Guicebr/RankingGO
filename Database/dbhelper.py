@@ -81,26 +81,13 @@ class DBHelper:
     def get_user_tgid(self, tgid):
         stmt = 'select * from users where tgid="%s"'
         args = (tgid, )
+
         try:
             self.cursor = self.conn.cursor()
             self.cursor.execute(stmt % args)
             self.conn.commit()
-
-        except MySQLdb.Error as e:
-            print("Error %s" % str(e))
-
-        finally:
-            if self.conn:
-                self.cursor.close()
-                print("MySQL cursor is closed")
-
-    def get_user_name(self, name):
-        stmt = 'select * from users where nick="%s"'
-        args = (name, )
-        try:
-            self.cursor = self.conn.cursor()
-            self.cursor.execute(stmt % args)
-            self.conn.commit()
+            a = self.cursor.fetchall()
+            return a
 
         except MySQLdb.Error as e:
             print("Error %s" % str(e))
@@ -113,6 +100,7 @@ class DBHelper:
     def get_users(self):
         stmt = 'select * from users'
         try:
+            self.cursor = self.conn.cursor()
             self.cursor.execute(stmt)
             print(self.cursor.fetchall())
 
@@ -124,7 +112,6 @@ class DBHelper:
                 self.cursor.close()
                 print("MySQL cursor is closed")
 
-    # ranking
     def add_ranking_data(self, personid, type, amount):
         stmt = "insert into ranking(personid, type, amount) VALUES (%s,%s,%s)"
         args = (personid, type, amount)
@@ -132,6 +119,23 @@ class DBHelper:
         try:
             self.cursor = self.conn.cursor()
             print(stmt % args)
+            self.cursor.execute(stmt % args)
+            self.conn.commit()
+
+        except MySQLdb.Error as e:
+            print("Error %s" % str(e))
+
+        finally:
+            if self.conn:
+                self.cursor.close()
+                print("MySQL cursor is closed")
+
+    # ranking
+    def get_user_name(self, name):
+        stmt = 'select * from users where nick="%s"'
+        args = (name, )
+        try:
+            self.cursor = self.conn.cursor()
             self.cursor.execute(stmt % args)
             self.conn.commit()
 
