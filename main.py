@@ -37,7 +37,7 @@ logger = logging.getLogger(__name__)
 
 dbconn = DBHelper()
 
-REGISTER, NICK, NICK_VAL = range(3)
+REGISTER_VAL, NICK, NICK_VAL = range(3)
 
 #DEBUG = 1
 
@@ -115,34 +115,50 @@ def nickval(update, context):
     user = update.message.from_user
     nickctx = str(context.user_data["nick"])
     photo_file = update.message.photo[-1].get_file()
+    userdbid = 0
 
-#try:
     ocr_user = visionocr.ocr_register(photo_file, nickctx)
     print("ocr_return nickval ", str(ocr_user))
 
     context.user_data["ocr_user"] = ocr_user
 
-    #TODO: Si nick no valido comunicar al usuario y cancelar registro
+    # Si nick no valido comunicar al usuario y cancelar registro
     if ocr_user.nick is None:
-        text = "Nick no válido"
+        text = "Nick no válido, vuelva a intentarlo con el comando /registro"
         update.message.reply_text(text)
-        return REGISTER
+        return ConversationHandler.END
 
-    #TODO: Si nick valido comprobar si existe en la bd o no y obtener un userid
-
-
+    # Si nick valido comprobar si existe en la bd o no y obtener un userid
+    else:
+        try:
+            # Buscar usuario en la BD y conseguir userdbid
+            dbconn = DBHelper()
+            index = dbconn.get_user_tgid(user.id)
+            print("Len Index", len(index))
+            if len(index) >= 1:
+                userdbid = index[0][0]
+            else:
+                # Añadimos usuario a la BD y obtenemos su userdbid
+                print("AddUser DB")
+                userdbid = dbconn.add_user(ocr_user.nick, user.id)
+        except:
+            print("Error desconocido")
+        finally:
+            print(userdbid)
+            dbconn.close()
     #TODO: Validacion por parte del usuario los datos obtenidos mediante OCR, cada uno.
     #TODO: Insertar datos en la BD e indicar al Usuario
 
-
-    #personid = dbconn.add_user(ocr_text[nick], user.id)
-
-    text = "Nickval " + ocr_user.nick + str(ocr_user)
+    text = "Nickval " + ocr_user.nick +" "+ str(userdbid) +" "+ str(ocr_user)
     update.message.reply_text(text)
-#except:
-    logger.info("Error OCR nickval")
+
+    return REGISTER_VAL
+
+
+def register_val(update, context):
 
     return ConversationHandler.END
+
 
 def cancel(update, context):
     user = update.message.from_user
@@ -151,6 +167,8 @@ def cancel(update, context):
                               reply_markup=ReplyKeyboardRemove())
 
     return ConversationHandler.END
+
+
 
 
 def main():
@@ -187,7 +205,8 @@ def main():
 
         states={
             NICK: [MessageHandler(Filters.text & ~Filters.command, nick)],
-            NICK_VAL: [MessageHandler(Filters.photo, nickval)]
+            NICK_VAL: [MessageHandler(Filters.photo, nickval)],
+            REGISTER_VAL: [MessageHandler(Filters.text & ~Filters.command, register_val)],
         },
 
         fallbacks=[CommandHandler("cancel", cancel)]
