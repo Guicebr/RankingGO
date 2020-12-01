@@ -17,9 +17,9 @@ import logging
 
 import telegram
 from telegram import Update
-from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove)
+from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardButton, InlineKeyboardMarkup,)
 from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters,
-                          ConversationHandler, CallbackContext)
+                          ConversationHandler, CallbackContext, CallbackQueryHandler)
 
 from CREDENTIALS import BOT_TOKEN
 
@@ -112,6 +112,8 @@ def nickval(update, context):
     #reply_keyboard = [['/registro', '/cancel', '/experience']]
     #message = update.message
 
+    keyboard = []
+
     user = update.message.from_user
     nickctx = str(context.user_data["nick"])
     photo_file = update.message.photo[-1].get_file()
@@ -134,7 +136,7 @@ def nickval(update, context):
             # Buscar usuario en la BD y conseguir userdbid
             dbconn = DBHelper()
             index = dbconn.get_user_tgid(user.id)
-            print("Len Index", len(index))
+            #print("Len Index", len(index))
             if len(index) >= 1:
                 userdbid = index[0][0]
             else:
@@ -146,8 +148,20 @@ def nickval(update, context):
         finally:
             print(userdbid)
             dbconn.close()
+
+    context.user_data["userdbid"] = userdbid
+    txt = 'Please check the following values:'
+    for i in ocr_user.getDict():
+        if ocr_user[i] is not None:
+            value = str(i)+": "+str(ocr_user[i])
+            keyboard.append([InlineKeyboardButton(str(value)),
+                            InlineKeyboardButton("✅", callback_data='i')])
+
+    keyboard.append([InlineKeyboardButton("Finish", callback_data='0')])
+
     #TODO: Validacion por parte del usuario los datos obtenidos mediante OCR, cada uno.
     #TODO: Insertar datos en la BD e indicar al Usuario
+
 
     text = "Nickval " + ocr_user.nick +" "+ str(userdbid) +" "+ str(ocr_user)
     update.message.reply_text(text)
@@ -157,8 +171,10 @@ def nickval(update, context):
 
 def register_val(update, context):
 
-    return ConversationHandler.END
 
+    print("UserDBID", str(context.user_data["userdbid"]))
+    print("OCR_USER", str(context.user_data["ocr_user"]))
+    return ConversationHandler.END
 
 def cancel(update, context):
     user = update.message.from_user
@@ -168,6 +184,14 @@ def cancel(update, context):
 
     return ConversationHandler.END
 
+def button(update: Update, context: CallbackContext) -> None:
+    query = update.callback_query
+
+    # CallbackQueries need to be answered, even if no notification to the user is needed
+    # Some clients may have trouble otherwise. See https://core.telegram.org/bots/api#callbackquery
+    query.answer()
+
+    #query.edit_message_text(text=f"Selected option: {query.data}")
 
 
 
@@ -206,7 +230,7 @@ def main():
         states={
             NICK: [MessageHandler(Filters.text & ~Filters.command, nick)],
             NICK_VAL: [MessageHandler(Filters.photo, nickval)],
-            REGISTER_VAL: [MessageHandler(Filters.text & ~Filters.command, register_val)],
+            REGISTER_VAL: [CallbackQueryHandler(register_val)]
         },
 
         fallbacks=[CommandHandler("cancel", cancel)]
@@ -215,7 +239,7 @@ def main():
     dp.add_handler(conv_handler)
 
     # Start the Bot
-    updater.start_polling()
+    updater.start_polling(allowed_updates=[])
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
