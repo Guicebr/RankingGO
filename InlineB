@@ -10,8 +10,9 @@ Basic example for a bot that uses inline keyboards.
 import logging
 import collections
 
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, bot
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, CallbackContext
+from Modelo.TypeRanking import bool_to_icon
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
@@ -26,32 +27,20 @@ def start(update: Update, context: CallbackContext) -> None:
     context.user_data["ocr_user"] = collections.OrderedDict(data)
     context.user_data["ocr_user_valid"] = collections.OrderedDict(vdata)
 
+    ocr_user = context.user_data["ocr_user"]
+    ocr_user_valid = context.user_data["ocr_user_valid"]
+
     txt = 'Please check the following values:'
-    for i in context.user_data["ocr_user"]:
-        if context.user_data["ocr_user"][i] is not None:
-            value = str(i) + ": " + str(context.user_data["ocr_user"][i]) + " ✅"
-            cb_data = list(context.user_data["ocr_user"].keys()).index(i)
+    for i in ocr_user:
+        if ocr_user[i] is not None:
+            value = str(i) + ": " + str(ocr_user[i]) + bool_to_icon[int(ocr_user_valid[i])]
+            cb_data = list(ocr_user.keys()).index(i)
+            if cb_data == 0:
+                cb_data = "nick"
 
             keyboard.append([InlineKeyboardButton(str(value), callback_data=cb_data)])
 
     keyboard.append([InlineKeyboardButton("Finish", callback_data='finish')])
-
-    """
-    keyboard = [
-        [
-            InlineKeyboardButton("Option1 ✅", callback_data='1'),
-            #InlineKeyboardButton("✅", callback_data='Option2')
-        ],
-        [
-            InlineKeyboardButton("Option2 ❌", callback_data='2'),
-            #InlineKeyboardButton("❌", callback_data='Option4')
-        ],
-        [
-            InlineKeyboardButton("Option3 ❌", callback_data='3'),
-            #InlineKeyboardButton("❌", callback_data='Option6')
-        ],
-        [InlineKeyboardButton("Terminar", callback_data='0')],
-    ]"""
 
     reply_markup = InlineKeyboardMarkup(keyboard)
 
@@ -68,30 +57,34 @@ def button(update, context) -> None:
 
     ocr_user_valid = context.user_data["ocr_user_valid"]
     ocr_user = context.user_data["ocr_user"]
+
     # CallbackQueries need to be answered, even if no notification to the user is needed
     # Some clients may have trouble otherwise. See https://core.telegram.org/bots/api#callbackquery
-    query.answer()
+    query.answer("Plomo")
 
+    print(query.message)
     data = query.data
     if data.isnumeric():
-        keyboard = query.message.reply_markup['inline_keyboard']
-        print(keyboard[int(data)][0]['text'])
+        keyboard = query.message.reply_markup['inline_keyboard'].copy()
+        #print(keyboard[int(data)][0]['text'])
+
         index = list(ocr_user_valid.keys())[int(data)]
         ocr_user_valid[index] = not ocr_user_valid[index]
-
-        if ocr_user_valid[index]:
-            keyboard[int(data)][0]['text'] = str(index) + ": " + str(ocr_user[index]) + " ✅"
-        else:
-            keyboard[int(data)][0]['text'] = str(index) + ": " + str(ocr_user[index]) + " ❌"
-
-        print(keyboard[int(data)][0]['text'])
-
+        #TODO Traducir i
+        txt = str(index) + ": " + str(ocr_user[index]) + bool_to_icon[int(ocr_user_valid[index])]
+        cb_data = list(ocr_user.keys()).index(index)
+        keyboard[int(data)][0] = InlineKeyboardButton(str(txt), callback_data=cb_data)
+        #print(keyboard[int(data)][0]['text'])
+        #print(str(query))
+        query.edit_message_reply_markup(InlineKeyboardMarkup(keyboard))
     else:
         pass
 
+    print(str(ocr_user))
+    print(str(ocr_user_valid))
 
     query.message.reply_text(str(query.data))
-    print(query.message.reply_markup)
+    #print(query.message.reply_markup)
     #query.edit_message_text(text=f"Selected option: {query.data}")
 
 def main():

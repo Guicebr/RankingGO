@@ -65,3 +65,5 @@ typeranking = {
 datapattern = {
     'totalxp': '^(\d+(\.|\,))+\d+$'
 }
+
+bool_to_icon = {0: " ❌", 1: " ✅"}

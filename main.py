@@ -25,6 +25,7 @@ from CREDENTIALS import BOT_TOKEN
 
 from Database.dbhelper import DBHelper
 from Plugins.visionocr import *
+from Modelo.TypeRanking import bool_to_icon
 
 # Enable logging
 from Plugins import visionocr
