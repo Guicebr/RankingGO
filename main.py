@@ -27,6 +27,7 @@ from CREDENTIALS import BOT_TOKEN
 from Database.dbhelper import DBHelper
 from Plugins.visionocr import *
 from Modelo.TypeRanking import bool_to_icon
+from Modelo.TypeRanking import typeranking_enum as tr_enum
 
 # Enable logging
 from Plugins import visionocr
@@ -153,31 +154,88 @@ def nickval(update, context):
 
     context.user_data["userdbid"] = userdbid
 
+    txt = 'Nick registrado: '+str(nickctx)
+    update.message.reply_text(txt)
+
     context.user_data["ocr_user"] = collections.OrderedDict(ocr_user.getDict()).pop("nick")
     context.user_data["ocr_user_valid"] = {k: True for k in context.user_data["ocr_user"]}
 
     ocr_user = context.user_data["ocr_user"]
     ocr_user_valid = context.user_data["ocr_user_valid"]
 
+
     #TODO: Validacion por parte del usuario los datos obtenidos mediante OCR, cada uno.
+    txt = 'Verifica los siguientes datos por favor:'
+    for i in ocr_user:
+        if ocr_user[i] is not None:
+            value = str(i) + ": " + str(ocr_user[i]) + bool_to_icon[int(ocr_user_valid[i])]
+            cb_data = list(ocr_user.keys()).index(i)
 
+            keyboard.append([InlineKeyboardButton(str(value), callback_data=cb_data)])
 
+    keyboard.append([InlineKeyboardButton("Finish", callback_data='finish')])
 
+    reply_markup = InlineKeyboardMarkup(keyboard)
 
-    #TODO: Insertar datos en la BD e indicar al Usuario
+    update.message.reply_text(txt, reply_markup=reply_markup)
 
-
-    text = "Nickval " + ocr_user.nick +" "+ str(userdbid) +" "+ str(ocr_user)
-    update.message.reply_text(text)
+    print("main.py")
+    print(str(ocr_user))
+    print(str(ocr_user_valid))
+    print("main.py")
 
     return REGISTER_VAL
 
 
 def register_val(update, context):
 
-
     print("UserDBID", str(context.user_data["userdbid"]))
     print("OCR_USER", str(context.user_data["ocr_user"]))
+
+    query = update.callback_query
+
+    ocr_user_valid = context.user_data["ocr_user_valid"]
+    ocr_user = context.user_data["ocr_user"]
+    userbdid = context.user_data["userdbid"]
+
+
+    print(query.message)
+    data = query.data
+    if data.isnumeric():
+        keyboard = query.message.reply_markup['inline_keyboard'].copy()
+        # print(keyboard[int(data)][0]['text'])
+
+        index = list(ocr_user_valid.keys())[int(data)]
+        ocr_user_valid[index] = not ocr_user_valid[index]
+        # TODO Traducir i
+        txt = str(index) + ": " + str(ocr_user[index]) + bool_to_icon[int(ocr_user_valid[index])]
+        cb_data = list(ocr_user.keys()).index(index)
+        keyboard[int(data)][0] = InlineKeyboardButton(str(txt), callback_data=cb_data)
+        # print(keyboard[int(data)][0]['text'])
+        # print(str(query))
+        query.edit_message_reply_markup(InlineKeyboardMarkup(keyboard))
+
+        query.answer(str(index))
+    elif data == "finish":
+        try:
+            dbconn = DBHelper()
+            for type in ocr_user:
+                if ocr_user_valid[type] is True and type != "nick":
+                    dbconn.add_ranking_data(userbdid, tr_enum[type], ocr_user[type])
+            query.answer("Datos guardados")
+        except:
+            print("Error desconocido")
+        finally:
+            dbconn.close()
+    else:
+        print("Callback no programado ", str(data))
+    print(str(ocr_user))
+    print(str(ocr_user_valid))
+
+    query.message.reply_text(str(query.data))
+    # print(query.message.reply_markup)
+    # query.edit_message_text(text=f"Selected option: {query.data}")
+
     return ConversationHandler.END
 
 def cancel(update, context):
@@ -223,6 +281,7 @@ def main():
 
     # command
     dp.add_handler(CommandHandler("experience", experience))
+    updater.dispatcher.add_handler(CallbackQueryHandler(register_val))
 
     # on noncommand i.e message - echo the message on Telegram
     # dp.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
