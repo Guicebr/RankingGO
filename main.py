@@ -14,8 +14,9 @@ bot.
 """
 
 import logging
-
 import telegram
+import collections
+
 from telegram import Update
 from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardButton, InlineKeyboardMarkup,)
 from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters,
@@ -151,16 +152,18 @@ def nickval(update, context):
             dbconn.close()
 
     context.user_data["userdbid"] = userdbid
-    txt = 'Please check the following values:'
-    for i in ocr_user.getDict():
-        if ocr_user[i] is not None:
-            value = str(i)+": "+str(ocr_user[i])
-            keyboard.append([InlineKeyboardButton(str(value)),
-                            InlineKeyboardButton("✅", callback_data='i')])
 
-    keyboard.append([InlineKeyboardButton("Finish", callback_data='0')])
+    context.user_data["ocr_user"] = collections.OrderedDict(ocr_user.getDict()).pop("nick")
+    context.user_data["ocr_user_valid"] = {k: True for k in context.user_data["ocr_user"]}
+
+    ocr_user = context.user_data["ocr_user"]
+    ocr_user_valid = context.user_data["ocr_user_valid"]
 
     #TODO: Validacion por parte del usuario los datos obtenidos mediante OCR, cada uno.
+
+
+
+
     #TODO: Insertar datos en la BD e indicar al Usuario
 
 

@@ -1,3 +1,5 @@
+
+
 class UserData:
     nick = None
     jogger = None
@@ -29,5 +31,15 @@ class UserData:
         filtered = {k: v for k, v in dict.items() if v is not None}
         dict.clear()
         dict.update(filtered)"""
+
+        return dict
+
+    def getDict(self):
+        dict = {}
+        dict["nick"] = self.nick
+        dict["jogger"] = self.jogger
+        dict["collector"] = self.collector
+        dict["backpaker"] = self.backpaker
+        dict["totalxp"] = self.totalxp
 
         return dict

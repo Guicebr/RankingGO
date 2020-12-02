@@ -1,4 +1,4 @@
-typeranking_enum = {
+"""typeranking_enum = {
     1: "totalxp",
     2: "collector",
     3: "jogger",
@@ -28,7 +28,7 @@ typeranking_enum = {
     27: "best_buddy",
     28: "wayfarer",
     29: "successor"
-}
+} """
 
 typeranking = {
     'totalxp': ["XP", "PX", "XP:", "PX:"],
@@ -67,3 +67,11 @@ datapattern = {
 }
 
 bool_to_icon = {0: " ❌", 1: " ✅"}
+
+typeranking_enum = {
+    "totalxp": 1,
+    "collector": 2,
+    "jogger": 3,
+    "backpacker": 4,
+    "breeder": 5
+}
