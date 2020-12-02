@@ -72,6 +72,6 @@ typeranking_enum = {
     "totalxp": 1,
     "collector": 2,
     "jogger": 3,
-    "backpacker": 4,
+    "backpaker": 4,
     "breeder": 5
 }

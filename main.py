@@ -157,15 +157,17 @@ def nickval(update, context):
     txt = 'Nick registrado: '+str(nickctx)
     update.message.reply_text(txt)
 
-    context.user_data["ocr_user"] = collections.OrderedDict(ocr_user.getDict()).pop("nick")
+    ocr_user = ocr_user.getDict()
+    ocr_user.pop("nick")
+    context.user_data["ocr_user"] = collections.OrderedDict(ocr_user)
     context.user_data["ocr_user_valid"] = {k: True for k in context.user_data["ocr_user"]}
 
     ocr_user = context.user_data["ocr_user"]
     ocr_user_valid = context.user_data["ocr_user_valid"]
 
-
     #TODO: Validacion por parte del usuario los datos obtenidos mediante OCR, cada uno.
     txt = 'Verifica los siguientes datos por favor:'
+    print(ocr_user)
     for i in ocr_user:
         if ocr_user[i] is not None:
             value = str(i) + ": " + str(ocr_user[i]) + bool_to_icon[int(ocr_user_valid[i])]
@@ -187,10 +189,10 @@ def nickval(update, context):
     return REGISTER_VAL
 
 
-def register_val(update, context):
+def register_val(update, context) -> None:
 
-    print("UserDBID", str(context.user_data["userdbid"]))
-    print("OCR_USER", str(context.user_data["ocr_user"]))
+    #print("UserDBID", str(context.user_data["userdbid"]))
+    #print("OCR_USER", str(context.user_data["ocr_user"]))
 
     query = update.callback_query
 
@@ -223,16 +225,18 @@ def register_val(update, context):
                 if ocr_user_valid[type] is True and type != "nick":
                     dbconn.add_ranking_data(userbdid, tr_enum[type], ocr_user[type])
             query.answer("Datos guardados")
+            query.edit_message_text(text=f"Datos Guardados")
         except:
             print("Error desconocido")
         finally:
             dbconn.close()
     else:
         print("Callback no programado ", str(data))
-    print(str(ocr_user))
-    print(str(ocr_user_valid))
 
-    query.message.reply_text(str(query.data))
+    #print(str(ocr_user))
+    #print(str(ocr_user_valid))
+
+    #query.message.reply_text(str(query.data))
     # print(query.message.reply_markup)
     # query.edit_message_text(text=f"Selected option: {query.data}")
 
@@ -245,17 +249,6 @@ def cancel(update, context):
                               reply_markup=ReplyKeyboardRemove())
 
     return ConversationHandler.END
-
-def button(update: Update, context: CallbackContext) -> None:
-    query = update.callback_query
-
-    # CallbackQueries need to be answered, even if no notification to the user is needed
-    # Some clients may have trouble otherwise. See https://core.telegram.org/bots/api#callbackquery
-    query.answer()
-
-    #query.edit_message_text(text=f"Selected option: {query.data}")
-
-
 
 def main():
     """Start the bot."""
