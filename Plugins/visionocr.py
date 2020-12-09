@@ -36,7 +36,7 @@ def ocr_register(photo_file, nick):
     img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
     ocr_data = pytesseract.image_to_data(img, output_type=Output.DICT, config="--psm 3")
 
-    logger.info("OCR Start")
+    logger.info("OCR Start - Register")
 
     user.nick = ocrRegister_Nick(nick, ocr_data)
     user.jogger = ocrRegister_Distance(ocr_data)
@@ -51,10 +51,33 @@ def ocr_register(photo_file, nick):
     os.remove(filepath)
 
     print("ocr_registro return ", str(user))
-    logger.info("User Data Register %s", str(user))
+    logger.info("OCR End - Register User Data %s", str(user))
 
     return user
 
+def ocr_screenshot(photo_file):
+    """ Comment"""
+
+    logger.info("OCR Start - Screenshot Data")
+    #Añadir variable idioma/lang
+
+    filepath = os.path.expanduser('~') + '/' + str(photo_file.file_id)
+    photo_file.download(filepath)
+
+    img = cv.imread(filepath, 0)
+    img = cv.medianBlur(img, 3)
+    img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 11, 3)
+    img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+    ocr_data = pytesseract.image_to_data(img, output_type=Output.DICT, config="--psm 3")
+    #TODO: Comparar ocr_data[text] con typeranking -> Tipo/Type
+    #TODO: Obtener con data pattern el valor -> Cantidad/Amount
+
+    os.remove(filepath)
+
+    #print("ocr_registro return ", str(user))
+    logger.info("OCR End - Screenshot Data")
+
+    pass
 
 def ocrRegister_Experience(ocr_data, img):
 

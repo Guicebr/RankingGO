@@ -250,7 +250,7 @@ def screenshot_handler(update, context) -> None:
         dbconn.close()
 
     #TODO: Obtener tipo_ranking y cantidad
-
+    ocr_data = visionocr.ocr_screenshot(photo_file)
 
     #TODO: Validar?
     #TODO: Salvar datos y Notificar al usuario
