@@ -113,7 +113,6 @@ def nickval(update, context):
     #Get data from OCR and save in context
     ocr_user = visionocr.ocr_register(photo_file, nickctx)
     #print("ocr_return nickval ", str(ocr_user))
-
     context.user_data["ocr_user"] = ocr_user
 
     # Check validity of user nick
@@ -227,6 +226,39 @@ def register_val(update, context) -> None:
 
     return ConversationHandler.END
 
+def screenshot_handler(update, context) -> None:
+    """ Function comment"""
+    userbdid = 0
+    user = update.message.from_user
+    photo_file = update.message.photo[-1].get_file()
+
+    # Verificar si el usuario esta registrado -> userbdid
+    try:
+        # Buscar usuario en la BD y conseguir userdbid
+        dbconn = DBHelper()
+        result = dbconn.get_user_tgid(user.id)
+        # print("Len Index", len(index))
+        if len(result) >= 1:
+            userdbid = int(result[0][0])
+        else:
+            txt = "Usuario no registrado ejecute el comando registro"
+            update.message.reply_text(txt)
+    except:
+        print("Error desconocido")
+    finally:
+        print(userdbid)
+        dbconn.close()
+
+    #TODO: Obtener tipo_ranking y cantidad
+
+
+    #TODO: Validar?
+    #TODO: Salvar datos y Notificar al usuario
+
+    # Get data from OCR and save in context
+    #ocr_user = visionocr.ocr_register(photo_file, nickctx)
+    pass
+
 def cancel(update, context):
     """Cancel command."""
     user = update.message.from_user
@@ -264,13 +296,15 @@ def main():
     # on noncommand i.e message - echo the message on Telegram
     # dp.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
 
+    dp.add_handler(MessageHandler(Filters.photo & ~Filters.command, screenshot_handler))
+
     # Add conversation handler with the states NICK, NICK_VAL, REGISTER_VAL
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler("registro", register)],
 
         states={
             NICK: [MessageHandler(Filters.text & ~Filters.command, nick)],
-            NICK_VAL: [MessageHandler(Filters.photo, nickval)],
+            NICK_VAL: [MessageHandler(Filters.photo & ~Filters.command, nickval)],
             REGISTER_VAL: [CallbackQueryHandler(register_val)]
         },
 
