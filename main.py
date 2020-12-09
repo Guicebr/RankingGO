@@ -13,26 +13,25 @@ Press Ctrl-C on the command line or send a signal to the process to stop the
 bot.
 """
 
-import logging
+
 import telegram
 import collections
+from CREDENTIALS import BOT_TOKEN
 
 from telegram import Update
 from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardButton, InlineKeyboardMarkup,)
 from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters,
                           ConversationHandler, CallbackContext, CallbackQueryHandler)
+import logging
 
-from CREDENTIALS import BOT_TOKEN
-
+from Plugins import visionocr
 from Database.dbhelper import DBHelper
 from Plugins.visionocr import *
 from Modelo.TypeRanking import bool_to_icon
 from Modelo.TypeRanking import typeranking_enum as tr_enum
-
-# Enable logging
-from Plugins import visionocr
 from Modelo.UserData import UserData
 
+# Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO, filename='example.log')
 
@@ -72,24 +71,12 @@ def echo(update, context):
 
 
 def experience(update, context):
-    """ Show last experience data."""
+    """ Show last experience data writed in telegram chat"""
     update.message.reply_text("Tu experiencia es " + context.args[0])
 
 
-"""
-def sumar(update, context):
-    try:
-        num1 = int(context.args[0])
-        num2 = int(context.args[1])
-        sum = num1+num2
-        update.message.reply_text("La suma es "+ str(sum))
-
-    except(ValueError):
-        update.message.reply_text("Por favor utilice 2 números") 
-"""
-
-
 def register(update, context):
+    """Start the register proccess, ask user for nick"""
     user = update.message.from_user
 
     text = 'Send me your nickname in PokemonGO.'
@@ -101,9 +88,11 @@ def register(update, context):
 
 
 def nick(update, context):
+    """Save users nick in context data and ask the user to send you a photo"""
     user = update.message.from_user
     logger.info("Nombre %s: Nick %s", user.first_name, update.message.text)
     context.user_data["nick"] = update.message.text
+
     text = "Is " + update.message.text + " your nickname?\n" \
                                          "Send me a photo at your profile account to verify"
     update.message.reply_text(text)
@@ -112,29 +101,34 @@ def nick(update, context):
 
 
 def nickval(update, context):
-    #reply_keyboard = [['/registro', '/cancel', '/experience']]
-    #message = update.message
+    """
+    Receive photo from user,
 
+    Save/Get User from DB
+    Create Validation Form
+    """
+    #Initialize vars
     keyboard = []
+    userdbid = 0
 
     user = update.message.from_user
     nickctx = str(context.user_data["nick"])
     photo_file = update.message.photo[-1].get_file()
-    userdbid = 0
 
+    #Get data from OCR and save in context
     ocr_user = visionocr.ocr_register(photo_file, nickctx)
-    print("ocr_return nickval ", str(ocr_user))
+    #print("ocr_return nickval ", str(ocr_user))
 
     context.user_data["ocr_user"] = ocr_user
 
-    # Si nick no valido comunicar al usuario y cancelar registro
+    # Check validity of user nick
     if ocr_user.nick is None:
+        # If invalid nick, notify user and cancel register
         text = "Nick no válido, vuelva a intentarlo con el comando /registro"
         update.message.reply_text(text)
         return ConversationHandler.END
-
-    # Si nick valido comprobar si existe en la bd o no y obtener un userid
     else:
+        # If nick is valid, check if it exists in the database and get/save to obtain userid
         try:
             # Buscar usuario en la BD y conseguir userdbid
             dbconn = DBHelper()
@@ -153,10 +147,10 @@ def nickval(update, context):
             dbconn.close()
 
     context.user_data["userdbid"] = userdbid
-
     txt = 'Nick registrado: '+str(nickctx)
     update.message.reply_text(txt)
 
+    # Save data in user context and prepare validation form
     ocr_user = ocr_user.getDict()
     ocr_user.pop("nick")
     context.user_data["ocr_user"] = collections.OrderedDict(ocr_user)
@@ -165,29 +159,20 @@ def nickval(update, context):
     ocr_user = context.user_data["ocr_user"]
     ocr_user_valid = context.user_data["ocr_user_valid"]
 
-    #TODO: Validacion por parte del usuario los datos obtenidos mediante OCR, cada uno.
+    #Validation by the user of each data obtained through OCR
     txt = 'Verifica los siguientes datos por favor:'
-
-
     print(ocr_user)
-    for i in ocr_user:
-        if ocr_user[i] is not None:
-            value = str(i) + ": " + str(ocr_user[i]) + bool_to_icon[int(ocr_user_valid[i])]
-            cb_data = list(ocr_user.keys()).index(i)
+    for type_rank in ocr_user:
+        if ocr_user[type_rank] is not None:
+            value = str(type_rank) + ": " + str(ocr_user[type_rank]) + bool_to_icon[int(ocr_user_valid[type_rank])]
+            cb_data = list(ocr_user.keys()).index(type_rank)
 
             keyboard.append([InlineKeyboardButton(str(value), callback_data=cb_data)])
 
     keyboard.append([InlineKeyboardButton("Finish", callback_data='finish')])
-
-
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     update.message.reply_text(txt, reply_markup=reply_markup)
-
-    print("main.py")
-    print(str(ocr_user))
-    print(str(ocr_user_valid))
-    print("main.py")
 
     return REGISTER_VAL
 
