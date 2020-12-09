@@ -44,15 +44,14 @@ def ocr_register(photo_file, nick):
     user.backpaker = ocrRegister_Pokestops(ocr_data)
     user.totalxp = ocrRegister_Experience(ocr_data, img)
 
-    #print("Pattern", str(data_p['totalxp']))
-    ocr_pattern_data = ocr_pattern(img, str(data_p['totalxp']))
+    #ocr_pattern_data = ocr_pattern(img, str(data_p['totalxp']))
+    #print("ocr_pattern_data", ocr_pattern_data)
+    #logger.info("Ocr_pattern_data %s", str(ocr_pattern_data))
 
-    print("ocr_pattern_data", ocr_pattern_data)
-    logger.info("Ocr_pattern_data %s", str(ocr_pattern_data))
-    logger.info("User Data Register %s", str(user))
-    #os.remove(filepath)
+    os.remove(filepath)
 
     print("ocr_registro return ", str(user))
+    logger.info("User Data Register %s", str(user))
 
     return user
 

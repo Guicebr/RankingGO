@@ -167,6 +167,8 @@ def nickval(update, context):
 
     #TODO: Validacion por parte del usuario los datos obtenidos mediante OCR, cada uno.
     txt = 'Verifica los siguientes datos por favor:'
+
+
     print(ocr_user)
     for i in ocr_user:
         if ocr_user[i] is not None:
@@ -176,6 +178,7 @@ def nickval(update, context):
             keyboard.append([InlineKeyboardButton(str(value), callback_data=cb_data)])
 
     keyboard.append([InlineKeyboardButton("Finish", callback_data='finish')])
+
 
     reply_markup = InlineKeyboardMarkup(keyboard)
 
@@ -252,9 +255,6 @@ def cancel(update, context):
 
 def main():
     """Start the bot."""
-    # Create the Updater and pass it your bot's token.
-    # Make sure to set use_context=True to use the new context based callbacks
-    # Post version 12 this will no longer be necessary
 
     # Para mandar mensajes a un canal
     # bot.send_message(channel_id, text)
@@ -273,13 +273,15 @@ def main():
     dp.add_handler(CommandHandler("help", help_command))
 
     # command
-    dp.add_handler(CommandHandler("experience", experience))
+    #dp.add_handler(CommandHandler("experience", experience))
+
+    #Registramos cuando el usuario pulsa un boton del formulario de registro
     updater.dispatcher.add_handler(CallbackQueryHandler(register_val))
 
     # on noncommand i.e message - echo the message on Telegram
     # dp.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
 
-    # Add conversation handler with the states GENDER, PHOTO, LOCATION and BIO
+    # Add conversation handler with the states NICK, NICK_VAL, REGISTER_VAL
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler("registro", register)],
 
@@ -294,7 +296,7 @@ def main():
 
     dp.add_handler(conv_handler)
 
-    # Start the Bot
+    # Start the Bot, añadimos allowed_update para poder editar lo mensajes
     updater.start_polling(allowed_updates=[])
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
