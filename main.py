@@ -88,7 +88,7 @@ def register(update, context):
 
 
 def nick(update, context):
-    """Save users nick in context data and ask the user to send you a photo"""
+    """Save users nick in context data and ask the user to send you a photo."""
     user = update.message.from_user
     logger.info("Nombre %s: Nick %s", user.first_name, update.message.text)
     context.user_data["nick"] = update.message.text
@@ -101,12 +101,7 @@ def nick(update, context):
 
 
 def nickval(update, context):
-    """
-    Receive photo from user,
-
-    Save/Get User from DB
-    Create Validation Form
-    """
+    """Receive photo from user, save/get User from DB, and create ValidationForm. """
     #Initialize vars
     keyboard = []
     userdbid = 0
@@ -178,9 +173,7 @@ def nickval(update, context):
 
 
 def register_val(update, context) -> None:
-
-    #print("UserDBID", str(context.user_data["userdbid"]))
-    #print("OCR_USER", str(context.user_data["ocr_user"]))
+    """Updates the form and stores the data, based on user actions"""
 
     query = update.callback_query
 
@@ -190,23 +183,27 @@ def register_val(update, context) -> None:
 
 
     print(query.message)
-    data = query.data
-    if data.isnumeric():
-        keyboard = query.message.reply_markup['inline_keyboard'].copy()
-        # print(keyboard[int(data)][0]['text'])
 
-        index = list(ocr_user_valid.keys())[int(data)]
-        ocr_user_valid[index] = not ocr_user_valid[index]
+    # Check callback type
+    callback_type = query.data
+    if callback_type.isnumeric():
+        # If numeric callback Store data in context and Update form
+        keyboard = query.message.reply_markup['inline_keyboard'].copy()
+
+        type_rank = list(ocr_user_valid.keys())[int(callback_type)]
+        ocr_user_valid[type_rank] = not ocr_user_valid[type_rank]
+
         # TODO Traducir i
-        txt = str(index) + ": " + str(ocr_user[index]) + bool_to_icon[int(ocr_user_valid[index])]
-        cb_data = list(ocr_user.keys()).index(index)
-        keyboard[int(data)][0] = InlineKeyboardButton(str(txt), callback_data=cb_data)
+        txt = str(type_rank) + ": " + str(ocr_user[type_rank]) + bool_to_icon[int(ocr_user_valid[type_rank])]
+        cb_data = list(ocr_user.keys()).index(type_rank)
+        keyboard[int(callback_type)][0] = InlineKeyboardButton(str(txt), callback_data=cb_data)
         # print(keyboard[int(data)][0]['text'])
         # print(str(query))
         query.edit_message_reply_markup(InlineKeyboardMarkup(keyboard))
 
-        query.answer(str(index))
-    elif data == "finish":
+        query.answer(str(type_rank))
+    elif callback_type == "finish":
+        # If callback is finish Store each data DB and notify user
         try:
             dbconn = DBHelper()
             for type in ocr_user:
@@ -219,7 +216,7 @@ def register_val(update, context) -> None:
         finally:
             dbconn.close()
     else:
-        print("Callback no programado ", str(data))
+        print("Callback no programado ", str(callback_type))
 
     #print(str(ocr_user))
     #print(str(ocr_user_valid))
@@ -231,6 +228,7 @@ def register_val(update, context) -> None:
     return ConversationHandler.END
 
 def cancel(update, context):
+    """Cancel command."""
     user = update.message.from_user
     logger.info("UserData %s canceled the conversation.", user.first_name)
     update.message.reply_text('Bye! I hope we can talk again some day.',
