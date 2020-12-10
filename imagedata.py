@@ -5,7 +5,7 @@ import cv2 as cv
 
 import numpy as np
 from Plugins import visionocr
-from Modelo import TypeRanking
+from Modelo.TypeRanking import *
 
 from functools import reduce
 
@@ -23,8 +23,8 @@ ficheros = ['mi8-es-battle_girl.jpg', 'mi8-es-battle_legend.jpg', 'mi8-es-champi
 img = cv.imread(str(carpeta + ficheros[sel_img]), 0)
 
 img = cv.medianBlur(img, 3)
-##img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_MEAN_C, cv.THRESH_BINARY, 11, 2)
-img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 11, 3)
+#img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_MEAN_C, cv.THRESH_BINARY, 11, 2)
+img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 11, 2)
 img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
 
 print(str(carpeta + ficheros[sel_img]))
@@ -32,7 +32,18 @@ print(str(carpeta + ficheros[sel_img]))
 
 #visionocr.ocr_screenshot(str(carpeta + ficheros[sel_img]))
 
-d = pytesseract.image_to_data(img, output_type=Output.DICT, config="--psm 3")
+config = "--psm 3"
+d = pytesseract.image_to_data(img, output_type=Output.DICT, config=config)
+
+(x, y, w, h) = (235, 520, 40, 70)
+crop_img = img[y:y + h, x:x + w]
+
+pytesseract.image_to_string(crop_img, config="--psm 3")
+
+#(x, y, w, h) = (d['left'][i]-10, d['top'][i]-10, d['width'][i]+20, d['height'][i]+20)
+
+
+#z = visionocr.ocr_pattern(img, datapattern["totalxp"])
 
 # a = pytesseract.image_to_boxes(img, output_type=Output.DICT)
 n_boxes = len(d['level'])
@@ -63,9 +74,11 @@ nick = reduce(np.intersect1d, (np.where(block == b), np.where(line == l), np.whe
 print(nick)
 print(d['text'][nick[0]])"""
 
-"""for i in range(n_boxes):
+for i in range(n_boxes):
     (x, y, w, h) = (d['left'][i], d['top'][i], d['width'][i], d['height'][i])
-    c = cv.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 1)"""
+    c = cv.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 1)
 
-cv.imshow('img', img)
+cv.imshow('img', crop_img)
+
+#print(z)
 cv.waitKey(0)

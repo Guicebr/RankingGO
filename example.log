@@ -4056,3 +4056,31 @@ ID: 13922907
 2020-12-09 13:26:45,087 - Plugins.visionocr - INFO - Ocr_Type totalxp Result OK ['73903573'].
 2020-12-09 13:26:45,087 - Plugins.visionocr - INFO - Experience 73903573
 2020-12-09 13:26:45,088 - Plugins.visionocr - INFO - OCR End - Register User Data {Nick Wicisian, Jogger 11553.6, Collector 86378, Backpaker 76221, TotalXP 73903573 }
+2020-12-10 12:46:03,267 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ start.
+2020-12-10 12:46:03,672 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ Result OK ['4000'].
+2020-12-10 12:46:30,273 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ start.
+2020-12-10 12:46:30,683 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ Result OK ['4000'].
+2020-12-10 12:47:28,113 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ start.
+2020-12-10 12:47:28,541 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ Result OK ['4000'].
+2020-12-10 12:47:45,460 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ start.
+2020-12-10 12:47:45,883 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ Result OK ['4000'].
+2020-12-10 12:48:02,833 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ start.
+2020-12-10 12:48:03,240 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ Result OK ['4000'].
+2020-12-10 12:48:11,074 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ start.
+2020-12-10 12:48:11,489 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ Result OK ['4000'].
+2020-12-10 12:48:22,857 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ start.
+2020-12-10 12:48:23,273 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ Result OK ['4000'].
+2020-12-10 12:48:29,800 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ start.
+2020-12-10 12:48:30,206 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ Result OK ['4000'].
+2020-12-10 12:48:40,485 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ start.
+2020-12-10 12:48:40,893 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ Result OK ['4000'].
+2020-12-10 12:48:52,513 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ start.
+2020-12-10 12:48:52,922 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ Result OK ['4000'].
+2020-12-10 12:49:02,116 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ start.
+2020-12-10 12:49:02,524 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ Result OK ['4000'].
+2020-12-10 12:49:09,728 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ start.
+2020-12-10 12:49:10,139 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ Result OK ['4000'].
+2020-12-10 12:49:17,137 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ start.
+2020-12-10 12:49:17,546 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ Result OK ['4000'].
+2020-12-10 12:49:23,070 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ start.
+2020-12-10 12:49:23,480 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ Result OK ['4000'].
