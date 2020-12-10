@@ -61,8 +61,13 @@ def ocr_screenshot(photo_file):
     logger.info("OCR Start - Screenshot Data")
     #Añadir variable idioma/lang
 
+    #TODO: ImageData Screenshot
+    filepath = photo_file
+
+    """
     filepath = os.path.expanduser('~') + '/' + str(photo_file.file_id)
     photo_file.download(filepath)
+    """
 
     img = cv.imread(filepath, 0)
     img = cv.medianBlur(img, 3)

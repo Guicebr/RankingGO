@@ -4014,3 +4014,45 @@ ID: 13922907
 2020-12-02 13:43:49,914 - Plugins.visionocr - INFO - User Data Register {Nick Wicisian, Jogger 11886.8, Collector 88334, Backpaker 77106, TotalXP 75422347 }
 2020-12-02 16:07:59,643 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
 2020-12-02 16:07:59,643 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2020-12-09 13:26:45,081 - Plugins.visionocr - INFO - OCR Start - Register
+2020-12-09 13:26:45,081 - Plugins.visionocr - INFO - Wicisian cmp Wicisian == 100
+
+2020-12-09 13:26:45,081 - Plugins.visionocr - INFO - Nickname Wicisian
+2020-12-09 13:26:45,081 - Plugins.visionocr - INFO - Ocr_Type jogger start.
+2020-12-09 13:26:45,081 - root - INFO - ['Distance', 'walked', 'Distancia', 'caminando', 'km']
+2020-12-09 13:26:45,081 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-12-09 13:26:45,081 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-12-09 13:26:45,082 - root - INFO - t,b,l (array([50]),) ['Distancia'] [10.] [1.] [1.]
+2020-12-09 13:26:45,082 - root - INFO - t,b,l (array([51]),) ['caminando'] [10. 10.] [1. 1.] [1. 1.]
+2020-12-09 13:26:45,083 - root - INFO - t,b,l (array([53]),) ['km'] [10. 10. 10.] [1. 1. 1.] [1. 1. 1.]
+2020-12-09 13:26:45,083 - Plugins.visionocr - INFO - Salida ['' 'a?' 'Distancia' 'caminando' '11,553,6' 'km']
+2020-12-09 13:26:45,083 - Plugins.visionocr - INFO - Ocr_Type jogger Result OK ['115536'].
+2020-12-09 13:26:45,083 - Plugins.visionocr - INFO - Distance 11553.6
+2020-12-09 13:26:45,083 - Plugins.visionocr - INFO - Ocr_Type collector start.
+2020-12-09 13:26:45,083 - root - INFO - ['Pokémon', 'Caught', 'atrapados']
+2020-12-09 13:26:45,084 - root - INFO - t,b,l (array([55]),) ['Pokémon'] [10.] [2.] [1.]
+2020-12-09 13:26:45,084 - root - INFO - t,b,l (array([], dtype=int64),) [] [10.] [2.] [1.]
+2020-12-09 13:26:45,084 - root - INFO - t,b,l (array([56]),) ['atrapados'] [10. 10.] [2. 2.] [1. 1.]
+2020-12-09 13:26:45,085 - Plugins.visionocr - INFO - Salida ['' 'Pokémon' 'atrapados' '86.378']
+2020-12-09 13:26:45,085 - Plugins.visionocr - INFO - Ocr_Type collector Result OK ['86378'].
+2020-12-09 13:26:45,085 - Plugins.visionocr - INFO - Pokemon 86378
+2020-12-09 13:26:45,085 - Plugins.visionocr - INFO - Ocr_Type backpaker start.
+2020-12-09 13:26:45,085 - root - INFO - ['Pokéstops', 'Pokeparadas', 'visited', 'visitadas', 'Poképaradas']
+2020-12-09 13:26:45,085 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-12-09 13:26:45,085 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-12-09 13:26:45,085 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-12-09 13:26:45,085 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-12-09 13:26:45,086 - root - INFO - t,b,l (array([59]),) ['Poképaradas'] [10.] [3.] [1.]
+2020-12-09 13:26:45,086 - Plugins.visionocr - INFO - Salida ['' 'Poképaradas' 'visy' '76.221']
+2020-12-09 13:26:45,086 - Plugins.visionocr - INFO - Ocr_Type backpaker Result OK ['76221'].
+2020-12-09 13:26:45,086 - Plugins.visionocr - INFO - Pokestops 76221
+2020-12-09 13:26:45,086 - Plugins.visionocr - INFO - Ocr_Type totalxp start.
+2020-12-09 13:26:45,086 - root - INFO - ['XP', 'PX', 'XP:', 'PX:']
+2020-12-09 13:26:45,086 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2020-12-09 13:26:45,087 - root - INFO - t,b,l (array([67]),) ['Px'] [10.] [1.] [2.]
+2020-12-09 13:26:45,087 - root - INFO - t,b,l (array([], dtype=int64),) [] [10.] [1.] [2.]
+2020-12-09 13:26:45,087 - root - INFO - t,b,l (array([], dtype=int64),) [] [10.] [1.] [2.]
+2020-12-09 13:26:45,087 - Plugins.visionocr - INFO - Salida ['' '@' 'Total' 'de' 'Px' '73,903.573']
+2020-12-09 13:26:45,087 - Plugins.visionocr - INFO - Ocr_Type totalxp Result OK ['73903573'].
+2020-12-09 13:26:45,087 - Plugins.visionocr - INFO - Experience 73903573
+2020-12-09 13:26:45,088 - Plugins.visionocr - INFO - OCR End - Register User Data {Nick Wicisian, Jogger 11553.6, Collector 86378, Backpaker 76221, TotalXP 73903573 }

@@ -9,12 +9,16 @@ from Modelo import TypeRanking
 
 from functools import reduce
 
-carpeta = 'Imagenes/'
+carpeta = '/home/guillermocs/PycharmProjects/RankingGO/Imagenes/'
 
 sel_img = 0
-ficheros = ['nickphotoesmi8.jpg', 'nickphotoen8t.jpg', 'nickphotoes8t.jpg', 'nickphotnesiphone11max.jpg']
+#ficheros = ['mi8-es-nick.jpg', '8t-en-nick.jpg', '8t-es-nick.jpg', 'i11max-es-nick.jpg']
 nick = ["Wicisian", "S1ckwhale", "S1ckwhale", "PabloLuis94"]
 
+ficheros = ['mi8-es-battle_girl.jpg', 'mi8-es-battle_legend.jpg', 'mi8-es-champion.jpg', 'mi8-es-collector.jpg',
+             'mi8-es-jogger.jpg', 'mi8-es-pokemon_ranger.jpg', 'mi8-es-sightseer.jpg']
+
+#ficheros = ['mi8-en-battle_girl.jpg', 'mi8-en-battle_legend.jpg', 'mi8-en-champion.jpg', 'mi8-en-collector.jpg','mi8-en-jogger.jpg', 'mi8-en-pokemon_ranger.jpg', 'mi8-en-sightseer.jpg']
 
 img = cv.imread(str(carpeta + ficheros[sel_img]), 0)
 
@@ -23,9 +27,10 @@ img = cv.medianBlur(img, 3)
 img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 11, 3)
 img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
 
-visionocr.ocr_register(img, nick[sel_img])
+print(str(carpeta + ficheros[sel_img]))
+#visionocr.ocr_register(str(carpeta + ficheros[sel_img]), nick[sel_img])
 
-exit
+#visionocr.ocr_screenshot(str(carpeta + ficheros[sel_img]))
 
 d = pytesseract.image_to_data(img, output_type=Output.DICT, config="--psm 3")
 
@@ -62,69 +67,5 @@ print(d['text'][nick[0]])"""
     (x, y, w, h) = (d['left'][i], d['top'][i], d['width'][i], d['height'][i])
     c = cv.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 1)"""
 
-# print("Busqueda nick")
-# print(visionocr.nickOCR(d,"S1ckwhale"))
-
-
-# print(visionocr.expOCR(d))
-
-# print("Busqueda Distancia")
-# print(visionocr.expDist(d))
-nickname, exp, distance, pokestops, pokemon = range(5)
-
-print("Validación del Nick")
-try:
-    if visionocr.nickOCR(d, nick[sel_img]):
-        nickname = nick[sel_img]
-except:
-    print("Nick No valido")
-
-print("Busqueda Distancia")
-try:
-    distance = visionocr.ocr_type(d, "jogger")
-    distance = float(str(distance[0:len(distance) - 1]) + "." + str(str(distance[len(distance) - 1:])))
-    print(distance)
-except:
-    print("Not distance or not value")
-
-print("Busqueda Atrapados")
-try:
-    pokemon = visionocr.ocr_type(d, "collector")
-    print(pokemon)
-except:
-    print("Pokemon cannot be obtained")
-
-print("Busqueda Pokeparadas")
-try:
-    pokestops = visionocr.ocr_type(d, "backpaker")
-    print(pokestops)
-except:
-    print("Pokestops cannot be obtained")
-
-print("Busqueda Exp")
-try:
-    #experience = visionocr.ocr_type(d, "totalxp")
-    exp = None
-    if exp is None:
-        print("try2")
-        exp = visionocr.ocr_pattern(img, TypeRanking.datapattern['totalxp'])
-
-    print("Exp", exp)
-except:
-    print("Exp cannot be obtained")
-
-print(nickname, distance, pokemon, pokestops, exp)
-
-# cv.imshow('img', img)
+cv.imshow('img', img)
 cv.waitKey(0)
-
-""" Syntax: cv2.rectangle(image, start_point, end_point, color, thickness)
-
-    Parameters:
-    image: It is the image on which rectangle is to be drawn.
-    start_point: It is the starting coordinates of rectangle. The coordinates are represented as tuples of two values i.e. (X coordinate value, Y coordinate value).
-    end_point: It is the ending coordinates of rectangle. The coordinates are represented as tuples of two values i.e. (X coordinate value, Y coordinate value).
-    color: It is the color of border line of rectangle to be drawn. For BGR, we pass a tuple. eg: (255, 0, 0) for blue color.
-    thickness: It is the thickness of the rectangle border line in px. Thickness of -1 px will fill the rectangle shape by the specified color.
-
-    Return Value: It returns an image. """
