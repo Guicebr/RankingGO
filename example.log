@@ -4084,3 +4084,497 @@ ID: 13922907
 2020-12-10 12:49:17,546 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ Result OK ['4000'].
 2020-12-10 12:49:23,070 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ start.
 2020-12-10 12:49:23,480 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ Result OK ['4000'].
+2020-12-11 12:30:20,740 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ start.
+2020-12-11 12:30:21,055 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ Result OK [].
+2020-12-11 12:30:44,835 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ start.
+2020-12-11 12:30:45,154 - Plugins.visionocr - INFO - Ocr_Pattern ^(\d+(\.|\,))+\d+$ Result OK [].
+2020-12-14 12:41:32,320 - Plugins.visionocr - INFO - 81462 cmp 38146 == 80
+
+2020-12-14 12:42:05,465 - Plugins.visionocr - INFO - 38146557 cmp 38146 == 77
+
+2020-12-14 12:42:09,802 - Plugins.visionocr - INFO - 33821465 cmp 38146 == 77
+
+2020-12-14 12:42:10,279 - Plugins.visionocr - INFO - 33821465 cmp 38146 == 77
+
+2020-12-14 12:42:19,204 - Plugins.visionocr - INFO - 821462 cmp 38146 == 73
+
+2020-12-14 12:42:53,372 - Plugins.visionocr - INFO - 338146 cmp 38146 == 91
+
+2020-12-14 12:43:02,607 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 12:43:03,064 - Plugins.visionocr - INFO - 38314 cmp 38146 == 80
+
+2020-12-14 12:43:42,313 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 12:45:29,473 - Plugins.visionocr - INFO - 387146 cmp 38146 == 91
+
+2020-12-14 12:45:29,933 - Plugins.visionocr - INFO - 387146 cmp 38146 == 91
+
+2020-12-14 12:48:20,348 - Plugins.visionocr - INFO - 338146 cmp 38146 == 91
+
+2020-12-14 12:48:29,320 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:05:05,611 - Plugins.visionocr - INFO - 38146> cmp 38146 == 91
+
+2020-12-14 13:05:10,501 - Plugins.visionocr - INFO - 38-146 cmp 38146 == 91
+
+2020-12-14 13:05:13,721 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:06:21,506 - Plugins.visionocr - INFO - 38.146 cmp 38146 == 91
+
+2020-12-14 13:07:54,200 - Plugins.visionocr - INFO - 38146> cmp 38146 == 91
+
+2020-12-14 13:07:59,066 - Plugins.visionocr - INFO - 38-146 cmp 38146 == 91
+
+2020-12-14 13:08:02,229 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:09:10,602 - Plugins.visionocr - INFO - 38.146 cmp 38146 == 91
+
+2020-12-14 13:09:50,553 - Plugins.visionocr - INFO - 387146 cmp 38146 == 91
+
+2020-12-14 13:09:51,020 - Plugins.visionocr - INFO - 387146 cmp 38146 == 91
+
+2020-12-14 13:10:12,965 - Plugins.visionocr - INFO - 38.146 cmp 38146 == 91
+
+2020-12-14 13:10:17,332 - Plugins.visionocr - INFO - 38.146 cmp 38146 == 91
+
+2020-12-14 13:10:17,856 - Plugins.visionocr - INFO - 38.146 cmp 38146 == 91
+
+2020-12-14 13:10:20,259 - Plugins.visionocr - INFO - 38.146 cmp 38146 == 91
+
+2020-12-14 13:10:24,788 - Plugins.visionocr - INFO - 38.146 cmp 38146 == 91
+
+2020-12-14 13:10:26,350 - Plugins.visionocr - INFO - 38.146 cmp 38146 == 91
+
+2020-12-14 13:10:30,975 - Plugins.visionocr - INFO - 38.146 cmp 38146 == 91
+
+2020-12-14 13:10:31,524 - Plugins.visionocr - INFO - 38.146 cmp 38146 == 91
+
+2020-12-14 13:11:08,923 - Plugins.visionocr - INFO - 38.146 cmp 38146 == 91
+
+2020-12-14 13:11:09,438 - Plugins.visionocr - INFO - 38.146 cmp 38146 == 91
+
+2020-12-14 13:11:15,949 - Plugins.visionocr - INFO - 38.146 cmp 38146 == 91
+
+2020-12-14 13:11:17,997 - Plugins.visionocr - INFO - 38.146 cmp 38146 == 91
+
+2020-12-14 13:11:20,154 - Plugins.visionocr - INFO - 38.146 cmp 38146 == 91
+
+2020-12-14 13:11:21,744 - Plugins.visionocr - INFO - 38.146 cmp 38146 == 91
+
+2020-12-14 13:11:22,198 - Plugins.visionocr - INFO - 38.146 cmp 38146 == 91
+
+2020-12-14 13:11:24,536 - Plugins.visionocr - INFO - 38.146 cmp 38146 == 91
+
+2020-12-14 13:11:26,166 - Plugins.visionocr - INFO - 38.146 cmp 38146 == 91
+
+2020-12-14 13:11:26,703 - Plugins.visionocr - INFO - 38.146 cmp 38146 == 91
+
+2020-12-14 13:12:18,778 - Plugins.visionocr - INFO - 38.146 cmp 38146 == 91
+
+2020-12-14 13:12:19,486 - Plugins.visionocr - INFO - 38.146 cmp 38146 == 91
+
+2020-12-14 13:12:21,588 - Plugins.visionocr - INFO - 38.146 cmp 38146 == 91
+
+2020-12-14 13:12:41,776 - Plugins.visionocr - INFO - 338146 cmp 38146 == 91
+
+2020-12-14 13:12:50,662 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:13:15,857 - Plugins.visionocr - INFO - 38.146 cmp 38146 == 91
+
+2020-12-14 13:24:31,486 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:24:34,559 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:24:36,314 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:24:39,464 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:25:21,418 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:25:24,486 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:25:26,238 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:25:29,382 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:25:36,058 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:26:29,551 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:26:30,095 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:26:37,035 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:26:43,449 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:27:12,010 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:27:12,511 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:27:25,657 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:27:30,087 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:27:34,613 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:27:35,138 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:27:37,310 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:27:39,008 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:27:43,372 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:27:43,893 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:27:46,292 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:27:50,833 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:27:52,401 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:27:57,060 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:27:57,610 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:28:17,330 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:28:35,198 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:28:35,705 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:28:37,939 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:28:39,579 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:28:40,108 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:28:42,216 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:28:43,803 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:28:44,269 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:28:46,440 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:28:48,030 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:28:48,489 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:28:50,824 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:28:52,439 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:28:52,970 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:29:21,342 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:29:25,822 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:29:30,271 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:29:30,756 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:29:34,639 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:29:35,124 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:29:37,336 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:29:38,988 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:29:39,465 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:29:41,598 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:29:43,203 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:29:43,685 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:29:45,090 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:29:45,799 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:29:47,882 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:30:16,434 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:30:20,750 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:30:25,107 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:30:25,558 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:30:29,527 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:30:30,008 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:30:33,933 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:30:34,403 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:30:38,367 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:30:38,868 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:30:41,022 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:30:42,677 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:30:43,162 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:36:56,298 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:37:56,172 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:37:59,252 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:38:01,013 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:38:04,182 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:38:10,903 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:39:04,703 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:39:05,252 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:39:12,246 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:39:18,714 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:39:47,559 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:39:48,063 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:40:01,319 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:40:05,735 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:40:10,275 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:40:10,798 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:40:12,957 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:40:14,677 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:40:19,065 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:40:19,586 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:40:21,993 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:40:26,575 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:40:28,168 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:40:32,850 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:40:33,407 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:40:53,195 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:41:10,997 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:41:11,511 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:41:13,752 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:41:15,404 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:41:15,939 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:41:18,052 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:41:19,655 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:41:20,122 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:41:22,297 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:41:23,883 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:41:24,341 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:41:26,682 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:41:28,313 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:41:28,845 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:41:57,487 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:42:01,992 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:42:06,468 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:42:06,961 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:42:10,896 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:42:11,385 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:42:13,624 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:42:15,291 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:42:15,777 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:42:17,932 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:42:19,567 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:42:20,058 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:42:21,499 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:42:22,221 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:42:24,347 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:42:53,362 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:42:57,765 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:43:02,197 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:43:02,656 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:43:06,715 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:43:07,212 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:43:11,198 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:43:11,673 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:43:15,680 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:43:16,173 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:43:18,329 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:43:19,977 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 13:43:20,451 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
+
+2020-12-14 14:10:06,834 - Plugins.visionocr - INFO - 553 cmp 553 == 100
+
+2020-12-14 14:10:57,190 - Plugins.visionocr - INFO - 553 cmp 553 == 100
+
+2020-12-14 14:11:25,400 - Plugins.visionocr - INFO - 553 cmp 553 == 100
+
+2020-12-14 14:11:26,137 - Plugins.visionocr - INFO - 553 cmp 553 == 100
+
+2020-12-14 14:11:47,786 - Plugins.visionocr - INFO - 553 cmp 553 == 100
+
+2020-12-14 14:11:48,181 - Plugins.visionocr - INFO - 553 cmp 553 == 100
+
+2020-12-14 14:11:48,958 - Plugins.visionocr - INFO - 553 cmp 553 == 100
+
+2020-12-14 14:11:49,247 - Plugins.visionocr - INFO - 553 cmp 553 == 100
+
+2020-12-14 14:11:49,534 - Plugins.visionocr - INFO - 553 cmp 553 == 100
+
+2020-12-14 14:11:51,736 - Plugins.visionocr - INFO - 553 cmp 553 == 100
+
+2020-12-14 14:11:52,127 - Plugins.visionocr - INFO - 553 cmp 553 == 100
+
+2020-12-14 14:12:13,204 - Plugins.visionocr - INFO - 553 cmp 553 == 100
+
+2020-12-14 14:12:13,498 - Plugins.visionocr - INFO - 553 cmp 553 == 100
+
+2020-12-14 14:12:13,789 - Plugins.visionocr - INFO - 553 cmp 553 == 100
+
+2020-12-14 14:12:14,479 - Plugins.visionocr - INFO - 553 cmp 553 == 100
+
+2020-12-14 14:12:15,975 - Plugins.visionocr - INFO - 553 cmp 553 == 100
+
+2020-12-14 14:12:16,369 - Plugins.visionocr - INFO - 553 cmp 553 == 100
+
+2020-12-14 14:12:17,166 - Plugins.visionocr - INFO - 553 cmp 553 == 100
+
+2020-12-14 14:12:17,485 - Plugins.visionocr - INFO - 553 cmp 553 == 100
+
+2020-12-14 14:12:17,796 - Plugins.visionocr - INFO - 553 cmp 553 == 100
+
+2020-12-14 14:12:18,434 - Plugins.visionocr - INFO - 553 cmp 553 == 100
+
+2020-12-14 14:12:19,944 - Plugins.visionocr - INFO - 553 cmp 553 == 100
+
+2020-12-14 14:12:20,352 - Plugins.visionocr - INFO - 553 cmp 553 == 100
+
+2020-12-14 14:12:26,058 - Plugins.visionocr - INFO - 553 cmp 553 == 100
+
+2020-12-15 11:51:36,032 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:51:36,477 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:51:36,888 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:52:41,908 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:52:42,420 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:53:28,614 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:53:29,135 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:53:30,983 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:53:34,597 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:53:35,686 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:53:36,125 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:53:36,539 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:53:39,427 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:53:39,939 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:54:23,029 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:54:23,431 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:54:24,989 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:54:29,763 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:54:32,598 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:54:33,164 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:54:37,771 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:54:38,268 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:55:20,081 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:55:20,451 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:55:21,846 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:55:23,809 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:55:24,277 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:55:25,318 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:55:25,721 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:55:27,010 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:55:28,981 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:55:29,450 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:55:30,446 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:55:30,806 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+
+2020-12-15 11:55:31,987 - Plugins.visionocr - INFO - 383 cmp 383 == 100
+

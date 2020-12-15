@@ -152,7 +152,7 @@ def ocrRegister_Nick(nick, ocr_data):
 
     np_text = np.array(ocr_data['text'])
 
-    if arraycmp_string(np_text, nick) and nick is not None:
+    if arraycmp_string(np_text, nick, RATIO_NICK) and nick is not None:
         nickname = nick
     else:
         nickname = None
@@ -254,11 +254,11 @@ def ocr_pattern(img, pattern):
 ###
 # Compare a word with each string in array, if both are similar greater than RATIO_NICK ret TRUE
 #
-def arraycmp_string(arr, s):
+def arraycmp_string(arr, s, ratioval):
     for i in range(len(arr)):
         ratio = fuzz.ratio(arr[i], s)
 
-        if ratio >= RATIO_NICK:
+        if ratio >= ratioval:
             logger.info("%s cmp %s == %s\n", arr[i], s, ratio)
             return True
 
