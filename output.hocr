@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+ <head>
+  <title></title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+  <meta name='ocr-system' content='tesseract 4.1.1' />
+  <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word ocrp_wconf'/>
+ </head>
+ <body>
+  <div class='ocr_page' id='page_1' title='image "/home/guillermocs/PycharmProjects/RankingGO/Imagenes/mi8-es-battle_girl-38146-Y.jpg"; bbox 0 0 1080 2248; ppageno 0'>
+   <div class='ocr_carea' id='block_1_1' title="bbox 0 0 1080 93">
+    <p class='ocr_par' id='par_1_1' lang='eng' title="bbox 0 0 1080 93">
+     <span class='ocr_line' id='line_1_1' title="bbox 0 0 1080 93; baseline 0 2155; x_size 117.5; x_descenders 29.375; x_ascenders 29.375">
+      <span class='ocrx_word' id='word_1_1' title='bbox 0 0 1080 93; x_wconf 95'> </span>
+     </span>
+    </p>
+   </div>
+   <div class='ocr_carea' id='block_1_2' title="bbox 369 271 709 327">
+    <p class='ocr_par' id='par_1_2' lang='eng' title="bbox 369 271 709 327">
+     <span class='ocr_line' id='line_1_2' title="bbox 369 271 709 327; baseline 0 0; x_size 64.392403; x_descenders 8.3924055; x_ascenders 17">
+      <span class='ocrx_word' id='word_1_2' title='bbox 369 271 709 327; x_wconf 91'>Luchadora</span>
+     </span>
+    </p>
+   </div>
+   <div class='ocr_carea' id='block_1_3' title="bbox 176 369 900 404">
+    <p class='ocr_par' id='par_1_3' lang='eng' title="bbox 176 369 900 404">
+     <span class='ocr_line' id='line_1_3' title="bbox 176 369 900 404; baseline 0 0; x_size 40.387756; x_descenders 5.3877549; x_ascenders 11">
+      <span class='ocrx_word' id='word_1_3' title='bbox 176 370 277 404; x_wconf 96'>Gana</span>
+      <span class='ocrx_word' id='word_1_4' title='bbox 293 370 413 404; x_wconf 93'>4.000</span>
+      <span class='ocrx_word' id='word_1_5' title='bbox 429 369 623 404; x_wconf 91'>combates</span>
+      <span class='ocrx_word' id='word_1_6' title='bbox 639 369 686 404; x_wconf 93'>de</span>
+      <span class='ocrx_word' id='word_1_7' title='bbox 702 370 900 404; x_wconf 92'>Gimnasio.</span>
+     </span>
+    </p>
+   </div>
+   <div class='ocr_carea' id='block_1_4' title="bbox 285 462 922 1236">
+    <p class='ocr_par' id='par_1_4' lang='eng' title="bbox 285 462 922 1236">
+     <span class='ocr_line' id='line_1_4' title="bbox 285 462 922 1236; baseline 0 1012; x_size 249.33333; x_descenders 62.333332; x_ascenders 62.333336">
+      <span class='ocrx_word' id='word_1_8' title='bbox 285 462 922 1236; x_wconf 95'> </span>
+     </span>
+    </p>
+   </div>
+   <div class='ocr_carea' id='block_1_5' title="bbox 473 2055 607 2190">
+    <p class='ocr_par' id='par_1_5' lang='eng' title="bbox 473 2055 607 2190">
+     <span class='ocr_line' id='line_1_5' title="bbox 473 2055 607 2190; baseline 0 58; x_size 56; x_descenders 14; x_ascenders 13.999999">
+      <span class='ocrx_word' id='word_1_9' title='bbox 473 2055 607 2190; x_wconf 95'> </span>
+     </span>
+    </p>
+   </div>
+  </div>
+ </body>
+</html>
