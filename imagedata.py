@@ -202,36 +202,52 @@ def get_OCRbox_for(device, name):
     return (x, y, w, h)
 
 def getNUM_from_freq(len_num_freq_arr, num_freq_arr):
+    """ Devolver un string, de los caracteres que más se repiten para cada posicion
+    num_freq_arr:Es un vector de vectores que contiene caracteres
+    len_num_freq_array: Es la longitud del vector anterior """
+
     percentage = 0.90
     ret = ""
     tam_word = 0
     tot = 0
     arr_lens = []
+
+
     for i in range(len_num_freq_arr):
         length = len(num_freq_arr[i])
         arr_lens.append(length)
         tot += length
+    print("Tamaño arrays de frecuencias %s, Suma %d" % (str(arr_lens), tot))
+
 
     sum = 0
     for i in range(len_num_freq_arr):
         sum += arr_lens[len_num_freq_arr-i-1]
-        if(sum/tot > 0.90):
-            tam_word = i
+        print(sum / tot)
+        if(sum/tot >= percentage):
+            tam_word = i+1
             break
-    print(tam_word)
+
+
+    print("Tamaño de número =", tam_word)
+
+    # Usamos Direcciones relativas para reducir el tamaño del array
 
     for i in range(tam_word):
-        x = np.array(num_freq_arr[len_num_freq_arr-tam_word+i])
-        print(np.bincount(x).argmax())
-        ret = str(ret) + str(x[np.bincount(x).argmax()])
-
-    print(ret)
+        x = np.array(num_freq_arr[len_num_freq_arr-tam_word+i]).astype(np.int)
+        # print(x)
+        # print(np.bincount(x).argmax())
+        ret += str(x[np.bincount(x).argmax()])
+    # print(ret)
+    return ret
 
 def gauss_Pruebas(sel_img, gaussParam, psm, bitwisebit):
 
     save = []
     num_freq_dict = {}
-    tmp_max = [0,1,2]
+    tmp_max = [0,1,2] # Vector donde se almacenan las cadenas mas frecuentes
+    n_max = 5 # Numero que indica cuantas cadenas frecuentes se deben almacenar
+
     device = ficheros[sel_img].split("-")[0]
 
     medal = str(ficheros[sel_img].split("-")[4].split(".")[0])
@@ -280,7 +296,7 @@ def gauss_Pruebas(sel_img, gaussParam, psm, bitwisebit):
 
                     tmp_max = []
                     arr_cpy = num_freq_dict.copy()
-                    n_max = 5
+
                     for i in range(n_max):
                         if len(arr_cpy):
                             a = max(arr_cpy, key=lambda key: arr_cpy[key])
@@ -290,8 +306,13 @@ def gauss_Pruebas(sel_img, gaussParam, psm, bitwisebit):
                     #save.append([gauss1, gauss2, psmi, tmp_max, elapsed_time, sel_img])
 
     print("Number Frequency", str(num_freq_dict))
+
+    # Hallamos la longitud maxima de la cadena
+    len_num_freq_arr = len(max(num_freq_dict.keys(), key=len))
+
+    # num_freq_arr = np.empty(len_num_freq_arr, dtype=object)
     num_freq_arr = []
-    len_num_freq_arr = 10
+
     for i in range(len_num_freq_arr):
         num_freq_arr.append([])
 
@@ -303,11 +324,12 @@ def gauss_Pruebas(sel_img, gaussParam, psm, bitwisebit):
     for arr in num_freq_arr:
         print("%s, %d" % (str(arr), len(arr)))
 
-    print(getNUM_from_freq(len_num_freq_arr, num_freq_arr))
 
-
+    ret_num_freq = getNUM_from_freq(len_num_freq_arr, num_freq_arr)
+    print(ret_num_freq)
     # print(tmp_max)
-    save.append([0, 0, 0, [tmp_max], 0.000, sel_img])
+    # save.append([0, 0, 0, [tmp_max], 0.000, sel_img])
+    save.append([0, 0, 0, [ret_num_freq], 0.000, sel_img])
     return save
 
 def print_save(results):
@@ -353,7 +375,7 @@ if __name__ == '__main__':
     # gaussParam = [[3, 5, 7, 9, 11, 13], range(1, 11, 1)]
 
     psm = [11, 12]
-    gaussParam = [[11, 13], [9,10]]
+    gaussParam = [[11, 13], [9, 10]]
     # gaussParam = [[11], [6]]
     results1 = []
     results2 = []
@@ -362,8 +384,8 @@ if __name__ == '__main__':
         result = gauss_Pruebas(index_img, gaussParam, psm, 1)
         results1.append(result)
 
-        # result = gauss_Pruebas(index_img, gaussParam, psm, 0)
-        # results2.append(result)
+        result = gauss_Pruebas(index_img, gaussParam, psm, 0)
+        results2.append(result)
 
     print("BITWISE_NOT ON")
     print_save(results1)
