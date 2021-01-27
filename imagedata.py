@@ -39,8 +39,9 @@ ficheros_iPad = ["iPad-es-battle_girl-3095-N.jpg", "iPad-es-battle_legend-487-N.
 #7-13 mi8-en
 #14-20 i11max-es
 #ficheros = ficheros_mi8 + ficheros_8t + ficheros_i11max + ficheros_iPad
+# ficheros = ficheros_mi8[5:6]
 
-ficheros = ficheros_mi8[5:6]
+ficheros = ficheros_mi8
 print(ficheros)
 
 
@@ -237,12 +238,13 @@ def getNUM_from_freq(len_num_freq_arr, num_freq_arr):
         x = np.array(num_freq_arr[len_num_freq_arr-tam_word+i]).astype(np.int)
         # print(x)
         # print(np.bincount(x).argmax())
-        ret += str(x[np.bincount(x).argmax()])
+        # np.bincount(x).argmax() entero que aparece mas frecuentemente en el vector x
+        ret += str(np.bincount(x).argmax())
     # print(ret)
     return ret
 
 def gauss_Pruebas(sel_img, gaussParam, psm, bitwisebit):
-
+    print(str(carpeta + ficheros[sel_img]))
     save = []
     num_freq_dict = {}
     tmp_max = [0,1,2] # Vector donde se almacenan las cadenas mas frecuentes
@@ -255,7 +257,7 @@ def gauss_Pruebas(sel_img, gaussParam, psm, bitwisebit):
 
     for gauss1 in gaussParam[0]:
         for gauss2 in gaussParam[1]:
-            # print(str(carpeta + ficheros[sel_img]))
+            #print(str(carpeta + ficheros[sel_img]))
             img = cv.imread(str(carpeta + ficheros[sel_img]), 0)
 
             (x, y, w, h) = get_OCRbox_for(device, name=nameocr)
@@ -264,7 +266,7 @@ def gauss_Pruebas(sel_img, gaussParam, psm, bitwisebit):
             if bitwisebit:
                 img = cv.bitwise_not(img)
 
-            img = cv.medianBlur(img, 5)
+            img = cv.medianBlur(img, 3)
             start_time = time()
             img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, gauss1, gauss2)
             # img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_MEAN_C, cv.THRESH_BINARY, gauss1, gauss2)
@@ -303,33 +305,34 @@ def gauss_Pruebas(sel_img, gaussParam, psm, bitwisebit):
                             tmp_max.append(a)
                             arr_cpy.pop(a)
 
-                    #save.append([gauss1, gauss2, psmi, tmp_max, elapsed_time, sel_img])
+                    save.append([gauss1, gauss2, psmi, tmp_max, elapsed_time, sel_img])
 
     print("Number Frequency", str(num_freq_dict))
 
-    # Hallamos la longitud maxima de la cadena
-    len_num_freq_arr = len(max(num_freq_dict.keys(), key=len))
 
-    # num_freq_arr = np.empty(len_num_freq_arr, dtype=object)
-    num_freq_arr = []
+    if(len(num_freq_dict) > 0):
+        # Hallamos la longitud maxima de la cadena
+        len_num_freq_arr = len(max(num_freq_dict.keys(), key=len))
 
-    for i in range(len_num_freq_arr):
-        num_freq_arr.append([])
+        num_freq_arr = []
 
-    for key in num_freq_dict:
-        for num in range(num_freq_dict[key]):
-            for char_index in range(len(key)):
-                index = len_num_freq_arr-len(key)+char_index
-                num_freq_arr[index].append(key[char_index])
-    for arr in num_freq_arr:
-        print("%s, %d" % (str(arr), len(arr)))
+        for i in range(len_num_freq_arr):
+            num_freq_arr.append([])
+
+        for key in num_freq_dict:
+            for num in range(num_freq_dict[key]):
+                for char_index in range(len(key)):
+                    index = len_num_freq_arr-len(key)+char_index
+                    num_freq_arr[index].append(key[char_index])
+        for arr in num_freq_arr:
+            print("%s, %d" % (str(arr), len(arr)))
 
 
-    ret_num_freq = getNUM_from_freq(len_num_freq_arr, num_freq_arr)
-    print(ret_num_freq)
-    # print(tmp_max)
-    # save.append([0, 0, 0, [tmp_max], 0.000, sel_img])
-    save.append([0, 0, 0, [ret_num_freq], 0.000, sel_img])
+        ret_num_freq = getNUM_from_freq(len_num_freq_arr, num_freq_arr)
+        print(ret_num_freq)
+        # print(tmp_max)
+        # save.append([0, 0, 0, [tmp_max], 0.000, sel_img])
+        save.append([0, 0, 0, [ret_num_freq], 0.000, sel_img])
     return save
 
 def print_save(results):
@@ -375,7 +378,7 @@ if __name__ == '__main__':
     # gaussParam = [[3, 5, 7, 9, 11, 13], range(1, 11, 1)]
 
     psm = [11, 12]
-    gaussParam = [[11, 13], [9, 10]]
+    gaussParam = [[11, 13], range(7, 11, 1)]
     # gaussParam = [[11], [6]]
     results1 = []
     results2 = []
@@ -384,8 +387,8 @@ if __name__ == '__main__':
         result = gauss_Pruebas(index_img, gaussParam, psm, 1)
         results1.append(result)
 
-        result = gauss_Pruebas(index_img, gaussParam, psm, 0)
-        results2.append(result)
+        # result = gauss_Pruebas(index_img, gaussParam, psm, 0)
+        # results2.append(result)
 
     print("BITWISE_NOT ON")
     print_save(results1)

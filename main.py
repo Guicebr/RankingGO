@@ -40,6 +40,7 @@ logger = logging.getLogger(__name__)
 dbconn = DBHelper()
 
 REGISTER_VAL, NICK, NICK_VAL = range(3)
+CATEGORY, VAL = range(2)
 
 #DEBUG = 1
 
@@ -134,42 +135,53 @@ def nickval(update, context):
                 # Añadimos usuario a la BD y obtenemos su userdbid
                 print("AddUser DB")
                 userdbid = dbconn.add_user(ocr_user.nick, user.id)
-        except:
-            print("Error desconocido")
+
+            context.user_data["userdbid"] = userdbid
+            txt = 'Nick registrado: ' + str(nickctx)
+            update.message.reply_text(txt)
+
+            # Save data in user context and prepare validation form
+            # El nick ya ha sido registrado,vamos a pedir confirmación del resto de valores
+            # Creamos un diccionario de los datos-OCR y eliminamos el nick porque ya lo tenemos
+            ocr_user = ocr_user.getDict()
+            ocr_user.pop("nick")
+
+            # Creamos un dicionario ordenado de los datos-OCR y un otro diccionario, para almacenar la validez de cada dato
+            context.user_data["ocr_user"] = collections.OrderedDict(ocr_user)
+            context.user_data["ocr_user_valid"] = {k: True for k in context.user_data["ocr_user"]}
+
+            ocr_user = context.user_data["ocr_user"]
+            ocr_user_valid = context.user_data["ocr_user_valid"]
+
+            # Validation by the user of each data obtained through OCR
+            # Creamos un teclado con los diferentes datos que hemos obtenido al hacer OCR
+            txt = 'Verifica los siguientes datos por favor:'
+            print(ocr_user)
+
+            keyboard = getKeyboardRegisterValidation(ocr_user, ocr_user_valid)
+            reply_markup = InlineKeyboardMarkup(keyboard)
+
+            update.message.reply_text(txt, reply_markup=reply_markup)
+
+            return REGISTER_VAL
+
+        except Exception as e:
+            print(e)
         finally:
-            print(userdbid)
             dbconn.close()
 
-    context.user_data["userdbid"] = userdbid
-    txt = 'Nick registrado: '+str(nickctx)
-    update.message.reply_text(txt)
+def getKeyboardRegisterValidation(ocr_user, ocr_user_valid):
 
-    # Save data in user context and prepare validation form
-    ocr_user = ocr_user.getDict()
-    ocr_user.pop("nick")
-    context.user_data["ocr_user"] = collections.OrderedDict(ocr_user)
-    context.user_data["ocr_user_valid"] = {k: True for k in context.user_data["ocr_user"]}
-
-    ocr_user = context.user_data["ocr_user"]
-    ocr_user_valid = context.user_data["ocr_user_valid"]
-
-    #Validation by the user of each data obtained through OCR
-    txt = 'Verifica los siguientes datos por favor:'
-    print(ocr_user)
+    keyboard = []
     for type_rank in ocr_user:
         if ocr_user[type_rank] is not None:
             value = str(type_rank) + ": " + str(ocr_user[type_rank]) + bool_to_icon[int(ocr_user_valid[type_rank])]
             cb_data = list(ocr_user.keys()).index(type_rank)
 
             keyboard.append([InlineKeyboardButton(str(value), callback_data=cb_data)])
-
     keyboard.append([InlineKeyboardButton("Finish", callback_data='finish')])
-    reply_markup = InlineKeyboardMarkup(keyboard)
 
-    update.message.reply_text(txt, reply_markup=reply_markup)
-
-    return REGISTER_VAL
-
+    return keyboard
 
 def register_val(update, context) -> None:
     """Updates the form and stores the data, based on user actions"""
@@ -180,24 +192,18 @@ def register_val(update, context) -> None:
     ocr_user = context.user_data["ocr_user"]
     userbdid = context.user_data["userdbid"]
 
-
-    print(query.message)
+    # print(query.message)
 
     # Check callback type
     callback_type = query.data
     if callback_type.isnumeric():
         # If numeric callback Store data in context and Update form
-        keyboard = query.message.reply_markup['inline_keyboard'].copy()
 
         type_rank = list(ocr_user_valid.keys())[int(callback_type)]
         ocr_user_valid[type_rank] = not ocr_user_valid[type_rank]
+        keyboard = getKeyboardRegisterValidation(ocr_user, ocr_user_valid)
 
         # TODO Traducir i
-        txt = str(type_rank) + ": " + str(ocr_user[type_rank]) + bool_to_icon[int(ocr_user_valid[type_rank])]
-        cb_data = list(ocr_user.keys()).index(type_rank)
-        keyboard[int(callback_type)][0] = InlineKeyboardButton(str(txt), callback_data=cb_data)
-        # print(keyboard[int(data)][0]['text'])
-        # print(str(query))
         query.edit_message_reply_markup(InlineKeyboardMarkup(keyboard))
 
         query.answer(str(type_rank))
@@ -207,6 +213,7 @@ def register_val(update, context) -> None:
             dbconn = DBHelper()
             for type in ocr_user:
                 if ocr_user_valid[type] is True and type != "nick":
+                    print("Type ", str(type))
                     dbconn.add_ranking_data(userbdid, tr_enum[type], ocr_user[type])
             query.answer("Datos guardados")
             query.edit_message_text(text=f"Datos Guardados")
@@ -268,6 +275,24 @@ def cancel(update, context):
 
     return ConversationHandler.END
 
+def manual_up(update,context):
+    """Start the update data proccess, ask user for category"""
+    user = update.message.from_user
+
+    text = ""
+    for i in tr_enum:
+        text = text + i + "\n"
+
+    # logger.info("Inicio Registro: %s\n"
+    #             "ID: %s", user.first_name, user.id)
+    update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
+
+    return CATEGORY
+
+def category_sel(update, context):
+    update.message.reply_text(update.message.text, reply_markup=ReplyKeyboardRemove())
+    return ConversationHandler.END
+
 def main():
     """Start the bot."""
 
@@ -296,7 +321,7 @@ def main():
     # on noncommand i.e message - echo the message on Telegram
     # dp.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
 
-    dp.add_handler(MessageHandler(Filters.photo & ~Filters.command, screenshot_handler))
+    # dp.add_handler(MessageHandler(Filters.photo & ~Filters.command, screenshot_handler))
 
     # Add conversation handler with the states NICK, NICK_VAL, REGISTER_VAL
     conv_handler = ConversationHandler(
@@ -312,6 +337,19 @@ def main():
     )
 
     dp.add_handler(conv_handler)
+
+    manual_up_conv_handler = ConversationHandler(
+        entry_points=[CommandHandler("manual_up", manual_up)],
+
+        states={
+            CATEGORY: [MessageHandler(Filters.text & ~Filters.command, category_sel)]
+            # CATEGORY: [CallbackQueryHandler(register_val)],
+        },
+
+        fallbacks=[CommandHandler("cancel", cancel)]
+    )
+
+    dp.add_handler(manual_up_conv_handler)
 
     # Start the Bot, añadimos allowed_update para poder editar lo mensajes
     updater.start_polling(allowed_updates=[])

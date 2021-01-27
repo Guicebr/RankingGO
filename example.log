@@ -9506,3 +9506,193 @@ ID: 13922907
 
 2020-12-21 12:03:22,141 - Plugins.visionocr - INFO - 38146 cmp 38146 == 100
 
+2021-01-27 13:00:36,776 - apscheduler.scheduler - INFO - Scheduler started
+2021-01-27 13:01:26,328 - __main__ - INFO - Inicio Registro: GuillermoCS
+ID: 13922907
+2021-01-27 13:01:30,551 - __main__ - INFO - Nombre GuillermoCS: Nick Wicisian
+2021-01-27 13:02:03,138 - Plugins.visionocr - INFO - OCR Start - Screenshot Data
+2021-01-27 13:02:03,138 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 270, in screenshot_handler
+    ocr_data = visionocr.ocr_screenshot(photo_file)
+  File "/home/guillermocs/PycharmProjects/RankingGO/Plugins/visionocr.py", line 72, in ocr_screenshot
+    img = cv.imread(filepath, 0)
+SystemError: <built-in function imread> returned NULL without setting an error
+2021-01-27 13:09:46,349 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-01-27 13:09:46,349 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-01-27 13:09:55,781 - apscheduler.scheduler - INFO - Scheduler started
+2021-01-27 13:10:02,988 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-01-27 13:10:02,988 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-01-27 13:10:03,515 - apscheduler.scheduler - INFO - Scheduler started
+2021-01-27 13:10:11,875 - __main__ - INFO - Inicio Registro: GuillermoCS
+ID: 13922907
+2021-01-27 13:10:15,168 - __main__ - INFO - Nombre GuillermoCS: Nick Wicisian
+2021-01-27 13:10:18,738 - Plugins.visionocr - INFO - OCR Start - Screenshot Data
+2021-01-27 13:10:18,738 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 271, in screenshot_handler
+    ocr_data = visionocr.ocr_screenshot(photo_file)
+  File "/home/guillermocs/PycharmProjects/RankingGO/Plugins/visionocr.py", line 72, in ocr_screenshot
+    img = cv.imread(filepath, 0)
+SystemError: <built-in function imread> returned NULL without setting an error
+2021-01-27 13:11:05,664 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-01-27 13:11:05,664 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-01-27 13:11:08,452 - apscheduler.scheduler - INFO - Scheduler started
+2021-01-27 13:11:12,938 - __main__ - INFO - Inicio Registro: GuillermoCS
+ID: 13922907
+2021-01-27 13:11:15,660 - __main__ - INFO - Nombre GuillermoCS: Nick Wicisian
+2021-01-27 13:11:19,763 - Plugins.visionocr - INFO - OCR Start - Screenshot Data
+2021-01-27 13:11:19,763 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 274, in screenshot_handler
+    ocr_data = visionocr.ocr_screenshot(photo_file)
+  File "/home/guillermocs/PycharmProjects/RankingGO/Plugins/visionocr.py", line 72, in ocr_screenshot
+    img = cv.imread(filepath, 0)
+SystemError: <built-in function imread> returned NULL without setting an error
+2021-01-27 13:11:42,100 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-01-27 13:11:42,100 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-01-27 13:11:42,626 - apscheduler.scheduler - INFO - Scheduler started
+2021-01-27 13:11:45,720 - __main__ - INFO - Inicio Registro: GuillermoCS
+ID: 13922907
+2021-01-27 13:11:48,493 - __main__ - INFO - Nombre GuillermoCS: Nick Wicisian
+2021-01-27 13:11:51,094 - Plugins.visionocr - INFO - OCR Start - Screenshot Data
+2021-01-27 13:11:51,094 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 274, in screenshot_handler
+    ocr_data = visionocr.ocr_screenshot(photo_file)
+  File "/home/guillermocs/PycharmProjects/RankingGO/Plugins/visionocr.py", line 72, in ocr_screenshot
+    img = cv.imread(filepath, 0)
+SystemError: <built-in function imread> returned NULL without setting an error
+2021-01-27 13:12:10,026 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-01-27 13:12:10,026 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-01-27 13:12:10,549 - apscheduler.scheduler - INFO - Scheduler started
+2021-01-27 13:13:39,709 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-01-27 13:13:39,709 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-01-27 13:13:40,245 - apscheduler.scheduler - INFO - Scheduler started
+2021-01-27 13:13:43,175 - __main__ - INFO - Inicio Registro: GuillermoCS
+ID: 13922907
+2021-01-27 13:13:45,332 - __main__ - INFO - Nombre GuillermoCS: Nick Wicisian
+2021-01-27 13:13:48,111 - Plugins.visionocr - INFO - OCR Start - Screenshot Data
+2021-01-27 13:13:48,112 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 267, in screenshot_handler
+    ocr_data = visionocr.ocr_screenshot(photo_file)
+  File "/home/guillermocs/PycharmProjects/RankingGO/Plugins/visionocr.py", line 72, in ocr_screenshot
+    img = cv.imread(filepath, 0)
+SystemError: <built-in function imread> returned NULL without setting an error
+2021-01-27 13:16:05,534 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-01-27 13:16:05,534 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-01-27 13:16:06,082 - apscheduler.scheduler - INFO - Scheduler started
+2021-01-27 13:16:27,786 - __main__ - INFO - Inicio Registro: GuillermoCS
+ID: 13922907
+2021-01-27 13:16:30,599 - __main__ - INFO - Nombre GuillermoCS: Nick Wicisian
+2021-01-27 13:16:34,452 - Plugins.visionocr - INFO - OCR Start - Screenshot Data
+2021-01-27 13:16:34,986 - Plugins.visionocr - INFO - OCR End - Screenshot Data
+2021-01-27 13:18:37,995 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-01-27 13:18:37,995 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-01-27 13:18:38,534 - apscheduler.scheduler - INFO - Scheduler started
+2021-01-27 13:19:01,259 - __main__ - INFO - Inicio Registro: GuillermoCS
+ID: 13922907
+2021-01-27 13:19:04,031 - __main__ - INFO - Nombre GuillermoCS: Nick Wicisian
+2021-01-27 13:19:07,820 - Plugins.visionocr - INFO - OCR Start - Register
+2021-01-27 13:19:07,820 - Plugins.visionocr - INFO - Wicisian cmp Wicisian == 100
+
+2021-01-27 13:19:07,820 - Plugins.visionocr - INFO - Nickname Wicisian
+2021-01-27 13:19:07,820 - Plugins.visionocr - INFO - Ocr_Type jogger start.
+2021-01-27 13:19:07,820 - root - INFO - ['Distance', 'walked', 'Distancia', 'caminando', 'km']
+2021-01-27 13:19:07,821 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2021-01-27 13:19:07,821 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2021-01-27 13:19:07,821 - root - INFO - t,b,l (array([60]),) ['Distancia'] [11.] [1.] [1.]
+2021-01-27 13:19:07,822 - root - INFO - t,b,l (array([61]),) ['caminando'] [11. 11.] [1. 1.] [1. 1.]
+2021-01-27 13:19:07,822 - root - INFO - t,b,l (array([63]),) ['km'] [11. 11. 11.] [1. 1. 1.] [1. 1. 1.]
+2021-01-27 13:19:07,823 - Plugins.visionocr - INFO - Salida ['' 'a?' 'Distancia' 'caminando' '12.485,6' 'km']
+2021-01-27 13:19:07,823 - Plugins.visionocr - INFO - Ocr_Type jogger Result OK ['124856'].
+2021-01-27 13:19:07,823 - Plugins.visionocr - INFO - Distance 12485.6
+2021-01-27 13:19:07,823 - Plugins.visionocr - INFO - Ocr_Type collector start.
+2021-01-27 13:19:07,824 - root - INFO - ['Pokémon', 'Caught', 'atrapados']
+2021-01-27 13:19:07,824 - root - INFO - t,b,l (array([65]),) ['Pokémon'] [11.] [2.] [1.]
+2021-01-27 13:19:07,824 - root - INFO - t,b,l (array([], dtype=int64),) [] [11.] [2.] [1.]
+2021-01-27 13:19:07,825 - root - INFO - t,b,l (array([66]),) ['atrapados'] [11. 11.] [2. 2.] [1. 1.]
+2021-01-27 13:19:07,825 - Plugins.visionocr - INFO - Salida ['' 'Pokémon' 'atrapados' '91.760']
+2021-01-27 13:19:07,825 - Plugins.visionocr - INFO - Ocr_Type collector Result OK ['91760'].
+2021-01-27 13:19:07,825 - Plugins.visionocr - INFO - Pokemon 91760
+2021-01-27 13:19:07,825 - Plugins.visionocr - INFO - Ocr_Type backpaker start.
+2021-01-27 13:19:07,825 - root - INFO - ['Pokéstops', 'Pokeparadas', 'visited', 'visitadas', 'Poképaradas']
+2021-01-27 13:19:07,825 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2021-01-27 13:19:07,825 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2021-01-27 13:19:07,825 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2021-01-27 13:19:07,826 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2021-01-27 13:19:07,826 - root - INFO - t,b,l (array([69]),) ['Poképaradas'] [11.] [3.] [1.]
+2021-01-27 13:19:07,826 - Plugins.visionocr - INFO - Salida ['' 'Poképaradas' 'vi:' '78.198']
+2021-01-27 13:19:07,826 - Plugins.visionocr - INFO - Ocr_Type backpaker Result OK ['78198'].
+2021-01-27 13:19:07,826 - Plugins.visionocr - INFO - Pokestops 78198
+2021-01-27 13:19:07,826 - Plugins.visionocr - INFO - Ocr_Type totalxp start.
+2021-01-27 13:19:07,826 - root - INFO - ['XP', 'PX', 'XP:', 'PX:']
+2021-01-27 13:19:07,826 - root - INFO - t,b,l (array([], dtype=int64),) [] [] [] []
+2021-01-27 13:19:07,827 - root - INFO - t,b,l (array([76]),) ['Px'] [11.] [4.] [1.]
+2021-01-27 13:19:07,827 - root - INFO - t,b,l (array([], dtype=int64),) [] [11.] [4.] [1.]
+2021-01-27 13:19:07,827 - root - INFO - t,b,l (array([], dtype=int64),) [] [11.] [4.] [1.]
+2021-01-27 13:19:07,828 - Plugins.visionocr - INFO - Salida ['' '@' 'Total' 'de' 'Px' '79,448,358']
+2021-01-27 13:19:07,828 - Plugins.visionocr - INFO - Ocr_Type totalxp Result OK ['79448358'].
+2021-01-27 13:19:07,828 - Plugins.visionocr - INFO - Experience 79448358
+2021-01-27 13:19:07,828 - Plugins.visionocr - INFO - OCR End - Register User Data {Nick Wicisian, Jogger 12485.6, Collector 91760, Backpaker 78198, TotalXP 79448358 }
+2021-01-27 13:57:04,195 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-01-27 13:57:04,195 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-01-27 14:01:14,110 - apscheduler.scheduler - INFO - Scheduler started
+2021-01-27 14:01:25,773 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/conversationhandler.py", line 487, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 293, in category_sel
+    update.message.reply_text(update.message.from_user, reply_markup=ReplyKeyboardRemove())
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/message.py", line 514, in reply_text
+    return self.bot.send_message(self.chat_id, *args, **kwargs)
+  File "<decorator-gen-2>", line 2, in send_message
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 78, in decorator
+    result = func(*args, **kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 382, in send_message
+    return self._message('sendMessage', data,  # type: ignore[return-value]
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 215, in _message
+    result = self._post(endpoint, data, timeout=timeout, api_kwargs=api_kwargs)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/bot.py", line 184, in _post
+    return self.request.post('{}/{}'.format(self.base_url, endpoint), data=data,
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/utils/request.py", line 326, in post
+    body=json.dumps(data).encode('utf-8'),
+  File "/usr/lib/python3.8/json/__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "/usr/lib/python3.8/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/lib/python3.8/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/usr/lib/python3.8/json/encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type User is not JSON serializable
+2021-01-27 14:02:52,346 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-01-27 14:02:52,346 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-01-27 14:02:52,900 - apscheduler.scheduler - INFO - Scheduler started
+2021-01-27 14:03:27,466 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-01-27 14:03:27,467 - apscheduler.scheduler - INFO - Scheduler has been shut down
