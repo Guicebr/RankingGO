@@ -25,8 +25,10 @@ from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters,
 import logging
 
 from Plugins import visionocr
+from Plugins import translate
+
 from Database.dbhelper import DBHelper
-from Plugins.visionocr import *
+#from Plugins.visionocr import *
 from Modelo.TypeRanking import bool_to_icon
 from Modelo.TypeRanking import typeranking_enum as tr_enum
 from Modelo.UserData import UserData
@@ -39,8 +41,11 @@ logger = logging.getLogger(__name__)
 
 dbconn = DBHelper()
 
+translator = translate.TypeRankTranslator()
+xml_lang_selector = "es"
+
 REGISTER_VAL, NICK, NICK_VAL = range(3)
-CATEGORY, VAL = range(2)
+TRTYPESEL, TYPE_AMOUNT, PHOTO_VAL = range(3)
 
 #DEBUG = 1
 
@@ -48,7 +53,7 @@ CATEGORY, VAL = range(2)
 # context. Error handlers also receive the raised TelegramError object in error.
 def start(update, context):
     """Send a message when the command /start is issued."""
-
+    user = update.message.from_user
     reply_keyboard = [['/registro', '/cancel', '/experience']]
     text = 'Hi! My name is RankingGo Bot. ' \
            'Send /register to register in my database.\n\n' \
@@ -80,7 +85,7 @@ def register(update, context):
     """Start the register proccess, ask user for nick"""
     user = update.message.from_user
 
-    text = 'Send me your nickname in PokemonGO.'
+    text = 'Send me your nitranslatorckname in PokemonGO.'
     logger.info("Inicio Registro: %s\n"
                 "ID: %s", user.first_name, user.id)
     update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
@@ -235,6 +240,7 @@ def register_val(update, context) -> None:
 
 def screenshot_handler(update, context) -> None:
     """ Function comment"""
+    # TODO: Sustituir por authuser()
     userbdid = 0
     user = update.message.from_user
     photo_file = update.message.photo[-1].get_file()
@@ -275,27 +281,101 @@ def cancel(update, context):
 
     return ConversationHandler.END
 
+
+def authuser(context, update):
+    """Return Id User in database"""
+    user = update.message.from_user
+
+    if "userdbid" in context.user_data.keys():
+        return context.user_data["userdbid"]
+    else:
+        try:
+            # Buscar usuario en la BD y conseguir userdbid
+            dbconn = DBHelper()
+            index = dbconn.get_user_tgid(user.id)
+            # print("Len Index", len(index))
+            if len(index) >= 1:
+                context.user_data["userdbid"] = index[0][0]
+                return index[0][0]
+            else:
+                return None
+        except Exception as e:
+            print(e)
+
 def manual_up(update,context):
     """Start the update data proccess, ask user for category"""
     user = update.message.from_user
+    lang = xml_lang_selector
 
-    text = ""
-    for i in tr_enum:
-        text = text + i + "\n"
+    # Verificamos que el usuario este registrado
+    if authuser(context, update) is None:
+        text = "Usuario no registrado, ejecute el comando /registro primero"
+        update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
+        return ConversationHandler.END
 
-    # logger.info("Inicio Registro: %s\n"
-    #             "ID: %s", user.first_name, user.id)
+    text = "Por favor selecciona la categoría: "
+    keyboard = []
+    # TODO Almacenar en un fichero temporal las categorias de la BD
+
+    # for i in tr_enum:
+    #     keyboard.append([str(i)])
+
+    print(translator.xml_translate_dict)
+    print(lang)
+    for name in translator.getlist_TypeRank(lang):
+        keyboard.append([str(name)])
+
+    # logger.info("Inicio Registro: %s\n ID: %s", user.first_name, user.id)
+    update.message.reply_text(text, reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True))
+
+    return TRTYPESEL
+
+def manual_up_trtype(update, context):
+    """Echo and finish Conversation"""
+    context.user_data["tr_type"] = update.message.text
+    text = "Introduce la cantidad, por favor."
     update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
 
-    return CATEGORY
+    return TYPE_AMOUNT
 
-def category_sel(update, context):
-    update.message.reply_text(update.message.text, reply_markup=ReplyKeyboardRemove())
-    return ConversationHandler.END
+def manual_up_typeamount(update, context):
+    """"""
+    context.user_data["amount"] = update.message.text
+
+    text = "Enviame una captura de pantalla, para que pueda validarlo."
+    update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
+
+    return PHOTO_VAL
+
+
+def manual_up_photoval(update, context):
+    tr_type = context.user_data["tr_type"]
+    amount = context.user_data["amount"]
+    userbdid = context.user_data["userdbid"]
+    lang = xml_lang_selector
+
+    photo_file = update.message.photo[-1].get_file()
+    data_valid = visionocr.ocrScreenshot_CheckTyp_Amount(photo_file, tr_type, amount)
+
+    if data_valid:
+        try:
+            # tr_id = tr_enum[tr_type]
+            tr_id = translator.translate_HumantoSEL(lang, "id", tr_type)
+            dbconn.add_ranking_data(userbdid, tr_id, amount)
+            text = "Datos guardados %s %s" % (str(tr_type), str(amount))
+            update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
+            return ConversationHandler.END
+        except Exception as e:
+            print(e)
+            return ConversationHandler.END
+    else:
+        text = "Datos no válidos"
+        update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
+        return ConversationHandler.END
+
 
 def main():
     """Start the bot."""
-
     # Para mandar mensajes a un canal
     # bot.send_message(channel_id, text)
 
@@ -342,7 +422,10 @@ def main():
         entry_points=[CommandHandler("manual_up", manual_up)],
 
         states={
-            CATEGORY: [MessageHandler(Filters.text & ~Filters.command, category_sel)]
+            TRTYPESEL: [MessageHandler(Filters.text & ~Filters.command, manual_up_trtype)],
+            TYPE_AMOUNT: [MessageHandler(Filters.text & ~Filters.command, manual_up_typeamount)],
+            PHOTO_VAL: [MessageHandler(Filters.photo & ~Filters.command, manual_up_photoval)]
+
             # CATEGORY: [CallbackQueryHandler(register_val)],
         },
 
