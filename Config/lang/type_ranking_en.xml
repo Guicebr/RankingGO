@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<typeranks>
+    <typerank>
+        <id>1</id>
+        <name>totalxp</name>
+        <description>Total Experience</description>
+        <text>Total XP</text>
+    </typerank>
+    <typerank>
+        <id>2</id>
+        <name>collector</name>
+        <description>Pokémon Caught</description>
+        <text>Collector</text>
+    </typerank>
+    <typerank>
+        <id>3</id>
+        <name>jogger</name>
+        <description>Distance Walked</description>
+        <text>Jogger</text>
+    </typerank>
+    <typerank>
+        <id>4</id>
+        <name>backpacker</name>
+        <description>PokéStops Visited</description>
+        <text>Backpacker</text>
+    </typerank>
+    <typerank>
+        <id>5</id>
+        <name>breeder</name>
+        <description>Eggs Hatched</description>
+        <text>Breeder</text>
+    </typerank>
+
+</typeranks>
