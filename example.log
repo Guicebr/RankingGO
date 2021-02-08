@@ -9696,3 +9696,234 @@ TypeError: Object of type User is not JSON serializable
 2021-01-27 14:02:52,900 - apscheduler.scheduler - INFO - Scheduler started
 2021-01-27 14:03:27,466 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
 2021-01-27 14:03:27,467 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-01-28 12:54:52,353 - apscheduler.scheduler - INFO - Scheduler started
+2021-01-28 13:33:53,685 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-01-28 13:33:53,685 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-08 10:00:51,197 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-08 10:01:15,159 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-08 10:01:15,159 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-08 11:56:53,825 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-08 11:57:09,648 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/conversationhandler.py", line 487, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 310, in manual_up
+    lang = context.user_data["lang"]
+KeyError: 'lang'
+2021-02-08 11:57:14,258 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/conversationhandler.py", line 487, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 310, in manual_up
+    lang = context.user_data["lang"]
+KeyError: 'lang'
+2021-02-08 11:57:58,866 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/conversationhandler.py", line 487, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 313, in manual_up
+    if authuser(context, update) is None:
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 291, in authuser
+    if context.user_data["userdbid"] is not None:
+KeyError: 'userdbid'
+2021-02-08 11:58:26,168 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-08 11:58:26,168 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-08 11:58:28,883 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-08 11:58:44,568 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/conversationhandler.py", line 487, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 313, in manual_up
+    if authuser(context, update) is None:
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 291, in authuser
+    if context.user_data["userdbid"] is not None:
+KeyError: 'userdbid'
+2021-02-08 12:00:05,058 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-08 12:00:05,058 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-08 12:00:06,668 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-08 12:00:11,573 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/conversationhandler.py", line 487, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 311, in manual_up
+    lang = context.user_data["lang"]
+KeyError: 'lang'
+2021-02-08 12:01:47,087 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-08 12:01:47,087 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-08 12:01:52,994 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-08 12:01:54,806 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-08 12:01:58,738 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/conversationhandler.py", line 487, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 314, in manual_up
+    lang = context.user_data["lang"]
+KeyError: 'lang'
+2021-02-08 12:03:41,528 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-08 12:03:41,528 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-08 12:03:43,957 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-08 12:03:45,685 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-08 12:03:45,686 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-08 12:03:55,741 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-08 12:04:16,664 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/conversationhandler.py", line 487, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 329, in manual_up
+    for name in translator.getlist_TypeRank(lang):
+AttributeError: 'NoneType' object has no attribute 'getlist_TypeRank'
+2021-02-08 12:05:04,677 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-08 12:05:04,677 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-08 12:05:06,174 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-08 12:05:15,377 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/conversationhandler.py", line 487, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 314, in manual_up
+    lang = context.user_data["lang"]
+KeyError: 'lang'
+2021-02-08 12:05:21,512 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/conversationhandler.py", line 487, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 330, in manual_up
+    for name in translator.getlist_TypeRank(lang):
+AttributeError: 'NoneType' object has no attribute 'getlist_TypeRank'
+2021-02-08 12:05:46,191 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-08 12:05:46,191 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-08 12:05:51,150 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-08 12:05:54,497 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/conversationhandler.py", line 487, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 314, in manual_up
+    lang = context.user_data["lang"]
+KeyError: 'lang'
+2021-02-08 12:07:17,768 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-08 12:07:17,768 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-08 12:07:19,234 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-08 12:07:22,267 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/conversationhandler.py", line 487, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 324, in manual_up
+    for name in translator.getlist_TypeRank(lang):
+AttributeError: 'NoneType' object has no attribute 'getlist_TypeRank'
+2021-02-08 12:08:24,163 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-08 12:08:24,164 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-08 12:08:25,685 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-08 12:08:28,387 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/conversationhandler.py", line 487, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 324, in manual_up
+    for name in translator.getlist_TypeRank(lang):
+AttributeError: 'NoneType' object has no attribute 'getlist_TypeRank'
+2021-02-08 12:11:13,900 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-08 12:11:13,900 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-08 12:11:15,413 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-08 12:11:21,320 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/conversationhandler.py", line 487, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 323, in manual_up
+    print(translator.xml_translate_dict)
+AttributeError: 'NoneType' object has no attribute 'xml_translate_dict'
+2021-02-08 12:11:57,429 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-08 12:11:57,429 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-08 12:11:58,917 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-08 12:13:12,012 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-08 12:13:12,012 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-08 12:13:13,434 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-08 12:13:21,385 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/conversationhandler.py", line 487, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 325, in manual_up
+    for name in translator.getlist_TypeRank(lang):
+  File "/home/guillermocs/PycharmProjects/RankingGO/Plugins/translate.py", line 79, in getlist_TypeRank
+    for id, name in self.xml_translate_dict[lang]["id"]:
+ValueError: not enough values to unpack (expected 2, got 1)
+2021-02-08 12:14:08,858 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-08 12:14:08,859 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-08 12:14:10,335 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-08 12:14:36,642 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-08 12:14:36,642 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-08 12:14:38,245 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-08 12:14:56,461 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-08 12:14:56,461 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-08 12:14:58,634 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-08 12:15:13,817 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-08 12:15:13,817 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-08 12:15:15,279 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-08 12:18:05,645 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-08 12:18:05,645 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-08 12:18:07,248 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-08 12:22:23,228 - Plugins.visionocr - INFO - OCR Screenshot - Check Type Amount
+2021-02-08 12:23:30,409 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-08 12:23:30,410 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-08 12:23:31,892 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-08 12:23:52,810 - Plugins.visionocr - INFO - OCR Screenshot - Check Type Amount
+2021-02-08 12:28:37,454 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-08 12:28:37,455 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-08 12:28:39,046 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-08 12:29:28,129 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-08 12:29:28,129 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-08 12:29:29,675 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-08 12:29:44,413 - Plugins.visionocr - INFO - OCR Screenshot - Check Type Amount
