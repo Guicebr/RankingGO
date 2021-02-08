@@ -20,6 +20,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 RATIO_NICK = 80
+RATIO_CHECK = 80
 
 def ocr_register(photo_file, nick):
 
@@ -159,6 +160,39 @@ def ocrRegister_Nick(nick, ocr_data):
     logger.info("Nickname %s", nickname)
     return nickname
 
+def ocrScreenshot_CheckTyp_Amount(photo_file, tr_type, amount):
+
+    filepath = os.path.expanduser('~') + '/' + str(photo_file.file_id)
+    # print(filepath)
+    photo_file.download(filepath)
+
+    # TODO: Import Image Data algorithm OCR tr_type and OCR amount
+    img = cv.imread(filepath, 0)
+
+    img = cv.medianBlur(img, 3)
+    img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 11, 3)
+    img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+    ocr_data = pytesseract.image_to_data(img, output_type=Output.DICT, config="--psm 11")
+
+    logger.info("OCR Screenshot - Check Type Amount")
+    np_text = np.array(ocr_data['text'])
+    print(np_text)
+
+    if tr_type is not None or amount is not None:
+        return False
+    else:
+        rank_valid = arraycmp_string(np_text, str(tr_type), RATIO_CHECK)
+        amount_valid = arraycmp_string(np_text, str(amount), RATIO_CHECK)
+        if rank_valid:
+            if amount_valid:
+                logger.info("TypeRanking %s Amount %s" % (str(tr_type), str(amount)))
+                return True
+            else:
+                logger.info("No se pudo encontrar la cantidad")
+                return False
+        else:
+            logger.info("No se pudo encontrar el tipo de ranking",)
+            return False
 
 def ocr_type(ocr_data, type):
     logger.info("Ocr_Type %s start.", type)
