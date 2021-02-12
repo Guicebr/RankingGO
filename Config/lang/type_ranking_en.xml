@@ -4,7 +4,7 @@
         <id>1</id>
         <name>totalxp</name>
         <description>Total Experience</description>
-        <text>Total XP</text>
+        <text>Totalxp</text>
     </typerank>
     <typerank>
         <id>2</id>
@@ -30,5 +30,148 @@
         <description>Eggs Hatched</description>
         <text>Breeder</text>
     </typerank>
-
+    <typerank>
+        <id>6</id>
+        <name>battlegirl</name>
+        <description>Gym Battles Won</description>
+        <text>Battlegirl</text>
+    </typerank>
+    <typerank>
+        <id>7</id>
+        <name>gymleader</name>
+        <description>Gym Defenders Hours</description>
+        <text>Gymleader</text>
+    </typerank>
+    <typerank>
+        <id>8</id>
+        <name>pokemon_ranger</name>
+        <description>Field Research Task Completed</description>
+        <text>Pokemon Ranger </text>
+    </typerank>
+    <typerank>
+        <id>9</id>
+        <name>scientist</name>
+        <description>Pokémon Evolved</description>
+        <text>Scientist</text>
+    </typerank>
+    <typerank>
+        <id>10</id>
+        <name>fisher</name>
+        <description>Big Magikarp Caught</description>
+        <text>Fisher</text>
+    </typerank>
+    <typerank>
+        <id>11</id>
+        <name>youngster</name>
+        <description>Tiny Ratata Caught</description>
+        <text>Youngster</text>
+    </typerank>
+    <typerank>
+        <id>12</id>
+        <name>pikachu_fan</name>
+        <description>Pikachu Caught</description>
+        <text>Pikachu Fan </text>
+    </typerank>
+    <typerank>
+        <id>13</id>
+        <name>berry_master</name>
+        <description>Berries at Gyms</description>
+        <text>Berry Master </text>
+    </typerank>
+    <typerank>
+        <id>14</id>
+        <name>idol</name>
+        <description>Best Friends</description>
+        <text>Idol</text>
+    </typerank>
+    <typerank>
+        <id>15</id>
+        <name>gentleman</name>
+        <description>Pokémon Traded</description>
+        <text>Gentleman</text>
+    </typerank>
+    <typerank>
+        <id>16</id>
+        <name>ace_trainer</name>
+        <description>Trains</description>
+        <text>Ace Trainer </text>
+    </typerank>
+    <typerank>
+        <id>17</id>
+        <name>champion</name>
+        <description>Raids Won</description>
+        <text>Champion</text>
+    </typerank>
+    <typerank>
+        <id>18</id>
+        <name>battle_legend</name>
+        <description>Legendary Raids Won</description>
+        <text>Battle Legend </text>
+    </typerank>
+    <typerank>
+        <id>19</id>
+        <name>pilot</name>
+        <description>Distance of all Pokémon Trades</description>
+        <text>Pilot</text>
+    </typerank>
+    <typerank>
+        <id>20</id>
+        <name>great_league_veteran</name>
+        <description>Great League Battles Won</description>
+        <text>Great League Veteran </text>
+    </typerank>
+    <typerank>
+        <id>21</id>
+        <name>master_league_veteran</name>
+        <description>Master League Battles Won</description>
+        <text>Master League Veteran </text>
+    </typerank>
+    <typerank>
+        <id>22</id>
+        <name>cameraman</name>
+        <description>Surprise Encounters Snapshot</description>
+        <text>Cameraman</text>
+    </typerank>
+    <typerank>
+        <id>23</id>
+        <name>purifier</name>
+        <description>Shadow Pokémon Purified</description>
+        <text>Purifier</text>
+    </typerank>
+    <typerank>
+        <id>24</id>
+        <name>hero</name>
+        <description>Team GO Rocket Members Defeated</description>
+        <text>Hero</text>
+    </typerank>
+    <typerank>
+        <id>25</id>
+        <name>ultra_hero</name>
+        <description>Team GO Rocket Boss Defeated</description>
+        <text>Ultra Hero </text>
+    </typerank>
+    <typerank>
+        <id>26</id>
+        <name>ultra_league_veteran</name>
+        <description>Ultra League Battles Won</description>
+        <text>Ultra League Veteran </text>
+    </typerank>
+    <typerank>
+        <id>27</id>
+        <name>best_buddy</name>
+        <description>Best Buddies</description>
+        <text>Best Buddy </text>
+    </typerank>
+    <typerank>
+        <id>28</id>
+        <name>wayfarer</name>
+        <description>Wayfarer Agreements</description>
+        <text>Wayfarer</text>
+    </typerank>
+    <typerank>
+        <id>29</id>
+        <name>successor</name>
+        <description>Mega Evolved Pokémon</description>
+        <text>Successor</text>
+    </typerank>
 </typeranks>
