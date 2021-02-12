@@ -20,8 +20,7 @@ carpeta = '/home/guillermocs/PycharmProjects/RankingGO/Imagenes/'
 
 sel_img =0
 
-#ficheros_nick = ['mi8-es-nick.jpg', '8t-en-nick.jpg', 'mi8t-es-nick.jpg', 'i11max-es-nick.jpg']
-#nick = ["Wicisian", "S1ckwhale", "S1ckwhale", "PabloLuis94"]
+ficheros_nick = ['mi8-es-nick-Wicisian-N.jpg', 'mi8t-es-nick-S1ckwhale-N.jpg', 'i11max-es-nick-PabloLuis94-N.jpg']
 
 #0-6 mi8-es
 ficheros_mi8 = ["mi8-es-battle_girl-38146-Y.jpg", "mi8-es-battle_legend-942-N.jpg", "mi8-es-champion-553-N.jpg",
@@ -41,7 +40,7 @@ ficheros_iPad = ["iPad-es-battle_girl-3095-N.jpg", "iPad-es-battle_legend-487-N.
 #ficheros = ficheros_mi8 + ficheros_8t + ficheros_i11max + ficheros_iPad
 # ficheros = ficheros_mi8[5:6]
 
-ficheros = ficheros_mi8
+ficheros = ficheros_nick[0:1]
 print(ficheros)
 
 
@@ -123,69 +122,12 @@ def ocr_num_psm(psmi, crop_img, value):
     length_checker = np.vectorize(len)
 
     # Apply len_checker np_text and compare with nicktam to obtain an array.
-    # This array have all words with the same length as nicktam
-
-
-    """if visionocr.arraycmp_string(z[x], value[2], ratioval):
-            print(config)
-            print(str(z[x]))"""
-
-    #if len(z[x]) >= 3:
-    #   if z[x][0] == value[0] and z[x][1] == value[1] and z[x][2] == value[2]:
-    #       print(config)
-    #       print(str(z[x]))
-    #print(str(z[x]), value)
-
-    # if len(z[x]):
-    #     #print(cmp_vec_i(z[x], value, len(value)))
-    #     if visionocr.arraycmp_string(z[x], str(value), ratioval):
-    #         print(config)
-    #         print(str(z[x]))
-    #
-    #         return z[x]
-    #     else:
-    #         return None
 
     if len(z[x]):
         y = z[x][np.where(length_checker(z[x]) > 0)]
-
-        # print("length_checker(z[x])", length_checker(z[x]))
-        # print("np.where(length_checker(z[x]) > 1)", np.where(length_checker(z[x]) > 1))
-        # print("y %s, psmi %s" % (str(y), str(psmi)))
         return y
     else:
         return None
-
-
-def image_to_rectangle(filepath, gauss1, gauss2, psmi):
-
-    img = cv.imread(filepath, 0)
-
-    # (x, y, w, h) = (400, 670, 275, 390)
-    # img = img[y:y + h, x:x + w]
-
-    img = cv.bitwise_not(img)
-    img = cv.medianBlur(img, 3)
-    img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, gauss1, gauss2)
-    # img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_MEAN_C, cv.THRESH_BINARY, 11, 2)
-    img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
-
-    config = "--psm " + str(psmi)
-
-    d = pytesseract.image_to_data(img, output_type=Output.DICT, config=config)
-    n_boxes = len(d['level'])
-    n_text = len(d['text'])
-    for box in range(n_boxes):
-        (x, y, w, h) = (d['left'][box], d['top'][box], d['width'][box], d['height'][box])
-        c = cv.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 1)
-        print("%10s %4s %4s %4s %4s" % (d['text'][box], x, y, w, h))
-    #print_ocr_dict(d)
-
-    # (x, y, w, h) = (400, 900, 280, 200)
-    # crop_img = img[y:y + h, x:x + w]
-
-    cv.imshow('img', cv.resize(img, (480,720)))
-    cv.waitKey(0)
 
 def get_OCRbox_for(device, name):
 
@@ -345,65 +287,130 @@ def print_save(results):
         #print("Resultados Obtenidos %d" % (len(result)))
 
 
-if __name__ == '__main__':
+def trasform_image(filepath, bitwise, blur, threshold_type, tparam1, tparam2, showimg):
+    # config = {"bitwise": False, "blur": 3, "threshold_type": 0,
+    #           "tparam1": 7, "tparam2": 7, "showimg": 0}
 
-    img = cv.imread(str(carpeta + ficheros[sel_img]), 0)
-
-    img = cv.bitwise_not(img)
-    img = cv.medianBlur(img, 3)
-
-    # [[3,5,7,9,11,13],[1,2,3]]
-    img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 11, 2)
-    #img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_MEAN_C, cv.THRESH_BINARY, 11, 2)
+    img = cv.imread(filepath, 0)
+    if bitwise:
+        img = cv.bitwise_not(img)
+    img = cv.medianBlur(img, blur)
+    if threshold_type == 0:
+        print("threshold_type %s" % ("ADAPTIVE_THRESH_GAUSSIAN_C"))
+        img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY,
+                                   tparam1, tparam2)
+    else:
+        print("threshold_type %s" % ("ADAPTIVE_THRESH_MEAN_C"))
+        img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_MEAN_C, cv.THRESH_BINARY,
+                                   tparam1, tparam2)
 
     img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+    cv.imwrite("out2.tiff", img)
+    img = cv.imread("out2.tiff", 0)
 
+    if showimg:
+        cv.imshow('img', cv.resize(img, (480, 720)))
+        cv.waitKey(0)
+
+    return img
+
+
+def image_to_rectangle(filepath, bitwise, blur, threshold_type, tparam1, tparam2, psmi, extrapsmi):
+
+    aux = "--psm %s %s" % (str(psmi), str(extrapsmi))
+    config = {"psm": aux}
+
+    # crop-img
+    # (x, y, w, h) = (400, 670, 275, 390)
+    # img = img[y:y + h, x:x + w]
+
+    img = trasform_image(filepath, bitwise, blur, threshold_type, tparam1, tparam2, showimg=0)
+
+    d = pytesseract.image_to_data(img, output_type=Output.DICT, config=config["psm"])
+    n_boxes = len(d['level'])
+    n_text = len(d['text'])
+    for box in range(n_boxes):
+        (x, y, w, h) = (d['left'][box], d['top'][box], d['width'][box], d['height'][box])
+        c = cv.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 1)
+        print("%10s %4s %4s %4s %4s" % (d['text'][box], x, y, w, h))
+    #print_ocr_dict(d)
+
+    # (x, y, w, h) = (400, 900, 280, 200)
+    # crop_img = img[y:y + h, x:x + w]
+
+    cv.imshow('img', cv.resize(img, (480, 720)))
+    cv.waitKey(0)
+
+def main():
+    if False:
+        img = cv.imread(str(carpeta + ficheros[sel_img]), 0)
+
+        img = cv.bitwise_not(img)
+        img = cv.medianBlur(img, 3)
+
+        # [[3,5,7,9,11,13],[1,2,3]]
+        img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 11, 2)
+        # img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_MEAN_C, cv.THRESH_BINARY, 11, 2)
+
+        img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+        cv.imwrite("out2.tiff", img)
+        img = cv.imread("out2.tiff", 0)
 
     #print(str(carpeta + ficheros[sel_img]))
     #visionocr.ocr_register(str(carpeta + ficheros[sel_img]), nick[sel_img])
 
     #visionocr.ocr_screenshot(str(carpeta + ficheros[sel_img]))
 
-    d = pytesseract.image_to_data(img, output_type=Output.DICT, config="--psm 3")
+    # d = pytesseract.image_to_data(img, output_type=Output.DICT, config="--psm 3")
+
+    if False:
+
+        (x, y, w, h) = (400, 900, 280, 200)
+        # (x, y, w, h) = (460, 965, 160, 50)
+        crop_img = img[y:y + h, x:x + w]
+        # crop_img = img
+
+        # psm = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+        # gaussParam = [[3, 5, 7, 9, 11, 13], range(1, 11, 1)]
+
+        psm = [11, 12]
+        gaussParam = [[11, 13], range(7, 11, 1)]
+        # gaussParam = [[11], [6]]
+        results1 = []
+        results2 = []
+
+        for index_img in range(len(ficheros)):
+            print(index_img)
+            result = gauss_Pruebas(index_img, gaussParam, psm, 1)
+            results1.append(result)
+
+            # result = gauss_Pruebas(index_img, gaussParam, psm, 0)
+            # results2.append(result)
+
+        print("BITWISE_NOT ON")
+        print_save(results1)
+        print("BITWISE_NOT OFF")
+        print_save(results2)
+
+
+        # print(str(visionocr.ocr_pattern(img, datapattern["totalxp"])))
+
+        # (x, y, w, h) = (d['left'][i]-10, d['top'][i]-10, d['width'][i]+20, d['height'][i]+20)
+
+        print(str(ficheros[sel_img]))
+        # (filepath, bitwise, blur, threshold_type, tparam1, tparam2, psmi, extrapsmi)
+        image_to_rectangle(str(carpeta + ficheros[sel_img]), False, 3, 0, 7, 7, 11, "")
+
+        # custom_config = r'--oem 3 --psm 6 outputbase digits'
+        # print(pytesseract.image_to_string(img, config=custom_config))
+
+
+if True:
+    print(str(ficheros[sel_img]))
+    exp = visionocr.ocr_Experience2(str(carpeta + ficheros[sel_img]))
+    print("visionocr.ocr_Experience = %s" % (exp))
 
 
 
-
-    (x, y, w, h) = (400, 900, 280, 200)
-    #(x, y, w, h) = (460, 965, 160, 50)
-    crop_img = img[y:y + h, x:x + w]
-    #crop_img = img
-
-    # psm = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-    # gaussParam = [[3, 5, 7, 9, 11, 13], range(1, 11, 1)]
-
-    psm = [11, 12]
-    gaussParam = [[11, 13], range(7, 11, 1)]
-    # gaussParam = [[11], [6]]
-    results1 = []
-    results2 = []
-    for index_img in range(len(ficheros)):
-        print(index_img)
-        result = gauss_Pruebas(index_img, gaussParam, psm, 1)
-        results1.append(result)
-
-        # result = gauss_Pruebas(index_img, gaussParam, psm, 0)
-        # results2.append(result)
-
-    print("BITWISE_NOT ON")
-    print_save(results1)
-    print("BITWISE_NOT OFF")
-    print_save(results2)
-
-    #print(str(visionocr.ocr_pattern(img, datapattern["totalxp"])))
-
-    #(x, y, w, h) = (d['left'][i]-10, d['top'][i]-10, d['width'][i]+20, d['height'][i]+20)
-
-    # #sel_img = 8
-    # #print(str(ficheros[sel_img]))
-    # image_to_rectangle(str(carpeta + ficheros[sel_img]), 7, 7, 11)
-
-# custom_config = r'--oem 3 --psm 6 outputbase digits'
-# print(pytesseract.image_to_string(img, config=custom_config))
-
-
+if __name__ == '__main__':
+    main()

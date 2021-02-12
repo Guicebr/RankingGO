@@ -64,7 +64,7 @@ class TypeRankTranslator:
                 for typerank_i in list_typerank:
                     dict_typerank_i[typerank_i.tag] = typerank_i.text
                     #print("%s=%s" % (typerank_i.tag, typerank_i.text))
-                print(dict_typerank_i)
+                # print(dict_typerank_i)
 
                 # Almacenamos en nuestro diccionario final las ids y los trs
                 dict_lang_i["id"][dict_typerank_i["id"]] = dict_typerank_i["text"]
@@ -75,11 +75,11 @@ class TypeRankTranslator:
     def translate_HumantoSEL(self, lang, type_selector, type_rank):
         "Devuelve el id o el tipo_ranking del nombre pasado como parametro(type_rank)"
 
-        retsel = ""
         seldict = self.xml_translate_dict[lang][type_selector]
+        print(seldict)
         for key, value in seldict.items():
             if value == type_rank:
-                return retsel
+                return key
 
     def getlist_TypeRank(self, lang):
         """Devuelve una lista de todas las categorías disponibles, para el idioma pasado"""
