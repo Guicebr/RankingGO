@@ -24,7 +24,7 @@ from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters,
 import logging
 
 from Plugins import visionocr
-from Modelo import translate
+from Modelo import TypeRankTranslator
 from Plugins import common_func as c_func
 
 from Database.dbhelper import DBHelper
@@ -40,7 +40,7 @@ logger = logging.getLogger(__name__)
 
 dbconn = DBHelper()
 
-translator = translate.TypeRankTranslator()
+translator = TypeRankTranslator.TypeRankTranslator()
 xml_lang_selector = "es"
 
 REGISTER_VAL, NICK, NICK_VAL = range(3)

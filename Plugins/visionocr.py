@@ -5,6 +5,7 @@ import re
 import cv2 as cv
 from time import time
 
+from Modelo import TypeRankTranslator
 from Plugins import common_func as c_func
 from Modelo.TypeRanking import typeranking as tr
 from Modelo.TypeRanking import datapattern as data_p
@@ -22,7 +23,7 @@ logger = logging.getLogger(__name__)
 
 RATIO_NICK = 80
 RATIO_CHECK = 80
-RATIO_AMOUNT = 80
+RATIO_AMOUNT = 90
 
 
 def trasform_image(filepath, bitwise, blur, threshold_type, tparam1, tparam2, showimg):
@@ -105,7 +106,7 @@ def ocr_register(photo_file, nick):
     return user
 
 
-def ocrRegister_Nick(filepath, nick):
+def ocrRegister_Nick (filepath, nick):
     """Recibe la direccion a una imagen que se usa para validar el nick y
     devuelve el nick si se puede encontrar en la imagen, sino devuelve None"""
 
@@ -135,7 +136,7 @@ def ocr_Experience(filepath):
     config = {"bitwise": False, "blur": 3, "threshold_type": 0,
               "tparam1": 7, "tparam2": 7, "psm": aux, "showimg": 0}
 
-    img = trasform_image(filepath, bitwise=config["bitwise"], blur=config["blur"], threshold_type=config["blur"],
+    img = trasform_image(filepath, bitwise=config["bitwise"], blur=config["blur"], threshold_type=config["threshold_type"],
                          tparam1=config["tparam1"], tparam2=config["tparam2"], showimg=config["showimg"])
 
     ocr_data = pytesseract.image_to_data(img, output_type=Output.DICT, config=config["psm"])
@@ -165,7 +166,7 @@ def ocr_Experience2(filepath):
     config = {"bitwise": False, "blur": 3, "threshold_type": 0,
               "tparam1": 7, "tparam2": 7, "psm": aux, "showimg": 0}
 
-    img = trasform_image(filepath, bitwise=config["bitwise"], blur=config["blur"], threshold_type=config["blur"],
+    img = trasform_image(filepath, bitwise=config["bitwise"], blur=config["blur"], threshold_type=config["threshold_type"],
                          tparam1=config["tparam1"], tparam2=config["tparam2"], showimg=config["showimg"])
 
     ocr_data = pytesseract.image_to_data(img, output_type=Output.DICT, config=config["psm"])
@@ -271,6 +272,9 @@ def ocrScreenshot_CheckTyp_Amount(photo_file, tr_type, amount):
     # print(filepath)
     photo_file.download(filepath)
 
+    translator = TypeRankTranslator.TypeRankTranslator()
+    xml_lang_selector = "es"
+
     # TODO: Import Image Data algorithm OCR tr_type and OCR amount
     # img = cv.imread(filepath, 0)
     #
@@ -286,12 +290,18 @@ def ocrScreenshot_CheckTyp_Amount(photo_file, tr_type, amount):
     # print(np_text)
 
     if tr_type is None or amount is None:
-        print("uno de los datos esta vacio")
+        print("Uno de los datos esta vacio")
         return False
     else:
         rank_valid = ocrScreenshot_Type(filepath, tr_type)
-        amount_valid = ocrScreenshot_Amount(filepath, amount)
         if rank_valid:
+            # TODO: Si Tr_type = EXP:amount_valid = ocrExp, Else amount_valid = ocrAmount
+            tr_cat = translator.translate_HumantoSEL(xml_lang_selector, "tr", tr_type)
+            print("tr_cat %s" % tr_cat)
+            if tr_cat == "totalxp":
+                amount_valid = ocrScreenshot_Amount(filepath, amount)
+            else:
+                amount_valid = ocrScreenshot_Amount_EXP(filepath, amount)
             if amount_valid:
                 logger.info("TypeRanking %s Amount %s" % (str(tr_type), str(amount)))
                 return True
@@ -304,17 +314,17 @@ def ocrScreenshot_CheckTyp_Amount(photo_file, tr_type, amount):
 
 
 def ocrScreenshot_Type(filepath, tr_type):
-    config = {"bitwise": True, "blur": 3, "threshold_type": 0,
-              "tparam1": 11, "tparam2": 3, "showimg": 0, "psm": "--psm 11"}
+    config = {"bitwise": False, "blur": 3, "threshold_type": 0,
+              "tparam1": 11, "tparam2": 3, "showimg": 0, "psm": "--psm 3"}
 
-    img = trasform_image(filepath, bitwise=config["bitwise"], blur=config["blur"], threshold_type=config["blur"],
+    img = trasform_image(filepath, bitwise=config["bitwise"], blur=config["blur"], threshold_type=config["threshold_type"],
                          tparam1=config["tparam1"], tparam2=config["tparam2"], showimg=config["showimg"])
 
     ocr_data = pytesseract.image_to_data(img, output_type=Output.DICT, config=config["psm"])
 
     logger.info("OCR Screenshot - Check Type")
     np_text = np.array(ocr_data['text'])
-
+    print(str(np_text))
     return arraycmp_string(np_text, str(tr_type), RATIO_CHECK)
 
 
@@ -322,9 +332,15 @@ def ocrScreenshot_Amount(filepath, amount):
     psm = [11, 12]
     gaussParam = [[11, 13], range(7, 11, 1)]
     arrnums = ocrScreenshot_NumberFreq(filepath, gaussParam, psm)
-    print(arrnums)
+    # print(arrnums)
     return arraycmp_string(list(arrnums), amount, RATIO_AMOUNT)
 
+def ocrScreenshot_Amount_EXP(filepath, amount):
+    psm = [11, 12]
+    gaussParam = [[11, 13], range(7, 11, 1)]
+    arrnums = ocrScreenshot_NumberFreq(filepath, gaussParam, psm)
+    print(arrnums)
+    return arraycmp_string(list(arrnums), amount, RATIO_AMOUNT)
 
 def ocr_type(ocr_data, type):
     logger.info("Ocr_Type %s start.", type)
@@ -421,7 +437,7 @@ def arraycmp_string(arr, s, ratioval):
     """Compare a word with each string in array, if both are similar greater than RATIO_NICK ret TRUE"""
     for i in range(len(arr)):
         ratio = fuzz.ratio(arr[i], s)
-
+        # print("%s cmp %s == %s\n"% (arr[i], s, ratio))
         if ratio >= ratioval:
             logger.info("%s cmp %s == %s\n", arr[i], s, ratio)
             return True
@@ -463,7 +479,7 @@ def ocrScreenshot_NumberFreq(filepath, gaussParam, psm):
         for gauss2 in gaussParam[1]:
 
             img = trasform_image(filepath, bitwise=config["bitwise"], blur=config["blur"],
-                                 threshold_type=config["blur"],
+                                 threshold_type=config["threshold_type"],
                                  tparam1=gauss1, tparam2=gauss2, showimg=config["showimg"])
 
             for psmi in psm:

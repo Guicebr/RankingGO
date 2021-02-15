@@ -10347,3 +10347,97 @@ ID: 13922907
 2021-02-12 12:37:53,463 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
 2021-02-12 12:37:53,463 - apscheduler.scheduler - INFO - Scheduler has been shut down
 2021-02-12 12:37:54,005 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-12 13:09:53,262 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-12 13:09:53,263 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-12 13:09:55,139 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-12 13:11:13,411 - Plugins.visionocr - INFO - OCR Screenshot - Check Type
+2021-02-12 13:11:16,843 - Plugins.visionocr - INFO - 26384 cmp 126384 == 91
+
+2021-02-12 13:11:16,844 - Plugins.visionocr - INFO - No se pudo encontrar el tipo de ranking
+2021-02-12 13:14:14,053 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-12 13:14:14,053 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-12 13:14:14,580 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-12 13:14:33,266 - Plugins.visionocr - INFO - OCR Screenshot - Check Type
+2021-02-12 13:14:36,651 - Plugins.visionocr - INFO - 26384 cmp 126384 == 91
+
+2021-02-12 13:14:36,651 - Plugins.visionocr - INFO - No se pudo encontrar el tipo de ranking
+2021-02-12 13:16:16,642 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-12 13:16:16,642 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-12 13:16:39,429 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-12 13:17:23,856 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-12 13:17:23,856 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-12 13:17:24,383 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-12 13:17:44,020 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-12 13:17:44,021 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-12 13:17:44,562 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-12 13:18:35,542 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-12 13:18:35,542 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-12 13:18:36,074 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-12 13:18:49,406 - Plugins.visionocr - INFO - OCR Screenshot - Check Type
+2021-02-12 13:18:52,801 - Plugins.visionocr - INFO - 26384 cmp 126384 == 91
+
+2021-02-12 13:18:52,801 - Plugins.visionocr - INFO - No se pudo encontrar el tipo de ranking
+2021-02-12 13:22:05,079 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-12 13:22:05,079 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-12 13:22:05,591 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-12 13:22:50,020 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-12 13:22:50,020 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-12 13:22:50,575 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-12 13:23:07,844 - Plugins.visionocr - INFO - OCR Screenshot - Check Type
+2021-02-12 13:23:11,406 - Plugins.visionocr - INFO - 126384 cmp 126384 == 100
+
+2021-02-12 13:23:11,406 - Plugins.visionocr - INFO - No se pudo encontrar el tipo de ranking
+2021-02-12 13:26:54,525 - Plugins.visionocr - INFO - OCR Screenshot - Check Type
+2021-02-12 13:27:24,383 - Plugins.visionocr - INFO - OCR Screenshot - Check Type
+2021-02-12 13:27:42,609 - Plugins.visionocr - INFO - OCR Screenshot - Check Type
+2021-02-12 13:27:42,610 - Plugins.visionocr - INFO - Corredor cmp Corredor == 100
+
+2021-02-12 13:27:51,904 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-12 13:27:51,904 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-12 13:27:55,616 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-12 13:28:12,026 - Plugins.visionocr - INFO - OCR Screenshot - Check Type
+2021-02-12 13:28:12,026 - Plugins.visionocr - INFO - Corredor cmp Corredor == 100
+
+2021-02-12 13:28:15,602 - Plugins.visionocr - INFO - 126384 cmp 126384 == 100
+
+2021-02-12 13:28:15,603 - Plugins.visionocr - INFO - TypeRanking Corredor Amount 126384
+2021-02-12 13:28:21,164 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-12 13:28:21,165 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-12 13:28:35,672 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-12 13:29:01,107 - Plugins.visionocr - INFO - OCR Screenshot - Check Type
+2021-02-12 13:29:01,107 - Plugins.visionocr - INFO - Corredor cmp Corredor == 100
+
+2021-02-12 13:29:04,697 - Plugins.visionocr - INFO - 126384 cmp 126384 == 100
+
+2021-02-12 13:29:04,697 - Plugins.visionocr - INFO - TypeRanking Corredor Amount 126384
+2021-02-12 13:29:28,443 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-12 13:29:28,444 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-15 12:37:36,935 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-15 12:37:52,197 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-15 12:37:52,197 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-15 12:37:56,411 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-15 12:39:48,003 - Plugins.visionocr - INFO - OCR Screenshot - Check Type
+2021-02-15 12:39:48,003 - Plugins.visionocr - INFO - Total cmp Totalxp == 83
+
+2021-02-15 12:39:48,004 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/dispatcher.py", line 425, in process_update
+    handler.handle_update(update, self, check, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/conversationhandler.py", line 487, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/venv/lib/python3.8/site-packages/telegram/ext/handler.py", line 145, in handle_update
+    return self.callback(update, context)
+  File "/home/guillermocs/PycharmProjects/RankingGO/main.py", line 376, in manual_up_photoval
+    data_valid = visionocr.ocrScreenshot_CheckTyp_Amount(photo_file, tr_type, amount)
+  File "/home/guillermocs/PycharmProjects/RankingGO/Plugins/visionocr.py", line 299, in ocrScreenshot_CheckTyp_Amount
+    tr_cat = translator.translate_HumantoSEL(xml_lang_selector, "name", tr_type)
+  File "/home/guillermocs/PycharmProjects/RankingGO/Modelo/TypeRankTranslator.py", line 78, in translate_HumantoSEL
+    seldict = self.xml_translate_dict[lang][type_selector]
+KeyError: 'name'
+2021-02-15 12:42:19,052 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2021-02-15 12:42:19,052 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2021-02-15 12:42:19,543 - apscheduler.scheduler - INFO - Scheduler started
+2021-02-15 12:42:41,857 - Plugins.visionocr - INFO - OCR Screenshot - Check Type
+2021-02-15 12:42:41,858 - Plugins.visionocr - INFO - Total cmp Totalxp == 83
+
+2021-02-15 12:42:48,518 - Plugins.visionocr - INFO - No se pudo encontrar la cantidad

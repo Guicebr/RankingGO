@@ -40,7 +40,7 @@ ficheros_iPad = ["iPad-es-battle_girl-3095-N.jpg", "iPad-es-battle_legend-487-N.
 #ficheros = ficheros_mi8 + ficheros_8t + ficheros_i11max + ficheros_iPad
 # ficheros = ficheros_mi8[5:6]
 
-ficheros = ficheros_nick[0:1]
+ficheros = ficheros_mi8[4:5]
 print(ficheros)
 
 
@@ -406,9 +406,20 @@ def main():
 
 
 if True:
+    print(ficheros)
+    ficheros = ficheros_nick
+    sel_img = 0
     print(str(ficheros[sel_img]))
-    exp = visionocr.ocr_Experience2(str(carpeta + ficheros[sel_img]))
-    print("visionocr.ocr_Experience = %s" % (exp))
+    # exp = visionocr.ocr_Experience2(str(carpeta + ficheros[sel_img]))
+    # print("visionocr.ocr_Experience = %s" % (exp))
+
+    # cat = visionocr.ocrScreenshot_Type(str(carpeta + ficheros[sel_img]), "Corredor")
+    # print("ocrScreenshot_Type = %s" % (cat))
+
+    amount = visionocr.ocrScreenshot_Amount_EXP(str(carpeta + ficheros[sel_img]), "79825637")
+
+
+
 
 
 
