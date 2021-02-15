@@ -2,3 +2,5 @@ venv/
 /Imagenes/
 example.log
 Logs/translate.log
+/Config/ExperienciaPorNivel.csv
+/Config/ExperienciaPorNIvel.ods
