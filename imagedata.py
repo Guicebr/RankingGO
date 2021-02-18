@@ -13,6 +13,8 @@ from Modelo.TypeRanking import *
 from Plugins import common_func as c_func
 from functools import reduce
 
+from Modelo import LevelsTranslator
+
 CONFIGBOXDIR = 'Config/Box_OCR.xml'
 SHOW_IMG = 0
 
@@ -407,17 +409,32 @@ def main():
 
 if True:
     print(ficheros)
+    ficheros = ficheros_mi8[6:7]
+    sel_img = 0
+    print(str(ficheros[sel_img]))
+    filepath = str(carpeta + ficheros[sel_img])
+    # exp = visionocr.ocr_Experience2(str(carpeta + ficheros[sel_img]))
+    # print("visionocr.ocr_Experience = %s" % (exp))
+    filepath = str(carpeta + ficheros[sel_img])
+
+    tipo = "Turista"
+    cantidad = 1746
+    cat = visionocr.ocrScreenshot_Type(filepath, tipo)
+    amount = visionocr.ocrScreenshot_Amount(filepath, cantidad)
+    valid_data = cat and amount
+    print("ocrScreenshot_CheckTyp_Amount = %s" % (valid_data))
+
     ficheros = ficheros_nick
     sel_img = 0
     print(str(ficheros[sel_img]))
-    # exp = visionocr.ocr_Experience2(str(carpeta + ficheros[sel_img]))
-    # print("visionocr.ocr_Experience = %s" % (exp))
-
-    # cat = visionocr.ocrScreenshot_Type(str(carpeta + ficheros[sel_img]), "Corredor")
-    # print("ocrScreenshot_Type = %s" % (cat))
-
-    amount = visionocr.ocrScreenshot_Amount_EXP(str(carpeta + ficheros[sel_img]), "79825637")
-
+    filepath = str(carpeta + ficheros[sel_img])
+    # lv_translator = LevelsTranslator.LevelsTranslator()
+    exp = 79825637
+    # exp = 3556
+    # f = lv_translator.getLV_EXP(exp)
+    # print(f)
+    amount = visionocr.ocrScreenshot_Amount_EXP(filepath, exp)
+    print(amount)
 
 
 

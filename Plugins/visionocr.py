@@ -6,10 +6,12 @@ import cv2 as cv
 from time import time
 
 from Modelo import TypeRankTranslator
+from Modelo import LevelsTranslator
 from Plugins import common_func as c_func
 from Modelo.TypeRanking import typeranking as tr
 from Modelo.TypeRanking import datapattern as data_p
 from Modelo.UserData import UserData
+
 
 from pytesseract import pytesseract
 from pytesseract import Output
@@ -24,7 +26,11 @@ logger = logging.getLogger(__name__)
 RATIO_NICK = 80
 RATIO_CHECK = 80
 RATIO_AMOUNT = 90
+RATIO_AMOUNT_EXP = 90
 
+xml_lang_selector = "es"
+translator = TypeRankTranslator.TypeRankTranslator()
+lv_translator = LevelsTranslator.LevelsTranslator()
 
 def trasform_image(filepath, bitwise, blur, threshold_type, tparam1, tparam2, showimg):
     # config = {"bitwise": False, "blur": 3, "threshold_type": 0,
@@ -272,9 +278,6 @@ def ocrScreenshot_CheckTyp_Amount(photo_file, tr_type, amount):
     # print(filepath)
     photo_file.download(filepath)
 
-    translator = TypeRankTranslator.TypeRankTranslator()
-    xml_lang_selector = "es"
-
     # TODO: Import Image Data algorithm OCR tr_type and OCR amount
     # img = cv.imread(filepath, 0)
     #
@@ -295,7 +298,7 @@ def ocrScreenshot_CheckTyp_Amount(photo_file, tr_type, amount):
     else:
         rank_valid = ocrScreenshot_Type(filepath, tr_type)
         if rank_valid:
-            # TODO: Si Tr_type = EXP:amount_valid = ocrExp, Else amount_valid = ocrAmount
+            # Si Tr_type = EXP:amount_valid = ocrExp, Else amount_valid = ocrAmount
             tr_cat = translator.translate_HumantoSEL(xml_lang_selector, "tr", tr_type)
             print("tr_cat %s" % tr_cat)
             if tr_cat == "totalxp":
@@ -331,16 +334,34 @@ def ocrScreenshot_Type(filepath, tr_type):
 def ocrScreenshot_Amount(filepath, amount):
     psm = [11, 12]
     gaussParam = [[11, 13], range(7, 11, 1)]
-    arrnums = ocrScreenshot_NumberFreq(filepath, gaussParam, psm)
-    # print(arrnums)
-    return arraycmp_string(list(arrnums), amount, RATIO_AMOUNT)
+    arrnums = ocrScreenshot_NumberFreq(filepath, gaussParam, psm, bitwise=True)
+    print(arrnums)
+    return arraycmp_string(list(arrnums), str(amount), RATIO_AMOUNT)
 
 def ocrScreenshot_Amount_EXP(filepath, amount):
+    """"""
     psm = [11, 12]
     gaussParam = [[11, 13], range(7, 11, 1)]
-    arrnums = ocrScreenshot_NumberFreq(filepath, gaussParam, psm)
-    print(arrnums)
-    return arraycmp_string(list(arrnums), amount, RATIO_AMOUNT)
+
+    validlv_exp = False
+    validtotalexp = False
+
+    arrnums = ocrScreenshot_NumberFreq(filepath, gaussParam, psm, bitwise=False)
+    LV_EXP = lv_translator.getLV_EXP(int(amount))
+    # print(arrnums, LV_EXP)
+
+    if arraycmp_string(list(arrnums), str(amount), RATIO_AMOUNT_EXP):
+        validtotalexp = True
+
+    for lv in LV_EXP:
+        lvvalid = arraycmp_string(list(arrnums), str(lv[0]), RATIO_AMOUNT)
+        expvalid = arraycmp_string(list(arrnums), str(lv[1]), RATIO_AMOUNT_EXP)
+        # print("lvvalid %d %s; expvalid %d %s" % (lv[0], str(lvvalid), lv[1], str(expvalid)))
+        if lvvalid and expvalid:
+            validlv_exp = True
+
+    valid = validlv_exp or validtotalexp
+    return valid
 
 def ocr_type(ocr_data, type):
     logger.info("Ocr_Type %s start.", type)
@@ -435,14 +456,21 @@ def ocr_pattern(img, pattern):
 
 def arraycmp_string(arr, s, ratioval):
     """Compare a word with each string in array, if both are similar greater than RATIO_NICK ret TRUE"""
+    max_ratio = 0
+    i_max = 0
     for i in range(len(arr)):
         ratio = fuzz.ratio(arr[i], s)
         # print("%s cmp %s == %s\n"% (arr[i], s, ratio))
-        if ratio >= ratioval:
-            logger.info("%s cmp %s == %s\n", arr[i], s, ratio)
-            return True
+        if ratio > max_ratio:
+            i_max = i
+            max_ratio = ratio
 
-    return False
+    # print("%s cmp %s == %s\n"% (arr[i_max], s, max_ratio))
+    if max_ratio > ratioval:
+        logger.info("%s cmp %s == %s\n", arr[i_max], s, max_ratio)
+        return True
+    else:
+        return False
 
 
 def ocr_num_psm(psmi, img):
@@ -450,7 +478,7 @@ def ocr_num_psm(psmi, img):
     Devuelve None o un Array de Numeros obtenidos"""
 
     # custom_config = r'--oem 3 --psm 6 outputbase digits'
-    config = "--oem 3 --psm " + str(psmi) + ' outputbase digits'
+    config = "--psm " + str(psmi)
     z = pytesseract.image_to_data(img, output_type=Output.DICT, config=config)
     z = np.array(z['text'])
 
@@ -469,10 +497,10 @@ def ocr_num_psm(psmi, img):
         return None
 
 
-def ocrScreenshot_NumberFreq(filepath, gaussParam, psm):
+def ocrScreenshot_NumberFreq(filepath, gaussParam, psm, bitwise):
     num_freq_dict = {}
 
-    config = {"bitwise": True, "blur": 3, "threshold_type": 0,
+    config = {"bitwise": bitwise, "blur": 3, "threshold_type": 0,
               "tparam1": 7, "tparam2": 7, "showimg": 0}
 
     for gauss1 in gaussParam[0]:
