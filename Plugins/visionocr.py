@@ -43,11 +43,11 @@ def trasform_image(filepath, bitwise, blur, threshold_type, tparam1, tparam2, sh
     img = cv.medianBlur(img, blur)
 
     if threshold_type == 0:
-        print("threshold_type %s" % ("ADAPTIVE_THRESH_GAUSSIAN_C"))
+        # print("threshold_type %s" % ("ADAPTIVE_THRESH_GAUSSIAN_C"))
         img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY,
                                    tparam1, tparam2)
     else:
-        print("threshold_type %s" % ("ADAPTIVE_THRESH_MEAN_C"))
+        # print("threshold_type %s" % ("ADAPTIVE_THRESH_MEAN_C"))
         img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_MEAN_C, cv.THRESH_BINARY,
                                    tparam1, tparam2)
 
@@ -59,7 +59,7 @@ def trasform_image(filepath, bitwise, blur, threshold_type, tparam1, tparam2, sh
         cv.imshow('img', cv.resize(img, (480, 720)))
         cv.waitKey(0)
     elapsed_time = time() - start_time
-    print("gauss1=%d gauss2=%d time: %.5f seconds" % (tparam1, tparam2, elapsed_time))
+    # print("gauss1=%d gauss2=%d time: %.5f seconds" % (tparam1, tparam2, elapsed_time))
     return img
 # ocr_register v1
 # def ocr_register2(photo_file, nick):
@@ -328,7 +328,15 @@ def ocrScreenshot_Type(filepath, tr_type):
     logger.info("OCR Screenshot - Check Type")
     np_text = np.array(ocr_data['text'])
     print(str(np_text))
-    return arraycmp_string(np_text, str(tr_type), RATIO_CHECK)
+
+    words_trtype = str(tr_type).split(" ")
+    valid = True
+
+    for word in words_trtype:
+        valid_word = arraycmp_string(np_text, str(word), RATIO_CHECK)
+        valid = valid and valid_word
+
+    return valid
 
 
 def ocrScreenshot_Amount(filepath, amount):
@@ -465,9 +473,10 @@ def arraycmp_string(arr, s, ratioval):
             i_max = i
             max_ratio = ratio
 
-    # print("%s cmp %s == %s\n"% (arr[i_max], s, max_ratio))
+    print("%s cmp %s == %s\n" % (arr[i_max], s, max_ratio))
+    logger.info("%s cmp %s == %s\n", arr[i_max], s, max_ratio)
     if max_ratio > ratioval:
-        logger.info("%s cmp %s == %s\n", arr[i_max], s, max_ratio)
+        # logger.info("%s cmp %s == %s\n", arr[i_max], s, max_ratio)
         return True
     else:
         return False
