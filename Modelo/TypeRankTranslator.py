@@ -89,3 +89,8 @@ class TypeRankTranslator:
 
         return arr_type
 
+    def translate_DBtoHUMAN(self, lang, type_rank):
+        "Devuelve el id o el tipo_ranking del nombre pasado como parametro(type_rank)"
+        seldict = self.xml_translate_dict[lang]["tr"]
+        # print(seldict)
+        return seldict[type_rank]

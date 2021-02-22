@@ -14,6 +14,7 @@ from Plugins import common_func as c_func
 from functools import reduce
 
 from Modelo import LevelsTranslator
+from Modelo import TypeRankTranslator
 
 CONFIGBOXDIR = 'Config/Box_OCR.xml'
 SHOW_IMG = 0
@@ -25,15 +26,18 @@ sel_img =0
 ficheros_nick = ['mi8-es-nick-Wicisian-N.jpg', 'mi8t-es-nick-S1ckwhale-N.jpg', 'i11max-es-nick-PabloLuis94-N.jpg']
 
 #0-6 mi8-es
-ficheros_mi8 = ["mi8-es-battle_girl-38146-Y.jpg", "mi8-es-battle_legend-942-N.jpg", "mi8-es-champion-553-N.jpg",
+ficheros_mi8 = ["mi8-es-battlegirl-38146-Y.jpg", "mi8-es-battle_legend-942-N.jpg", "mi8-es-champion-553-N.jpg",
                 "mi8-es-collector-89891-Y.jpg", "mi8-es-jogger-120701-Y.jpg", "mi8-es-pokemon_ranger-3311-Y.jpg",
                 "mi8-es-sightseer-1746-N.jpg"]
+
 ficheros_8t = ["mi8t-es-battle_girl-10335-Y.jpg", "mi8t-es-battle_legend-646-N.jpg", "mi8t-es-champion-368-N.jpg",
                "mi8t-es-collector-34945-N.jpg", "mi8t-es-jogger-47252-N.jpg","mi8t-es-pokemon_ranger-1400-N.jpg",
                "mi8t-es-sightseer-712-N.jpg"]
+
 ficheros_i11max = ["i11max-es-battle_girl-34582-Y.jpg", "i11max-es-battle_legend-383-N.jpg",
                    "i11max-es-champion-517-N.jpg", "i11max-es-collector-68657-Y.jpg", "i11max-es-jogger-122240-Y.jpg",
                    "i11max-es-pokemon_ranger-4053-Y.jpg", "i11max-es-sightseer-678-N.jpg"]
+
 ficheros_iPad = ["iPad-es-battle_girl-3095-N.jpg", "iPad-es-battle_legend-487-N.jpg", "iPad-es-champion-277-N.jpg",
                  "iPad-es-collector-14021-N.jpg", "iPad-es-collector-90534-Y.jpg", "iPad-es-jogger-19701-N.jpg",
                  "iPad-es-pokemon_ranger-886-N.jpg", "iPad-es-sightseer-668-N.jpg"]
@@ -407,38 +411,50 @@ def main():
         # print(pytesseract.image_to_string(img, config=custom_config))
 
 
+
+        ficheros = ficheros_nick
+        sel_img = 0
+        print(str(ficheros[sel_img]))
+        filepath = str(carpeta + ficheros[sel_img])
+        # lv_translator = LevelsTranslator.LevelsTranslator()
+        exp = 79825637
+        # exp = 3556
+        # f = lv_translator.getLV_EXP(exp)
+        # print(f)
+        amount = visionocr.ocrScreenshot_Amount_EXP(filepath, exp)
+        print(amount)
+
+def fichnameToDict(name):
+    """i11max-es-battle_girl-34582-Y.jpg
+     device-lang-med_al-value-gold.jpg"""
+    dic = dict()
+    dic['device'] = name.split("-")[0]
+    dic['lang'] = name.split("-")[1]
+    dic['tranking'] = name.split("-")[2]
+    dic['value'] = name.split("-")[3]
+    dic['medal'] = name.split("-")[4].split(".")[0]
+    # print(str(dic))
+    return dic
+
 if True:
-    print(ficheros)
-    ficheros = ficheros_mi8[6:7]
-    sel_img = 0
-    print(str(ficheros[sel_img]))
-    filepath = str(carpeta + ficheros[sel_img])
-    # exp = visionocr.ocr_Experience2(str(carpeta + ficheros[sel_img]))
-    # print("visionocr.ocr_Experience = %s" % (exp))
-    filepath = str(carpeta + ficheros[sel_img])
 
-    tipo = "Turista"
-    cantidad = 1746
-    cat = visionocr.ocrScreenshot_Type(filepath, tipo)
-    amount = visionocr.ocrScreenshot_Amount(filepath, cantidad)
-    valid_data = cat and amount
-    print("ocrScreenshot_CheckTyp_Amount = %s" % (valid_data))
+    tr_translator = TypeRankTranslator.TypeRankTranslator()
+    xml_lang_sel = "es"
+    ficheros = ficheros_mi8
 
-    ficheros = ficheros_nick
-    sel_img = 0
-    print(str(ficheros[sel_img]))
-    filepath = str(carpeta + ficheros[sel_img])
-    # lv_translator = LevelsTranslator.LevelsTranslator()
-    exp = 79825637
-    # exp = 3556
-    # f = lv_translator.getLV_EXP(exp)
-    # print(f)
-    amount = visionocr.ocrScreenshot_Amount_EXP(filepath, exp)
-    print(amount)
+    for index_img in range(len(ficheros)):
+        filepath_user = carpeta + str(ficheros[index_img])
+        # print(str(ficheros[index_img]))
+        dic_fich = fichnameToDict(ficheros[index_img])
+        cat_user = tr_translator.translate_DBtoHUMAN(xml_lang_sel, dic_fich["tranking"])
+        amount_user = dic_fich["value"]
 
-
-
-
+        cat = visionocr.ocrScreenshot_Type(filepath_user, cat_user)
+        amount = visionocr.ocrScreenshot_Amount(filepath_user, amount_user)
+        valid_data = cat and amount
+        
+        print("Fichero: %s \n Cat %s %s \n Amount %s %s\n ocrScreenshot: %s \n\n\n" %
+              (filepath_user, cat_user, cat, amount_user, amount, valid_data))
 
 if __name__ == '__main__':
     main()
