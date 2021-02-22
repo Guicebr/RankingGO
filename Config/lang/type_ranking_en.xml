@@ -174,4 +174,10 @@
         <description>Mega Evolved Pokémon</description>
         <text>Successor</text>
     </typerank>
+    <typerank>
+        <id>30</id>
+        <name>sightseer</name>
+        <description>PokéStops Unique Visited</description>
+        <text>Sightseer</text>
+    </typerank>
 </typeranks>

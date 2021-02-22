@@ -65,3 +65,4 @@ insert into tranking(id,name,description) values (26,"ultra_league_veteran","Ult
 insert into tranking(id,name,description) values (27,"best_buddy","Best Buddies");
 insert into tranking(id,name,description) values (28,"wayfarer","Wayfarer Agreements");
 insert into tranking(id,name,description) values (29,"successor","Mega Evolved Pokémon");
+insert into tranking(id,name,description) values (30,"sightseer","PokéStops Unique Visited");

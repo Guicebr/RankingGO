@@ -147,6 +147,21 @@ class DBHelper:
                 self.cursor.close()
                 print("MySQL cursor is closed")
 
+    def add_ranking_types(self, id, name, description):
+        """insert into tranking(id,name,description) values (30,"sightseer","PokéStops Unique Visited");"""
+
+        stmt = "insert into tranking(id, name, description) VALUES (%s,'%s','%s')"
+        args = (id, str(name), str(description))
+
+        try:
+            self.cursor = self.conn.cursor()
+            print(stmt % args)
+            self.cursor.execute(stmt % args)
+            self.conn.commit()
+
+        except MySQLdb.Error as e:
+            print("Error %s" % str(e))
+
     def close(self):
         if self.conn:
             self.cursor.close()
