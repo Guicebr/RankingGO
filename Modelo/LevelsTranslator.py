@@ -89,7 +89,7 @@ class LevelsTranslator:
                 OUT: List[Int] Nivel"""
         lvposibles = []
         for leveli in range(40-1, len(self.level_dict)):
-            print(leveli)
+            # print(leveli)
             if (exp - self.level_dict[leveli]['totalxp']) > 0:
                 lvposibles.append(leveli+1)
         print(lvposibles)

@@ -302,9 +302,9 @@ def ocrScreenshot_CheckTyp_Amount(photo_file, tr_type, amount):
             tr_cat = translator.translate_HumantoSEL(xml_lang_selector, "tr", tr_type)
             print("tr_cat %s" % tr_cat)
             if tr_cat == "totalxp":
-                amount_valid = ocrScreenshot_Amount(filepath, amount)
-            else:
                 amount_valid = ocrScreenshot_Amount_EXP(filepath, amount)
+            else:
+                amount_valid = ocrScreenshot_Amount(filepath, amount)
             if amount_valid:
                 logger.info("TypeRanking %s Amount %s" % (str(tr_type), str(amount)))
                 return True
