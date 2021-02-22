@@ -34,133 +34,133 @@
         <id>6</id>
         <name>battlegirl</name>
         <description>Gym Battles Won</description>
-        <text>Battlegirl</text>
+        <text>Luchadora</text>
     </typerank>
     <typerank>
         <id>7</id>
         <name>gymleader</name>
         <description>Gym Defenders Hours</description>
-        <text>Gymleader</text>
+        <text>Líder del Gimnasio</text>
     </typerank>
     <typerank>
         <id>8</id>
         <name>pokemon_ranger</name>
         <description>Field Research Task Completed</description>
-        <text>Pokemon Ranger </text>
+        <text>Pokémon Ranger</text>
     </typerank>
     <typerank>
         <id>9</id>
         <name>scientist</name>
         <description>Pokémon Evolved</description>
-        <text>Scientist</text>
+        <text>Científico</text>
     </typerank>
     <typerank>
         <id>10</id>
         <name>fisher</name>
         <description>Big Magikarp Caught</description>
-        <text>Fisher</text>
+        <text>Pescador</text>
     </typerank>
     <typerank>
         <id>11</id>
         <name>youngster</name>
         <description>Tiny Ratata Caught</description>
-        <text>Youngster</text>
+        <text>Joven</text>
     </typerank>
     <typerank>
         <id>12</id>
         <name>pikachu_fan</name>
         <description>Pikachu Caught</description>
-        <text>Pikachu Fan </text>
+        <text>Fan de Pikachu</text>
     </typerank>
     <typerank>
         <id>13</id>
         <name>berry_master</name>
         <description>Berries at Gyms</description>
-        <text>Berry Master </text>
+        <text>Maestro de Bayas</text>
     </typerank>
     <typerank>
         <id>14</id>
         <name>idol</name>
         <description>Best Friends</description>
-        <text>Idol</text>
+        <text>Famoso</text>
     </typerank>
     <typerank>
         <id>15</id>
         <name>gentleman</name>
         <description>Pokémon Traded</description>
-        <text>Gentleman</text>
+        <text>Aristócrata</text>
     </typerank>
     <typerank>
         <id>16</id>
         <name>ace_trainer</name>
         <description>Trains</description>
-        <text>Ace Trainer </text>
+        <text>Entre. Guay</text>
     </typerank>
     <typerank>
         <id>17</id>
         <name>champion</name>
         <description>Raids Won</description>
-        <text>Champion</text>
+        <text>Campeón</text>
     </typerank>
     <typerank>
         <id>18</id>
         <name>battle_legend</name>
         <description>Legendary Raids Won</description>
-        <text>Battle Legend </text>
+        <text>Combates Legendarios</text>
     </typerank>
     <typerank>
         <id>19</id>
         <name>pilot</name>
         <description>Distance of all Pokémon Trades</description>
-        <text>Pilot</text>
+        <text>Piloto</text>
     </typerank>
     <typerank>
         <id>20</id>
         <name>great_league_veteran</name>
         <description>Great League Battles Won</description>
-        <text>Great League Veteran </text>
+        <text>Veterano Liga Super Ball</text>
     </typerank>
     <typerank>
         <id>21</id>
         <name>master_league_veteran</name>
         <description>Master League Battles Won</description>
-        <text>Master League Veteran </text>
+        <text>Veterano Liga Master Ball</text>
     </typerank>
     <typerank>
         <id>22</id>
         <name>cameraman</name>
         <description>Surprise Encounters Snapshot</description>
-        <text>Cameraman</text>
+        <text>Camarógrafo</text>
     </typerank>
     <typerank>
         <id>23</id>
         <name>purifier</name>
         <description>Shadow Pokémon Purified</description>
-        <text>Purifier</text>
+        <text>Purificador</text>
     </typerank>
     <typerank>
         <id>24</id>
         <name>hero</name>
         <description>Team GO Rocket Members Defeated</description>
-        <text>Hero</text>
+        <text>Héroe</text>
     </typerank>
     <typerank>
         <id>25</id>
         <name>ultra_hero</name>
         <description>Team GO Rocket Boss Defeated</description>
-        <text>Ultra Hero </text>
+        <text>Ultrahéroe </text>
     </typerank>
     <typerank>
         <id>26</id>
         <name>ultra_league_veteran</name>
         <description>Ultra League Battles Won</description>
-        <text>Ultra League Veteran </text>
+        <text>Veterano Liga Ultra Ball </text>
     </typerank>
     <typerank>
         <id>27</id>
         <name>best_buddy</name>
         <description>Best Buddies</description>
-        <text>Best Buddy </text>
+        <text>Mejor compañero</text>
     </typerank>
     <typerank>
         <id>28</id>
@@ -172,6 +172,6 @@
         <id>29</id>
         <name>successor</name>
         <description>Mega Evolved Pokémon</description>
-        <text>Successor</text>
+        <text>Heredera</text>
     </typerank>
 </typeranks>
