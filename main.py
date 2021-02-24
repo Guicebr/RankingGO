@@ -45,6 +45,8 @@ xml_lang_selector = "es"
 
 REGISTER_VAL, NICK, NICK_VAL = range(3)
 TRTYPESEL, TYPE_AMOUNT, PHOTO_VAL = range(3)
+RANKINGTRSEL, RANKINGTOPSEL = range(2)
+RANKINGTOPS = [10, 50, 100]
 
 #DEBUG = 1
 
@@ -275,6 +277,8 @@ def screenshot_handler(update, context) -> None:
     #ocr_user = visionocr.ocr_register(photo_file, nickctx)
     pass
 
+
+
 def cancel(update, context):
     """Cancel command."""
     user = update.message.from_user
@@ -365,6 +369,29 @@ def manual_up_typeamount(update, context):
     return PHOTO_VAL
 
 
+def get_usernick(context, update, userid):
+    """Return User Nick from database"""
+    user = update.message.from_user
+
+    if "userdbnick" in context.user_data.keys():
+        return context.user_data["userdbnick"]
+    else:
+        try:
+            # Buscar usuario en la BD y conseguir userdbid
+            dbconn = DBHelper()
+            index = dbconn.get_user_nick(userid)
+            # print("Len Index", len(index))
+            if len(index) >= 1:
+                context.user_data["userdbnick"] = index[0][0]
+                return index[0][0]
+            else:
+                return None
+        except Exception as e:
+            print(e)
+        finally:
+            dbconn.close()
+
+
 def manual_up_photoval(update, context):
     tr_type = context.user_data["tr_type"]
     amount = context.user_data["amount"]
@@ -372,8 +399,10 @@ def manual_up_photoval(update, context):
     userbdid = context.user_data["userdbid"]
     lang = xml_lang_selector
 
+    nick = get_usernick(context, update, userbdid)
+
     photo_file = update.message.photo[-1].get_file()
-    data_valid = visionocr.ocrScreenshot_CheckTyp_Amount(photo_file, tr_type, amount)
+    data_valid = visionocr.ocrScreenshot_CheckTyp_Amount(photo_file, tr_type, amount, nick)
 
 
     if data_valid:
@@ -393,6 +422,56 @@ def manual_up_photoval(update, context):
         update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
 
+
+def get_ranking(update, context):
+    """Mostrar categorías disponibles, y el usuario selecciona una"""
+    user = update.message.from_user
+    lang = xml_lang_selector
+
+    # Verificamos que el usuario este registrado
+    if authuser(context, update) is None:
+        text = "Usuario no registrado, ejecute el comando /registro primero"
+        update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
+        return ConversationHandler.END
+
+    text = "Por favor selecciona la categoría: "
+    keyboard = []
+
+    # print(translator.xml_translate_dict)
+    # print(lang)
+    for name in translator.getlist_TypeRank(lang):
+        keyboard.append([str(name)])
+
+    update.message.reply_text(text, reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True))
+
+    return RANKINGTRSEL
+
+
+def get_ranking_trtype(update, context):
+    """Obtenemos la categoría que ha seleccionado el usuario y pedimos el número de elementos a buscar"""
+    context.user_data["tr_type"] = update.message.text
+    keyboard = []
+
+    for ranks in RANKINGTOPS:
+        name = "TOP " + str(ranks)
+        keyboard.append([str(name)])
+
+    text = """Selecciona el la cantidad de elementos que quieres mostrar de la categoría %s: 
+           """ % (context.user_data["tr_type"])
+
+    update.message.reply_text(text, reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True))
+
+    return RANKINGTOPSEL
+
+def show_ranking(update, context):
+    """Tenemos la categoría y el número de elementos a mostrar, se hace una petición a la BD con
+     la categoria y el número de elemtos buscados"""
+
+    data = dbconn.get_ranking(1, 100)
+    print(str(data))
+    update.message.reply_text(str(data), reply_markup=ReplyKeyboardRemove())
+
+    return ConversationHandler.END
 
 def main():
     """Start the bot."""
@@ -445,14 +524,25 @@ def main():
             TRTYPESEL: [MessageHandler(Filters.text & ~Filters.command, manual_up_trtype)],
             TYPE_AMOUNT: [MessageHandler(Filters.text & ~Filters.command, manual_up_typeamount)],
             PHOTO_VAL: [MessageHandler(Filters.photo & ~Filters.command, manual_up_photoval)]
-
-            # CATEGORY: [CallbackQueryHandler(register_val)],
         },
 
         fallbacks=[CommandHandler("cancel", cancel)]
     )
 
     dp.add_handler(manual_up_conv_handler)
+
+    ranking_conv_handler = ConversationHandler(
+        entry_points=[CommandHandler("ranking", get_ranking)],
+
+        states={
+            RANKINGTRSEL: [MessageHandler(Filters.text & ~Filters.command, get_ranking_trtype)],
+            RANKINGTOPSEL: [MessageHandler(Filters.text & ~Filters.command, show_ranking)]
+        },
+
+        fallbacks=[CommandHandler("cancel", cancel)]
+    )
+
+    dp.add_handler(ranking_conv_handler)
 
     # Start the Bot, añadimos allowed_update para poder editar lo mensajes
     updater.start_polling(allowed_updates=[])
