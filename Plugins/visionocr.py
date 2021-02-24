@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 RATIO_NICK = 80
 RATIO_CHECK = 80
 RATIO_AMOUNT = 90
-RATIO_AMOUNT_EXP = 90
+RATIO_AMOUNT_EXP = 100
 
 xml_lang_selector = "es"
 translator = TypeRankTranslator.TypeRankTranslator()
@@ -273,7 +273,7 @@ def ocrRegister_Distance(ocr_data):
 #     logger.info("OCR End - Screenshot Data")
 #     pass
 
-def ocrScreenshot_CheckTyp_Amount(photo_file, tr_type, amount):
+def ocrScreenshot_CheckTyp_Amount(photo_file, tr_type, amount, nick):
     filepath = os.path.expanduser('~') + '/Fotos_RankingPOGO' + str(photo_file.file_id)
     # print(filepath)
     photo_file.download(filepath)
@@ -296,11 +296,16 @@ def ocrScreenshot_CheckTyp_Amount(photo_file, tr_type, amount):
         print("Uno de los datos esta vacio")
         return False
     else:
-        rank_valid = ocrScreenshot_Type(filepath, tr_type)
+        # Si Tr_type = EXP:amount_valid = ocrExp, Else amount_valid = ocrAmount
+        tr_cat = translator.translate_HumantoSEL(xml_lang_selector, "tr", tr_type)
+        print("tr_cat %s" % tr_cat)
+
+        if tr_cat == "totalxp":
+            rank_valid = ocrScreenshot_Type(filepath, nick)
+        else:
+            rank_valid = ocrScreenshot_Type(filepath, tr_type)
+
         if rank_valid:
-            # Si Tr_type = EXP:amount_valid = ocrExp, Else amount_valid = ocrAmount
-            tr_cat = translator.translate_HumantoSEL(xml_lang_selector, "tr", tr_type)
-            print("tr_cat %s" % tr_cat)
             if tr_cat == "totalxp":
                 amount_valid = ocrScreenshot_Amount_EXP(filepath, amount)
             else:
