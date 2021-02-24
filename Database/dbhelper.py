@@ -79,8 +79,27 @@ class DBHelper:
                 print("MySQL cursor is closed")
 
     def get_user_tgid(self, tgid):
-        stmt = 'select * from users where tgid="%s"'
+        stmt = 'select id from users where tgid="%s"'
         args = (tgid, )
+
+        try:
+            self.cursor = self.conn.cursor()
+            self.cursor.execute(stmt % args)
+            self.conn.commit()
+            a = self.cursor.fetchall()
+            return a
+
+        except MySQLdb.Error as e:
+            print("Error %s" % str(e))
+
+        finally:
+            if self.conn:
+                self.cursor.close()
+                print("MySQL cursor is closed")
+
+    def get_user_nick(self, userbdid):
+        stmt = 'select nick from users where id="%s"'
+        args = (userbdid,)
 
         try:
             self.cursor = self.conn.cursor()
@@ -161,6 +180,49 @@ class DBHelper:
 
         except MySQLdb.Error as e:
             print("Error %s" % str(e))
+
+    def get_ranking(self, tr_id, max_elements):
+        """select personid, amount, max(dcreate) max_fecha
+        from ranking
+        where type = 1;
+        """
+
+        stmt = """
+        SELECT r.personid, u.nick, u.tgid, r.amount
+        FROM ((ranking r
+        INNER JOIN (
+            SELECT personid, type, MAX(dcreate) max_dcreate
+            FROM ranking
+            WHERE type = %s
+            GROUP BY personid
+        ) AS t
+        ON r.dcreate = t.max_dcreate
+        AND r.personid = t.personid)
+        INNER JOIN (
+            SELECT id, nick, tgid
+            FROM users
+            group by id
+        ) AS u
+        ON u.id = r.personid)
+        ORDER BY r.amount DESC
+        LIMIT %s;"""
+
+        args = (str(tr_id), str(max_elements))
+
+        try:
+            self.cursor = self.conn.cursor()
+            self.cursor.execute(stmt % args)
+            self.conn.commit()
+            a = self.cursor.fetchall()
+            return a
+
+        except MySQLdb.Error as e:
+            print("Error %s" % str(e))
+
+        finally:
+            if self.conn:
+                self.cursor.close()
+                print("MySQL cursor is closed")
 
     def close(self):
         if self.conn:

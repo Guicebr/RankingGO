@@ -1,7 +1,5 @@
-insert into users(nick,tgid) values("Pablo",23);
-insert into users(nick,tgid) values("Guille",50);
-insert into users(nick,tgid) values("Pablo",43);
-insert into users(nick,tgid) values("Pablo",23);
+insert into users(nick,tgid) values("Wicisian",13922907);
+insert into users(nick,tgid) values("Bugimaemper0r",1441409608);
 
 
 
@@ -15,4 +13,29 @@ except db:
     db
 finally
     close()
+
+SELECT r.personid, u.nick, u.tgid, r.amount
+FROM ((ranking r
+INNER JOIN (
+    SELECT personid, type, MAX(dcreate) max_dcreate
+    FROM ranking
+    WHERE type = 1
+    GROUP BY personid
+) AS t
+ON r.dcreate = t.max_dcreate
+AND r.personid = t.personid)
+INNER JOIN (
+    SELECT id, nick, tgid
+    FROM users
+    group by id
+) AS u
+ON u.id = r.personid)
+ORDER BY r.amount DESC
+LIMIT 100;
+
+from Database import dbhelper
+dbconn = dbhelper.DBHelper()
+print(str(dbconn.get_ranking(1, 100)))
+
+
 
