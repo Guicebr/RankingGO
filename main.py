@@ -18,7 +18,8 @@ import telegram
 import collections
 from CREDENTIALS import BOT_TOKEN
 
-from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardButton, InlineKeyboardMarkup,)
+from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardButton, InlineKeyboardMarkup,
+                      MessageEntity, )
 from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters,
                           ConversationHandler, CallbackQueryHandler)
 import logging
@@ -469,9 +470,17 @@ def show_ranking(update, context):
 
     data = dbconn.get_ranking(1, 100)
     print(str(data))
-    update.message.reply_text(str(data), reply_markup=ReplyKeyboardRemove())
+    head = "Ranking " + str(context.user_data["tr_type"]) + "\n"
+    txt = head
+    for useri in range(len(data)):
+        mention = "%s. %s [%s](tg://user?id=%s)\n" % (useri+1, data[useri][2], data[useri][0], data[useri][1])
+        #print(mention)
+        txt += mention
+
+    update.message.reply_text(txt, parse_mode="Markdown")
 
     return ConversationHandler.END
+
 
 def main():
     """Start the bot."""

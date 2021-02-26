@@ -182,13 +182,13 @@ class DBHelper:
             print("Error %s" % str(e))
 
     def get_ranking(self, tr_id, max_elements):
-        """select personid, amount, max(dcreate) max_fecha
+        """select amount, max(dcreate) max_fecha
         from ranking
         where type = 1;
         """
 
         stmt = """
-        SELECT r.personid, u.nick, u.tgid, r.amount
+        SELECT u.nick, u.tgid, r.amount
         FROM ((ranking r
         INNER JOIN (
             SELECT personid, type, MAX(dcreate) max_dcreate
