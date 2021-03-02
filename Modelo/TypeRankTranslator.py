@@ -18,6 +18,9 @@ class TypeRankTranslator:
     xml_translate_dict = dict() # Estructura que almacena los idiomas
     xml_lang_pool = []          # Array que almacena los idiomas disponibles
 
+    ID = "id"
+    TR = "tr"
+
     def __init__(self):
         files = os.listdir(DIR)
         self.xml_lang_pool = self.getLangfromFiles(files)
@@ -92,5 +95,11 @@ class TypeRankTranslator:
     def translate_DBtoHUMAN(self, lang, type_rank):
         "Devuelve el id o el tipo_ranking del nombre pasado como parametro(type_rank)"
         seldict = self.xml_translate_dict[lang]["tr"]
-        # print(seldict)
+        #print(seldict)
         return seldict[type_rank]
+
+    def translate_DBidtoHUMAN(self, lang, type_rank_id):
+        "Devuelve el id o el tipo_ranking del nombre pasado como parametro(type_rank)"
+        seldict = self.xml_translate_dict[lang]["id"]
+        #print(seldict)
+        return seldict[type_rank_id]
