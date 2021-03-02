@@ -224,6 +224,29 @@ class DBHelper:
                 self.cursor.close()
                 print("MySQL cursor is closed")
 
+    def get_types_ranking(self):
+        """ Devuelve lista de tipos de los que existe algún valor almacenado en la BD"""
+
+        stmt = "SELECT type FROM ranking GROUP BY type"
+
+        args = ()
+
+        try:
+            self.cursor = self.conn.cursor()
+            self.cursor.execute(stmt % args)
+            self.conn.commit()
+            a = self.cursor.fetchall()
+            return a
+
+        except MySQLdb.Error as e:
+            print("Error %s" % str(e))
+
+        finally:
+            if self.conn:
+                self.cursor.close()
+                print("MySQL cursor is closed")
+        pass
+
     def close(self):
         if self.conn:
             self.cursor.close()
