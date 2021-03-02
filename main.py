@@ -14,30 +14,36 @@ bot.
 """
 
 
-import telegram
 import collections
-from CREDENTIALS import BOT_TOKEN
-
-from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardButton, InlineKeyboardMarkup,
-                      MessageEntity, )
-from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters,
-                          ConversationHandler, CallbackQueryHandler)
 import logging
+from time import sleep
 
-from Plugins import visionocr
-from Modelo import TypeRankTranslator
-from Plugins import common_func as c_func
+import telegram
+from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import Update
 
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext, ConversationHandler, CallbackQueryHandler
+
+from CREDENTIALS import BOT_TOKEN
 from Database.dbhelper import DBHelper
-#from Plugins.visionocr import *
+from Modelo import TypeRankTranslator
+# from Plugins.visionocr import *
 from Modelo.TypeRanking import bool_to_icon
 from Modelo.TypeRanking import typeranking_enum as tr_enum
+from Plugins import common_func as c_func
+from Plugins import visionocr
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO, filename='example.log')
 
 logger = logging.getLogger(__name__)
+
+""" logger.debug(‘Este mensaje es sólo para frikis programadores como nosotros ;)’)
+    logger.info(‘Este mensaje representa algo normal’)
+    logger.warning(‘Esto ya no es tan normal’)
+    logger.error(‘Deberías empezar a preocuparte’)
+    logger.critical(‘El bot está así X(’)"""
 
 dbconn = DBHelper()
 
@@ -53,7 +59,7 @@ RANKINGTOPS = [10, 50, 100]
 
 # Define a few command handlers. These usually take the two arguments update and
 # context. Error handlers also receive the raised TelegramError object in error.
-def start(update, context):
+def start(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
     user = update.message.from_user
     reply_keyboard = [['/registro', '/cancel', '/experience']]
@@ -63,6 +69,9 @@ def start(update, context):
            'Send /cancel to stop talking to me.\n\n'
     update.message.reply_text(text, reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
 
+def error(update, context):
+    """Log Errors caused by Updates."""
+    logger.warning('Update "%s" caused error "%s"', update, context.error)
 
 def help_command(update, context):
     """Send a message when the command /help is issued."""
@@ -85,6 +94,25 @@ def experience(update, context):
 
 def register(update, context):
     """Start the register proccess, ask user for nick"""
+
+    chat_id = update.message.chat_id
+    chat_type = update.message.chat.type
+
+    if chat_type != "private":
+        message = update.message.reply_text(
+            text="Para registarte hablame por privado con el comando /registro",
+            reply_markup=ReplyKeyboardRemove())
+        # sleep(10)
+        # deleteMessage(message.id, chat_id)
+
+        return ConversationHandler.END
+
+    # context.bot.send_message(
+    #     chat_id=chat_id,
+    #     text="Soy un Achicayna, que entre los primeros pobladores de Canarias era el equivalente a un plebeyo."
+    # )
+
+
     user = update.message.from_user
 
     text = 'Send me your Nickname in PokemonGO.'
@@ -429,6 +457,9 @@ def get_ranking(update, context):
     user = update.message.from_user
     lang = xml_lang_selector
 
+    # TODO: Argumento 0 -> Indique tipoderanking, se comprueba si esta en la lista de disponible
+    # TODO: Argumento 1 -> Numero de elementos, tiene que ser una de los establecido 10, 50, 100
+
     # Verificamos que el usuario este registrado
     if authuser(context, update) is None:
         text = "Usuario no registrado, ejecute el comando /registro primero"
@@ -438,10 +469,14 @@ def get_ranking(update, context):
     text = "Por favor selecciona la categoría: "
     keyboard = []
 
-    # print(translator.xml_translate_dict)
-    # print(lang)
-    for name in translator.getlist_TypeRank(lang):
-        keyboard.append([str(name)])
+    # Imprimir solo los tiposderanking que tengan algún dato en la BD
+    tr_avalible = dbconn.get_types_ranking()
+
+    print(tr_avalible)
+    for tr_id in tr_avalible:
+        tr_id = str(tr_id[0])
+        name = translator.translate_DBidtoHUMAN(xml_lang_selector, tr_id)
+        keyboard.append([name])
 
     update.message.reply_text(text, reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True))
 
@@ -468,19 +503,45 @@ def show_ranking(update, context):
     """Tenemos la categoría y el número de elementos a mostrar, se hace una petición a la BD con
      la categoria y el número de elemtos buscados"""
 
-    data = dbconn.get_ranking(1, 100)
-    print(str(data))
-    head = "Ranking " + str(context.user_data["tr_type"]) + "\n"
+    tr = context.user_data["tr_type"]
+    try:
+        if update.message.text > 0:
+            num_elem = int(update.message.text.split(" ")[1])
+
+    except Exception as e:
+        num_elem = 100
+        logger.warning("Error %s con el valor: %s\n", e, update.message.text)
+        print(e)
+
+    tr_id = translator.translate_HumantoSEL(xml_lang_selector, translator.ID, tr)
+    data = dbconn.get_ranking(tr_id, num_elem)
+
+    # print(str(data))
+    head = "Ranking " + str(tr) + "\n"
     txt = head
     for useri in range(len(data)):
         mention = "%s. %s [%s](tg://user?id=%s)\n" % (useri+1, data[useri][2], data[useri][0], data[useri][1])
-        #print(mention)
         txt += mention
 
     update.message.reply_text(txt, parse_mode="Markdown")
-
     return ConversationHandler.END
 
+
+def pruebabot(update: Update, context: CallbackContext) -> None:
+    logger.info('He recibido un comando start')
+
+    chat_id = update.message.chat_id
+
+    print(update.message, chat_id, update.message.chat.type)
+
+    context.bot.send_message(
+        chat_id=chat_id,
+        text="Soy un Achicayna, que entre los primeros pobladores de Canarias era el equivalente a un plebeyo."
+    )
+
+def set_lang():
+    # TODO: establecer lenguaje en Contexto
+    pass
 
 def main():
     """Start the bot."""
@@ -490,7 +551,7 @@ def main():
     # Para mandar mensajes a un usuario por privado
     # update.message.reply_text(text)
 
-    bot = telegram.Bot(token=BOT_TOKEN)
+    # bot = telegram.Bot(token=BOT_TOKEN)
     updater = Updater(BOT_TOKEN, use_context=True)
 
     # Get the dispatcher to register handlers
@@ -500,6 +561,10 @@ def main():
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help_command))
 
+    #TODO: Set lang
+    dp.add_handler(CommandHandler("lang", set_lang))
+
+    dp.add_handler(CommandHandler("pruebabot", pruebabot))
     # command
     #dp.add_handler(CommandHandler("experience", experience))
 
