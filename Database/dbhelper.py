@@ -79,7 +79,7 @@ class DBHelper:
                 print("MySQL cursor is closed")
 
     def get_user_tgid(self, tgid):
-        stmt = 'select id from users where tgid="%s"'
+        stmt = 'select id,nick from users where tgid="%s"'
         args = (tgid, )
 
         try:
