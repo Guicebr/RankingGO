@@ -17,6 +17,7 @@ bot.
 import collections
 import logging
 from time import sleep
+import constant as CONS
 
 import telegram
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardButton, InlineKeyboardMarkup
@@ -55,6 +56,8 @@ TRTYPESEL, TYPE_AMOUNT, PHOTO_VAL = range(3)
 RANKINGTRSEL, RANKINGTOPSEL = range(2)
 RANKINGTOPS = [10, 50, 100]
 
+
+
 #DEBUG = 1
 
 # Define a few command handlers. These usually take the two arguments update and
@@ -62,6 +65,8 @@ RANKINGTOPS = [10, 50, 100]
 def start(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
     user = update.message.from_user
+
+    authuser(context, update)
     reply_keyboard = [['/registro', '/cancel', '/experience']]
     text = 'Hi! My name is RankingGo Bot. ' \
            'Send /register to register in my database.\n\n' \
@@ -107,6 +112,13 @@ def register(update, context):
 
         return ConversationHandler.END
 
+    if authuser(context, update) > 0:
+        text = "%s ya estás registrad@" % context.user_data[CONS.CONTEXT_VAR_USERDBNICK]
+        message = update.message.reply_text(
+            text=text,
+            reply_markup=ReplyKeyboardRemove())
+        return ConversationHandler.END
+
     # context.bot.send_message(
     #     chat_id=chat_id,
     #     text="Soy un Achicayna, que entre los primeros pobladores de Canarias era el equivalente a un plebeyo."
@@ -127,7 +139,7 @@ def nick(update, context):
     """Save users nick in context data and ask the user to send you a photo."""
     user = update.message.from_user
     logger.info("Nombre %s: Nick %s", user.first_name, update.message.text)
-    context.user_data["nick"] = update.message.text
+    context.user_data[CONS.CONTEXT_VAR_TMPNICK] = update.message.text
 
     text = "Is " + update.message.text + " your nickname?\n Send me a photo at your profile account to verify"
     update.message.reply_text(text)
@@ -142,13 +154,13 @@ def nickval(update, context):
     userdbid = 0
 
     user = update.message.from_user
-    nickctx = str(context.user_data["nick"])
+    nickctx = str(context.user_data[CONS.CONTEXT_VAR_TMPNICK])
     photo_file = update.message.photo[-1].get_file()
 
     #Get data from OCR and save in context
     ocr_user = visionocr.ocr_register(photo_file, nickctx)
     #print("ocr_return nickval ", str(ocr_user))
-    context.user_data["ocr_user"] = ocr_user
+    context.user_data[CONS.CONTEXT_VAR_OCRUSER] = ocr_user
 
     #ocr_user[nick]
 
@@ -170,7 +182,7 @@ def nickval(update, context):
                 print("AddUser DB")
                 userdbid = registeruser(ocr_user.nick, user.id)
 
-            context.user_data["userdbid"] = userdbid
+            context.user_data[CONS.CONTEXT_VAR_USERDBID] = userdbid
             txt = 'Nick registrado'+bool_to_icon[1]+': ' + str(nickctx)
             update.message.reply_text(txt)
 
@@ -192,11 +204,11 @@ def obtener_datos_de_captura_registro(update, context):
     ocr_user.pop("nick")
 
     # Creamos un dicionario ordenado de los datos-OCR y un otro diccionario, para almacenar la validez de cada dato
-    context.user_data["ocr_user"] = collections.OrderedDict(ocr_user)
-    context.user_data["ocr_user_valid"] = {k: True for k in context.user_data["ocr_user"]}
+    context.user_data[CONS.CONTEXT_VAR_OCRUSER] = collections.OrderedDict(ocr_user)
+    context.user_data[CONS.CONTEXT_VAR_OCRUSER_VALID] = {k: True for k in context.user_data[CONS.CONTEXT_VAR_OCRUSER]}
 
-    ocr_user = context.user_data["ocr_user"]
-    ocr_user_valid = context.user_data["ocr_user_valid"]
+    ocr_user = context.user_data[CONS.CONTEXT_VAR_OCRUSER]
+    ocr_user_valid = context.user_data[CONS.CONTEXT_VAR_OCRUSER_VALID]
 
     # Validation by the user of each data obtained through OCR
     # Creamos un teclado con los diferentes datos que hemos obtenido al hacer OCR
@@ -227,9 +239,9 @@ def register_val(update, context) -> None:
 
     query = update.callback_query
 
-    ocr_user_valid = context.user_data["ocr_user_valid"]
-    ocr_user = context.user_data["ocr_user"]
-    userbdid = context.user_data["userdbid"]
+    ocr_user_valid = context.user_data[CONS.CONTEXT_VAR_OCRUSER_VALID]
+    ocr_user = context.user_data[CONS.CONTEXT_VAR_OCRUSER]
+    userbdid = context.user_data[CONS.CONTEXT_VAR_USERDBID]
 
     # print(query.message)
 
@@ -319,11 +331,11 @@ def cancel(update, context):
 
 
 def authuser(context, update):
-    """Return Id User in database"""
+    """ Return Id User in database and Save ID, NICK in Context"""
     user = update.message.from_user
 
-    if "userdbid" in context.user_data.keys():
-        return context.user_data["userdbid"]
+    if CONS.CONTEXT_VAR_USERDBID in context.user_data.keys() and CONS.CONTEXT_VAR_USERDBNICK in context.user_data.keys():
+        return context.user_data[CONS.CONTEXT_VAR_USERDBID]
     else:
         try:
             # Buscar usuario en la BD y conseguir userdbid
@@ -331,8 +343,9 @@ def authuser(context, update):
             index = dbconn.get_user_tgid(user.id)
             # print("Len Index", len(index))
             if len(index) >= 1:
-                context.user_data["userdbid"] = index[0][0]
-                return index[0][0]
+                context.user_data[CONS.CONTEXT_VAR_USERDBID] = index[0][0]
+                context.user_data[CONS.CONTEXT_VAR_USERDBNICK] = index[0][1]
+                return context.user_data[CONS.CONTEXT_VAR_USERDBID]
             else:
                 return None
         except Exception as e:
@@ -382,7 +395,7 @@ def manual_up(update,context):
 
 def manual_up_trtype(update, context):
     """Echo and finish Conversation"""
-    context.user_data["tr_type"] = update.message.text
+    context.user_data[CONS.CONTEXT_VAR_TRTYPE] = update.message.text
     text = "Introduce la cantidad sin puntos ni comas, por favor."
     update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
 
@@ -390,54 +403,32 @@ def manual_up_trtype(update, context):
 
 def manual_up_typeamount(update, context):
     """"""
-    context.user_data["amount"] = update.message.text
+    context.user_data[CONS.CONTEXT_VAR_AMOUNT] = update.message.text
 
     text = "Enviame una captura de pantalla, para que pueda validarlo."
     update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
 
     return PHOTO_VAL
 
-
-def get_usernick(context, update, userid):
-    """Return User Nick from database"""
-    user = update.message.from_user
-
-    if "userdbnick" in context.user_data.keys():
-        return context.user_data["userdbnick"]
-    else:
-        try:
-            # Buscar usuario en la BD y conseguir userdbid
-            dbconn = DBHelper()
-            index = dbconn.get_user_nick(userid)
-            # print("Len Index", len(index))
-            if len(index) >= 1:
-                context.user_data["userdbnick"] = index[0][0]
-                return index[0][0]
-            else:
-                return None
-        except Exception as e:
-            print(e)
-        finally:
-            dbconn.close()
-
-
 def manual_up_photoval(update, context):
-    tr_type = context.user_data["tr_type"]
-    amount = context.user_data["amount"]
+    tr_type = context.user_data[CONS.CONTEXT_VAR_TRTYPE]
+    amount = context.user_data[CONS.CONTEXT_VAR_AMOUNT]
     amount = c_func.string_cleaner_for_num(amount)
-    userbdid = context.user_data["userdbid"]
+    userbdid = context.user_data[CONS.CONTEXT_VAR_USERDBID]
+    nick = context.user_data[CONS.CONTEXT_VAR_USERDBNICK]
+
     lang = xml_lang_selector
 
-    nick = get_usernick(context, update, userbdid)
 
     photo_file = update.message.photo[-1].get_file()
+    print(photo_file)
     data_valid = visionocr.ocrScreenshot_CheckTyp_Amount(photo_file, tr_type, amount, nick)
 
 
     if data_valid:
         try:
             # tr_id = tr_enum[tr_type]
-            tr_id = translator.translate_HumantoSEL(lang, "id", tr_type)
+            tr_id = translator.translate_HumantoSEL(lang, translator.ID, tr_type)
             print("tr_id", tr_id)
             dbconn.add_ranking_data(userbdid, tr_id, amount)
             text = "Datos guardados %s %s" % (str(tr_type), str(amount))
@@ -485,7 +476,7 @@ def get_ranking(update, context):
 
 def get_ranking_trtype(update, context):
     """Obtenemos la categoría que ha seleccionado el usuario y pedimos el número de elementos a buscar"""
-    context.user_data["tr_type"] = update.message.text
+    context.user_data[CONS.CONTEXT_VAR_TRTYPE] = update.message.text
     keyboard = []
 
     for ranks in RANKINGTOPS:
@@ -493,7 +484,7 @@ def get_ranking_trtype(update, context):
         keyboard.append([str(name)])
 
     text = """Selecciona el la cantidad de elementos que quieres mostrar de la categoría %s: 
-           """ % (context.user_data["tr_type"])
+           """ % (context.user_data[CONS.CONTEXT_VAR_TRTYPE])
 
     update.message.reply_text(text, reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True))
 
@@ -503,7 +494,7 @@ def show_ranking(update, context):
     """Tenemos la categoría y el número de elementos a mostrar, se hace una petición a la BD con
      la categoria y el número de elemtos buscados"""
 
-    tr = context.user_data["tr_type"]
+    tr = context.user_data[CONS.CONTEXT_VAR_TRTYPE]
     try:
         if update.message.text > 0:
             num_elem = int(update.message.text.split(" ")[1])
@@ -543,6 +534,16 @@ def set_lang():
     # TODO: establecer lenguaje en Contexto
     pass
 
+def printcontextdata(update, context):
+
+    print(context.user_data)
+
+    chat_id = update.message.chat_id
+    context.bot.send_message(
+        chat_id=chat_id,
+        text=str(context.user_data)
+    )
+
 def main():
     """Start the bot."""
     # Para mandar mensajes a un canal
@@ -560,6 +561,7 @@ def main():
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help_command))
+    dp.add_handler(CommandHandler("userdata", printcontextdata))
 
     #TODO: Set lang
     dp.add_handler(CommandHandler("lang", set_lang))
