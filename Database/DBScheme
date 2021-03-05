@@ -3,6 +3,8 @@ USE RankingPOGO;
 
 SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS telegroups;
+DROP TABLE IF EXISTS group_user;
 DROP TABLE IF EXISTS tranking;
 DROP TABLE IF EXISTS ranking;
 DROP VIEW IF EXISTS rankingview;
@@ -11,7 +13,21 @@ SET FOREIGN_KEY_CHECKS = 1;
 CREATE TABLE users (
      id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
      nick VARCHAR(255) NOT NULL,
-     tgid INTEGER NOT NULL UNIQUE
+     tgid INTEGER NOT NULL UNIQUE,
+     lang VARCHAR(10)
+);
+
+CREATE TABLE telegroups (
+     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+     tgid INT NOT NULL UNIQUE,
+     lang VARCHAR(10)
+);
+
+CREATE TABLE group_user (
+    groupid INTEGER NOT NULL,
+    userid INTEGER NOT NULL,
+    CONSTRAINT FK_userid FOREIGN KEY (userid) REFERENCES users(id),
+    CONSTRAINT FK_groupid FOREIGN KEY (groupid) REFERENCES telegroups(id)
 );
 
 CREATE TABLE tranking (
