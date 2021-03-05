@@ -13,7 +13,6 @@ Press Ctrl-C on the command line or send a signal to the process to stop the
 bot.
 """
 
-
 import collections
 import logging
 from time import sleep
@@ -23,7 +22,8 @@ import telegram
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram import Update
 
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext, ConversationHandler, CallbackQueryHandler
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext, ConversationHandler, \
+    CallbackQueryHandler
 
 from CREDENTIALS import BOT_TOKEN
 from Database.dbhelper import DBHelper
@@ -57,8 +57,7 @@ RANKINGTRSEL, RANKINGTOPSEL = range(2)
 RANKINGTOPS = [10, 50, 100]
 
 
-
-#DEBUG = 1
+# DEBUG = 1
 
 # Define a few command handlers. These usually take the two arguments update and
 # context. Error handlers also receive the raised TelegramError object in error.
@@ -74,9 +73,11 @@ def start(update: Update, context: CallbackContext) -> None:
            'Send /cancel to stop talking to me.\n\n'
     update.message.reply_text(text, reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
 
+
 def error(update, context):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, context.error)
+
 
 def help_command(update, context):
     """Send a message when the command /help is issued."""
@@ -107,8 +108,10 @@ def register(update, context):
         message = update.message.reply_text(
             text="Para registarte hablame por privado con el comando /registro",
             reply_markup=ReplyKeyboardRemove())
-        # sleep(10)
-        # deleteMessage(message.id, chat_id)
+        print(message)
+        sleep(3)ql with if
+        context.bot.deleteMessage(message.chat.id, message.message_id)
+        # context.bot.deleteMessage(message.reply_to_message.chat.id, message.reply_to_message.message_id)
 
         return ConversationHandler.END
 
@@ -123,7 +126,6 @@ def register(update, context):
     #     chat_id=chat_id,
     #     text="Soy un Achicayna, que entre los primeros pobladores de Canarias era el equivalente a un plebeyo."
     # )
-
 
     user = update.message.from_user
 
@@ -149,7 +151,7 @@ def nick(update, context):
 
 def nickval(update, context):
     """Receive photo from user, save/get User from DB, and create ValidationForm. """
-    #Initialize vars
+    # Initialize vars
     keyboard = []
     userdbid = 0
 
@@ -157,17 +159,17 @@ def nickval(update, context):
     nickctx = str(context.user_data[CONS.CONTEXT_VAR_TMPNICK])
     photo_file = update.message.photo[-1].get_file()
 
-    #Get data from OCR and save in context
+    # Get data from OCR and save in context
     ocr_user = visionocr.ocr_register(photo_file, nickctx)
-    #print("ocr_return nickval ", str(ocr_user))
+    # print("ocr_return nickval ", str(ocr_user))
     context.user_data[CONS.CONTEXT_VAR_OCRUSER] = ocr_user
 
-    #ocr_user[nick]
+    # ocr_user[nick]
 
     # Check validity of user nick
     if ocr_user.nick is None:
         # If invalid nick, notify user and cancel register
-        text = "Nick no válido"+bool_to_icon[0]+", vuelva a intentarlo con el comando /registro"
+        text = "Nick no válido" + bool_to_icon[0] + ", vuelva a intentarlo con el comando /registro"
         update.message.reply_text(text)
         return ConversationHandler.END
     else:
@@ -183,13 +185,14 @@ def nickval(update, context):
                 userdbid = registeruser(ocr_user.nick, user.id)
 
             context.user_data[CONS.CONTEXT_VAR_USERDBID] = userdbid
-            txt = 'Nick registrado'+bool_to_icon[1]+': ' + str(nickctx)
+            txt = 'Nick registrado' + bool_to_icon[1] + ': ' + str(nickctx)
             update.message.reply_text(txt)
 
             return ConversationHandler.END
 
         except Exception as e:
             print(e)
+
 
 def obtener_datos_de_captura_registro(update, context):
     # Initialize vars
@@ -222,7 +225,6 @@ def obtener_datos_de_captura_registro(update, context):
 
 
 def getKeyboardRegisterValidation(ocr_user, ocr_user_valid):
-
     keyboard = []
     for type_rank in ocr_user:
         if ocr_user[type_rank] is not None:
@@ -233,6 +235,7 @@ def getKeyboardRegisterValidation(ocr_user, ocr_user_valid):
     keyboard.append([InlineKeyboardButton("Finish", callback_data='finish')])
 
     return keyboard
+
 
 def register_val(update, context) -> None:
     """Updates the form and stores the data, based on user actions"""
@@ -275,14 +278,15 @@ def register_val(update, context) -> None:
     else:
         print("Callback no programado ", str(callback_type))
 
-    #print(str(ocr_user))
-    #print(str(ocr_user_valid))
+    # print(str(ocr_user))
+    # print(str(ocr_user_valid))
 
-    #query.message.reply_text(str(query.data))
+    # query.message.reply_text(str(query.data))
     # print(query.message.reply_markup)
     # query.edit_message_text(text=f"Selected option: {query.data}")
 
     return ConversationHandler.END
+
 
 def screenshot_handler(update, context) -> None:
     """ Function comment"""
@@ -308,16 +312,15 @@ def screenshot_handler(update, context) -> None:
         print(userdbid)
         dbconn.close()
 
-    #TODO: Obtener tipo_ranking y cantidad
+    # TODO: Obtener tipo_ranking y cantidad
     ocr_data = visionocr.ocr_screenshot(photo_file)
 
-    #TODO: Validar?
-    #TODO: Salvar datos y Notificar al usuario
+    # TODO: Validar?
+    # TODO: Salvar datos y Notificar al usuario
 
     # Get data from OCR and save in context
-    #ocr_user = visionocr.ocr_register(photo_file, nickctx)
+    # ocr_user = visionocr.ocr_register(photo_file, nickctx)
     pass
-
 
 
 def cancel(update, context):
@@ -353,6 +356,7 @@ def authuser(context, update):
         finally:
             dbconn.close()
 
+
 def registeruser(nick, tgid):
     """Register User in database"""
     try:
@@ -365,7 +369,8 @@ def registeruser(nick, tgid):
     finally:
         dbconn.close()
 
-def manual_up(update,context):
+
+def manual_up(update, context):
     """Start the update data proccess, ask user for category"""
     user = update.message.from_user
     lang = xml_lang_selector
@@ -393,6 +398,7 @@ def manual_up(update,context):
 
     return TRTYPESEL
 
+
 def manual_up_trtype(update, context):
     """Echo and finish Conversation"""
     context.user_data[CONS.CONTEXT_VAR_TRTYPE] = update.message.text
@@ -400,6 +406,7 @@ def manual_up_trtype(update, context):
     update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
 
     return TYPE_AMOUNT
+
 
 def manual_up_typeamount(update, context):
     """"""
@@ -410,6 +417,7 @@ def manual_up_typeamount(update, context):
 
     return PHOTO_VAL
 
+
 def manual_up_photoval(update, context):
     tr_type = context.user_data[CONS.CONTEXT_VAR_TRTYPE]
     amount = context.user_data[CONS.CONTEXT_VAR_AMOUNT]
@@ -419,11 +427,9 @@ def manual_up_photoval(update, context):
 
     lang = xml_lang_selector
 
-
     photo_file = update.message.photo[-1].get_file()
     print(photo_file)
     data_valid = visionocr.ocrScreenshot_CheckTyp_Amount(photo_file, tr_type, amount, nick)
-
 
     if data_valid:
         try:
@@ -490,6 +496,7 @@ def get_ranking_trtype(update, context):
 
     return RANKINGTOPSEL
 
+
 def show_ranking(update, context):
     """Tenemos la categoría y el número de elementos a mostrar, se hace una petición a la BD con
      la categoria y el número de elemtos buscados"""
@@ -511,7 +518,7 @@ def show_ranking(update, context):
     head = "Ranking " + str(tr) + "\n"
     txt = head
     for useri in range(len(data)):
-        mention = "%s. %s [%s](tg://user?id=%s)\n" % (useri+1, data[useri][2], data[useri][0], data[useri][1])
+        mention = "%s. %s [%s](tg://user?id=%s)\n" % (useri + 1, data[useri][2], data[useri][0], data[useri][1])
         txt += mention
 
     update.message.reply_text(txt, parse_mode="Markdown")
@@ -530,19 +537,51 @@ def pruebabot(update: Update, context: CallbackContext) -> None:
         text="Soy un Achicayna, que entre los primeros pobladores de Canarias era el equivalente a un plebeyo."
     )
 
+
 def set_lang():
     # TODO: establecer lenguaje en Contexto
     pass
 
-def printcontextdata(update, context):
 
+def printcontextdata(update, context):
     print(context.user_data)
 
+    print(update.message.from_user)
     chat_id = update.message.chat_id
+
+    # print(update.getChat(chat_id))
+    print(context.bot.getChat(chat_id))
+
     context.bot.send_message(
         chat_id=chat_id,
         text=str(context.user_data)
     )
+
+
+def getchatdata(update, context):
+    """klmcds"""
+    chat_id = update.message.chat_id
+    user = update.message.from_user
+    print(chat_id, user)
+
+    chat = context.bot.getChat(chat_id)
+    admins = context.bot.getChatAdministrators(chat_id)
+    count = context.bot.getChatMembersCount(chat_id)
+    member = context.bot.getChatMember(chat_id, user["id"])
+    # print(context.bot.getChat(chat_id))
+
+    txt = "%s \n %s" % (chat_id, user)
+    txt = "" + str(chat) + "\n"
+    txt += str(admins) + "\n"
+    txt += str(count) + "\n"
+    txt += str(member) + "\n"
+    print(txt)
+
+    context.bot.send_message(
+        chat_id=chat_id,
+        text=txt
+    )
+
 
 def main():
     """Start the bot."""
@@ -562,15 +601,15 @@ def main():
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help_command))
     dp.add_handler(CommandHandler("userdata", printcontextdata))
-
-    #TODO: Set lang
+    dp.add_handler(CommandHandler("chatdata", getchatdata))
+    # TODO: Set lang
     dp.add_handler(CommandHandler("lang", set_lang))
 
     dp.add_handler(CommandHandler("pruebabot", pruebabot))
     # command
-    #dp.add_handler(CommandHandler("experience", experience))
+    # dp.add_handler(CommandHandler("experience", experience))
 
-    #Registramos cuando el usuario pulsa un boton del formulario de registro
+    # Registramos cuando el usuario pulsa un boton del formulario de registro
     updater.dispatcher.add_handler(CallbackQueryHandler(register_val))
 
     # on noncommand i.e message - echo the message on Telegram
@@ -585,7 +624,7 @@ def main():
         states={
             NICK: [MessageHandler(Filters.text & ~Filters.command, nick)],
             NICK_VAL: [MessageHandler(Filters.photo & ~Filters.command, nickval)],
-            #REGISTER_VAL: [CallbackQueryHandler(register_val)]
+            # REGISTER_VAL: [CallbackQueryHandler(register_val)]
         },
 
         fallbacks=[CommandHandler("cancel", cancel)]

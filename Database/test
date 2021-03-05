@@ -1,18 +1,6 @@
-insert into users(nick,tgid) values("Wicisian",13922907);
-insert into users(nick,tgid) values("Bugimaemper0r",1441409608);
+insert into users(nick,tgid,lang) values("Wicisian",13922907,"es");
+insert into users(nick,tgid,lang) values("Bugimaemper0r",1441409608,"es");
 
-
-
-try
-    dbconnect()
-        insert into users(nick,tgid) values ("Guille",50);
-        insert into ranking(personid,type,amount) values (1,1,50);
-        insert into ranking(personid,type,amount) values (2,1,50);
-        insert into ranking(personid,type,amount) values (4,1,50);
-except db:
-    db
-finally
-    close()
 
 SELECT r.personid, u.nick, u.tgid, r.amount
 FROM ((ranking r
@@ -37,5 +25,25 @@ from Database import dbhelper
 dbconn = dbhelper.DBHelper()
 print(str(dbconn.get_ranking(1, 100)))
 
+DELIMITER $$
+CREATE TRIGGER 'checkValueIncrement'
+BEFORE INSERT ON 'ranking'
+FOR EACH ROW
+BEGIN
+  DECLARE maxvalue INT;
+  SELECT MAX(amount)
+         FROM ranking,
+         WHERE NEW.type = OLD.type AND NEW.personid = OLD.personid
+         INTO maxvalue;
+  IF maxvalue >= NEW.value:
+  THEN
+  END IF;
+END$$
+
+DELIMITER ;
+
+SELECT MAX(amount)
+         FROM ranking
+         WHERE type = 1 AND personid = 1;
 
 
