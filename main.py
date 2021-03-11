@@ -109,7 +109,7 @@ def register(update, context):
             text="Para registarte hablame por privado con el comando /registro",
             reply_markup=ReplyKeyboardRemove())
         print(message)
-        sleep(3)ql with if
+        sleep(3)
         context.bot.deleteMessage(message.chat.id, message.message_id)
         # context.bot.deleteMessage(message.reply_to_message.chat.id, message.reply_to_message.message_id)
 
@@ -585,13 +585,6 @@ def getchatdata(update, context):
 
 def main():
     """Start the bot."""
-    # Para mandar mensajes a un canal
-    # bot.send_message(channel_id, text)
-
-    # Para mandar mensajes a un usuario por privado
-    # update.message.reply_text(text)
-
-    # bot = telegram.Bot(token=BOT_TOKEN)
     updater = Updater(BOT_TOKEN, use_context=True)
 
     # Get the dispatcher to register handlers

@@ -25,8 +25,8 @@ CREATE TABLE telegroups (
 
 CREATE TABLE group_user (
     groupid INTEGER NOT NULL,
-    userid INTEGER NOT NULL,
-    CONSTRAINT FK_userid FOREIGN KEY (userid) REFERENCES users(id),
+    usertgid INTEGER NOT NULL,
+    CONSTRAINT PK_group PRIMARY KEY (groupid, usertgid),
     CONSTRAINT FK_groupid FOREIGN KEY (groupid) REFERENCES telegroups(id)
 );
 
