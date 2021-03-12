@@ -16,12 +16,15 @@ CREATE TABLE users (
      tgid INTEGER NOT NULL UNIQUE,
      lang VARCHAR(10)
 );
+CREATE INDEX idx_tgid ON users(tgid);
 
 CREATE TABLE telegroups (
      id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
      tgid INT NOT NULL UNIQUE,
-     lang VARCHAR(10)
+     lang VARCHAR(10),
+     name VARCHAR(255)
 );
+CREATE INDEX idx_tgid ON telegroups(tgid);
 
 CREATE TABLE group_user (
     groupid INTEGER NOT NULL,
@@ -29,6 +32,7 @@ CREATE TABLE group_user (
     CONSTRAINT PK_group PRIMARY KEY (groupid, usertgid),
     CONSTRAINT FK_groupid FOREIGN KEY (groupid) REFERENCES telegroups(id)
 );
+
 
 CREATE TABLE tranking (
      id INTEGER NOT NULL PRIMARY KEY,
@@ -45,6 +49,7 @@ CREATE TABLE ranking (
      CONSTRAINT FK_personid FOREIGN KEY (personid) REFERENCES users(id),
      CONSTRAINT FK_type FOREIGN KEY (type) REFERENCES tranking(id)
 );
+CREATE INDEX idx_type ON ranking(type);
 
 CREATE VIEW rankingview AS
 SELECT u.nick, t.name as type, r.amount, r.dcreate
@@ -82,3 +87,6 @@ insert into tranking(id,name,description) values (27,"best_buddy","Best Buddies"
 insert into tranking(id,name,description) values (28,"wayfarer","Wayfarer Agreements");
 insert into tranking(id,name,description) values (29,"successor","Mega Evolved Pokémon");
 insert into tranking(id,name,description) values (30,"sightseer","PokéStops Unique Visited");
+
+insert into users(nick,tgid,lang) values("Wicisian",13922907,"es");
+insert into users(nick,tgid,lang) values("Bugimaemper0r",1441409608,"es");

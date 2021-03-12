@@ -1,4 +1,5 @@
 CONTEXT_VAR_USERDBID = "userdbid"
+CONTEXT_VAR_GROUPDBID = "groupdbid"
 CONTEXT_VAR_USERDBNICK = "userdbnick"
 CONTEXT_VAR_TRTYPE = "tr_type"
 CONTEXT_VAR_AMOUNT = "amount"

@@ -583,10 +583,55 @@ def getchatdata(update: Update, context: CallbackContext):
         chat_id=chat_id,
         text=txt
     )
-def group_new_chat_members_handler(update: Update, context: CallbackContext):
+
+
+def authgroups(update: Update, context: CallbackContext):
+    """Verificar si un grupo esta en la BD y si no se añade yse devuelve el groupid"""
+    # TODO: Verificar si un grupo esta en la BD y si no se añade y se devuelve el groupid
+
+    group_id = update.message.chat_id
+    print("authgroup", update.message.chat_id)
+
+    if CONS.CONTEXT_VAR_GROUPDBID in context.user_data.keys():
+        return context.user_data[CONS.CONTEXT_VAR_GROUPDBID]
+    else:
+        try:
+            # Buscar grupo en la BD y conseguir userdbid
+            dbconn = DBHelper()
+            index = dbconn.get_user_tgid(user.id)
+            # print("Len Index", len(index))
+            if len(index) >= 1:
+                context.user_data[CONS.CONTEXT_VAR_USERDBID] = index[0][0]
+                context.user_data[CONS.CONTEXT_VAR_USERDBNICK] = index[0][1]
+                return context.user_data[CONS.CONTEXT_VAR_USERDBID]
+            else:
+                return None
+        except Exception as e:
+            print(e)
+        finally:
+            dbconn.close()
+
+    pass
+def groups_new_chat_members_handler(update: Update, context: CallbackContext):
+
+    # TODO: Obtener telegroup DBID
+
+    authgroups(update, context)
+    print(update.message)
+    chat_id = update.message.chat_id
+    new_users = update.message.new_chat_members
+    print(new_users)
+
+    # TODO: Insertar usuario en el grupo asociado a la BD
     pass
 
-def group_left_chat_member_handler(update: Update, context: CallbackContext):
+def groups_left_chat_member_handler(update: Update, context: CallbackContext):
+
+    print(update.message)
+    authgroups(update, context)
+    chat_id = update.message.chat_id
+    left_user = update.message.left_chat_member
+    print(left_user)
     pass
 
 def main():
@@ -610,11 +655,11 @@ def main():
 
 
     # El bot se fue/echaron de un grupo o Usuario abandona el grupo en el que esta el bot.
-    dp.add_handler(MessageHandler(Filters.status_update.left_chat_member, echo))
+    dp.add_handler(MessageHandler(Filters.status_update.left_chat_member, groups_left_chat_member_handler))
 
 
     # El bot se unio a un grupo/canal/supergrupo no privado o Usuario se une a un grupo en el que se encuentra el bot.
-    dp.add_handler(MessageHandler(Filters.status_update.new_chat_members, echo))
+    dp.add_handler(MessageHandler(Filters.status_update.new_chat_members, groups_new_chat_members_handler))
 
     # Registramos cuando el usuario pulsa un boton del formulario de registro
     updater.dispatcher.add_handler(CallbackQueryHandler(register_val))
