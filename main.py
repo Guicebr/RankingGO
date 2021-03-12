@@ -13,12 +13,13 @@ Press Ctrl-C on the command line or send a signal to the process to stop the
 bot.
 """
 
-import collections
+# import collections
+# import telegram
 import logging
 from time import sleep
 import constant as CONS
 
-import telegram
+
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram import Update
 
@@ -65,7 +66,7 @@ def start(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
     user = update.message.from_user
 
-    authuser(context, update)
+    authuser(update, context)
     reply_keyboard = [['/registro', '/cancel', '/experience']]
     text = 'Hi! My name is RankingGo Bot. ' \
            'Send /register to register in my database.\n\n' \
@@ -74,12 +75,12 @@ def start(update: Update, context: CallbackContext) -> None:
     update.message.reply_text(text, reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
 
 
-def error(update, context):
+def error(update: Update, context: CallbackContext):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 
 
-def help_command(update, context):
+def help_command(update: Update, context: CallbackContext):
     """Send a message when the command /help is issued."""
     text = 'Help!' \
            'Send /registro to register in my database.\n\n' \
@@ -88,17 +89,18 @@ def help_command(update, context):
     update.message.reply_text(text)
 
 
-def echo(update, context):
+def echo(update: Update, context: CallbackContext):
     """Echo the user message."""
+    print(update.message)
     update.message.reply_text(update.message.text)
 
 
-def experience(update, context):
+def experience(update: Update, context: CallbackContext):
     """ Show last experience data writed in telegram chat"""
     update.message.reply_text("Tu experiencia es " + context.args[0])
 
 
-def register(update, context):
+def register(update: Update, context: CallbackContext):
     """Start the register proccess, ask user for nick"""
 
     chat_id = update.message.chat_id
@@ -115,7 +117,7 @@ def register(update, context):
 
         return ConversationHandler.END
 
-    if authuser(context, update) > 0:
+    if authuser(update, context) > 0:
         text = "%s ya estás registrad@" % context.user_data[CONS.CONTEXT_VAR_USERDBNICK]
         message = update.message.reply_text(
             text=text,
@@ -137,7 +139,7 @@ def register(update, context):
     return NICK
 
 
-def nick(update, context):
+def nick(update: Update, context: CallbackContext):
     """Save users nick in context data and ask the user to send you a photo."""
     user = update.message.from_user
     logger.info("Nombre %s: Nick %s", user.first_name, update.message.text)
@@ -149,7 +151,7 @@ def nick(update, context):
     return NICK_VAL
 
 
-def nickval(update, context):
+def nickval(update: Update, context: CallbackContext):
     """Receive photo from user, save/get User from DB, and create ValidationForm. """
     # Initialize vars
     keyboard = []
@@ -176,7 +178,7 @@ def nickval(update, context):
         # If nick is valid, check if it exists in the database and get/save to obtain userid
         try:
             # Buscar usuario en la BD y conseguir userdbid
-            user_id = authuser(context, update)
+            user_id = authuser(update, context)
             if user_id is not None:
                 userdbid = user_id
             else:
@@ -194,34 +196,34 @@ def nickval(update, context):
             print(e)
 
 
-def obtener_datos_de_captura_registro(update, context):
-    # Initialize vars
-    keyboard = []
-    userdbid = authuser(context, update)
-    ocr_user = None
-
-    # Save data in user context and prepare validation form
-    # El nick ya ha sido registrado,vamos a pedir confirmación del resto de valores
-    # Creamos un diccionario de los datos-OCR y eliminamos el nick porque ya lo tenemos
-    ocr_user = ocr_user.getDict()
-    ocr_user.pop("nick")
-
-    # Creamos un dicionario ordenado de los datos-OCR y un otro diccionario, para almacenar la validez de cada dato
-    context.user_data[CONS.CONTEXT_VAR_OCRUSER] = collections.OrderedDict(ocr_user)
-    context.user_data[CONS.CONTEXT_VAR_OCRUSER_VALID] = {k: True for k in context.user_data[CONS.CONTEXT_VAR_OCRUSER]}
-
-    ocr_user = context.user_data[CONS.CONTEXT_VAR_OCRUSER]
-    ocr_user_valid = context.user_data[CONS.CONTEXT_VAR_OCRUSER_VALID]
-
-    # Validation by the user of each data obtained through OCR
-    # Creamos un teclado con los diferentes datos que hemos obtenido al hacer OCR
-    txt = 'Verifica los siguientes datos por favor:'
-    print(ocr_user)
-
-    keyboard = getKeyboardRegisterValidation(ocr_user, ocr_user_valid)
-    reply_markup = InlineKeyboardMarkup(keyboard)
-
-    update.message.reply_text(txt, reply_markup=reply_markup)
+# def obtener_datos_de_captura_registro(update: Update, context: CallbackContext):
+#     # Initialize vars
+#     keyboard = []
+#     userdbid = authuser(update, context)
+#     ocr_user = None
+#
+#     # Save data in user context and prepare validation form
+#     # El nick ya ha sido registrado,vamos a pedir confirmación del resto de valores
+#     # Creamos un diccionario de los datos-OCR y eliminamos el nick porque ya lo tenemos
+#     ocr_user = ocr_user.getDict()
+#     ocr_user.pop("nick")
+#
+#     # Creamos un dicionario ordenado de los datos-OCR y un otro diccionario, para almacenar la validez de cada dato
+#     context.user_data[CONS.CONTEXT_VAR_OCRUSER] = collections.OrderedDict(ocr_user)
+#     context.user_data[CONS.CONTEXT_VAR_OCRUSER_VALID] = {k: True for k in context.user_data[CONS.CONTEXT_VAR_OCRUSER]}
+#
+#     ocr_user = context.user_data[CONS.CONTEXT_VAR_OCRUSER]
+#     ocr_user_valid = context.user_data[CONS.CONTEXT_VAR_OCRUSER_VALID]
+#
+#     # Validation by the user of each data obtained through OCR
+#     # Creamos un teclado con los diferentes datos que hemos obtenido al hacer OCR
+#     txt = 'Verifica los siguientes datos por favor:'
+#     print(ocr_user)
+#
+#     keyboard = getKeyboardRegisterValidation(ocr_user, ocr_user_valid)
+#     reply_markup = InlineKeyboardMarkup(keyboard)
+#
+#     update.message.reply_text(txt, reply_markup=reply_markup)
 
 
 def getKeyboardRegisterValidation(ocr_user, ocr_user_valid):
@@ -231,13 +233,13 @@ def getKeyboardRegisterValidation(ocr_user, ocr_user_valid):
             value = str(type_rank) + ": " + str(ocr_user[type_rank]) + bool_to_icon[int(ocr_user_valid[type_rank])]
             cb_data = list(ocr_user.keys()).index(type_rank)
 
-            keyboard.append([InlineKeyboardButton(str(value), callback_data=cb_data)])
+            keyboard.append([InlineKeyboardButton(str(value), callback_data=str(cb_data))])
     keyboard.append([InlineKeyboardButton("Finish", callback_data='finish')])
 
     return keyboard
 
 
-def register_val(update, context) -> None:
+def register_val(update: Update, context: CallbackContext) -> None:
     """Updates the form and stores the data, based on user actions"""
 
     query = update.callback_query
@@ -288,42 +290,42 @@ def register_val(update, context) -> None:
     return ConversationHandler.END
 
 
-def screenshot_handler(update, context) -> None:
-    """ Function comment"""
-    # TODO: Sustituir por authuser()
-    userbdid = 0
-    user = update.message.from_user
-    photo_file = update.message.photo[-1].get_file()
+# def screenshot_handler(update: Update, context: CallbackContext) -> None:
+#     """ Function comment"""
+#     # TODO: Sustituir por authuser()
+#     userbdid = 0
+#     user = update.message.from_user
+#     photo_file = update.message.photo[-1].get_file()
+#
+#     # Verificar si el usuario esta registrado -> userbdid
+#     try:
+#         # Buscar usuario en la BD y conseguir userdbid
+#         dbconn = DBHelper()
+#         result = dbconn.get_user_tgid(user.id)
+#         # print("Len Index", len(index))
+#         if len(result) >= 1:
+#             userdbid = int(result[0][0])
+#         else:
+#             txt = "Usuario no registrado ejecute el comando registro"
+#             update.message.reply_text(txt)
+#     except:
+#         print("Error desconocido")
+#     finally:
+#         print(userdbid)
+#         dbconn.close()
+#
+#     # TODO: Obtener tipo_ranking y cantidad
+#     ocr_data = visionocr.ocr_screenshot(photo_file)
+#
+#     # TODO: Validar?
+#     # TODO: Salvar datos y Notificar al usuario
+#
+#     # Get data from OCR and save in context
+#     # ocr_user = visionocr.ocr_register(photo_file, nickctx)
+#     pass
 
-    # Verificar si el usuario esta registrado -> userbdid
-    try:
-        # Buscar usuario en la BD y conseguir userdbid
-        dbconn = DBHelper()
-        result = dbconn.get_user_tgid(user.id)
-        # print("Len Index", len(index))
-        if len(result) >= 1:
-            userdbid = int(result[0][0])
-        else:
-            txt = "Usuario no registrado ejecute el comando registro"
-            update.message.reply_text(txt)
-    except:
-        print("Error desconocido")
-    finally:
-        print(userdbid)
-        dbconn.close()
 
-    # TODO: Obtener tipo_ranking y cantidad
-    ocr_data = visionocr.ocr_screenshot(photo_file)
-
-    # TODO: Validar?
-    # TODO: Salvar datos y Notificar al usuario
-
-    # Get data from OCR and save in context
-    # ocr_user = visionocr.ocr_register(photo_file, nickctx)
-    pass
-
-
-def cancel(update, context):
+def cancel(update: Update, context: CallbackContext):
     """Cancel command."""
     user = update.message.from_user
     logger.info("UserData %s canceled the conversation.", user.first_name)
@@ -333,7 +335,7 @@ def cancel(update, context):
     return ConversationHandler.END
 
 
-def authuser(context, update):
+def authuser(update: Update, context: CallbackContext):
     """ Return Id User in database and Save ID, NICK in Context"""
     user = update.message.from_user
 
@@ -370,13 +372,13 @@ def registeruser(nick, tgid):
         dbconn.close()
 
 
-def manual_up(update, context):
+def manual_up(update: Update, context: CallbackContext):
     """Start the update data proccess, ask user for category"""
     user = update.message.from_user
     lang = xml_lang_selector
 
     # Verificamos que el usuario este registrado
-    if authuser(context, update) is None:
+    if authuser(update, context) is None:
         text = "Usuario no registrado, ejecute el comando /registro primero"
         update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
@@ -399,7 +401,7 @@ def manual_up(update, context):
     return TRTYPESEL
 
 
-def manual_up_trtype(update, context):
+def manual_up_trtype(update: Update, context: CallbackContext):
     """Echo and finish Conversation"""
     context.user_data[CONS.CONTEXT_VAR_TRTYPE] = update.message.text
     text = "Introduce la cantidad sin puntos ni comas, por favor."
@@ -408,7 +410,7 @@ def manual_up_trtype(update, context):
     return TYPE_AMOUNT
 
 
-def manual_up_typeamount(update, context):
+def manual_up_typeamount(update: Update, context: CallbackContext):
     """"""
     context.user_data[CONS.CONTEXT_VAR_AMOUNT] = update.message.text
 
@@ -418,7 +420,7 @@ def manual_up_typeamount(update, context):
     return PHOTO_VAL
 
 
-def manual_up_photoval(update, context):
+def manual_up_photoval(update: Update, context: CallbackContext):
     tr_type = context.user_data[CONS.CONTEXT_VAR_TRTYPE]
     amount = context.user_data[CONS.CONTEXT_VAR_AMOUNT]
     amount = c_func.string_cleaner_for_num(amount)
@@ -449,7 +451,7 @@ def manual_up_photoval(update, context):
         return ConversationHandler.END
 
 
-def get_ranking(update, context):
+def get_ranking(update: Update, context: CallbackContext):
     """Mostrar categorías disponibles, y el usuario selecciona una"""
     user = update.message.from_user
     lang = xml_lang_selector
@@ -458,7 +460,7 @@ def get_ranking(update, context):
     # TODO: Argumento 1 -> Numero de elementos, tiene que ser una de los establecido 10, 50, 100
 
     # Verificamos que el usuario este registrado
-    if authuser(context, update) is None:
+    if authuser(update, context) is None:
         text = "Usuario no registrado, ejecute el comando /registro primero"
         update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
@@ -480,7 +482,7 @@ def get_ranking(update, context):
     return RANKINGTRSEL
 
 
-def get_ranking_trtype(update, context):
+def get_ranking_trtype(update: Update, context: CallbackContext):
     """Obtenemos la categoría que ha seleccionado el usuario y pedimos el número de elementos a buscar"""
     context.user_data[CONS.CONTEXT_VAR_TRTYPE] = update.message.text
     keyboard = []
@@ -497,13 +499,13 @@ def get_ranking_trtype(update, context):
     return RANKINGTOPSEL
 
 
-def show_ranking(update, context):
+def show_ranking(update: Update, context: CallbackContext):
     """Tenemos la categoría y el número de elementos a mostrar, se hace una petición a la BD con
      la categoria y el número de elemtos buscados"""
 
     tr = context.user_data[CONS.CONTEXT_VAR_TRTYPE]
     try:
-        if update.message.text > 0:
+        if len(update.message.text) > 0:
             num_elem = int(update.message.text.split(" ")[1])
 
     except Exception as e:
@@ -543,7 +545,7 @@ def set_lang():
     pass
 
 
-def printcontextdata(update, context):
+def printcontextdata(update: Update, context: CallbackContext):
     print(context.user_data)
 
     print(update.message.from_user)
@@ -558,7 +560,7 @@ def printcontextdata(update, context):
     )
 
 
-def getchatdata(update, context):
+def getchatdata(update: Update, context: CallbackContext):
     """klmcds"""
     chat_id = update.message.chat_id
     user = update.message.from_user
@@ -581,7 +583,11 @@ def getchatdata(update, context):
         chat_id=chat_id,
         text=txt
     )
+def group_new_chat_members_handler(update: Update, context: CallbackContext):
+    pass
 
+def group_left_chat_member_handler(update: Update, context: CallbackContext):
+    pass
 
 def main():
     """Start the bot."""
@@ -601,6 +607,14 @@ def main():
     dp.add_handler(CommandHandler("pruebabot", pruebabot))
     # command
     # dp.add_handler(CommandHandler("experience", experience))
+
+
+    # El bot se fue/echaron de un grupo o Usuario abandona el grupo en el que esta el bot.
+    dp.add_handler(MessageHandler(Filters.status_update.left_chat_member, echo))
+
+
+    # El bot se unio a un grupo/canal/supergrupo no privado o Usuario se une a un grupo en el que se encuentra el bot.
+    dp.add_handler(MessageHandler(Filters.status_update.new_chat_members, echo))
 
     # Registramos cuando el usuario pulsa un boton del formulario de registro
     updater.dispatcher.add_handler(CallbackQueryHandler(register_val))
