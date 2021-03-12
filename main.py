@@ -239,56 +239,56 @@ def getKeyboardRegisterValidation(ocr_user, ocr_user_valid):
     return keyboard
 
 
-def register_val(update: Update, context: CallbackContext) -> None:
-    """Updates the form and stores the data, based on user actions"""
-
-    query = update.callback_query
-
-    ocr_user_valid = context.user_data[CONS.CONTEXT_VAR_OCRUSER_VALID]
-    ocr_user = context.user_data[CONS.CONTEXT_VAR_OCRUSER]
-    userbdid = context.user_data[CONS.CONTEXT_VAR_USERDBID]
-
-    # print(query.message)
-
-    # Check callback type
-    callback_type = query.data
-    if callback_type.isnumeric():
-        # If numeric callback Store data in context and Update form
-
-        type_rank = list(ocr_user_valid.keys())[int(callback_type)]
-        ocr_user_valid[type_rank] = not ocr_user_valid[type_rank]
-        keyboard = getKeyboardRegisterValidation(ocr_user, ocr_user_valid)
-
-        # TODO Traducir i
-        query.edit_message_reply_markup(InlineKeyboardMarkup(keyboard))
-
-        query.answer(str(type_rank))
-    elif callback_type == "finish":
-        # If callback is finish Store each data DB and notify user
-        try:
-            dbconn = DBHelper()
-            for type in ocr_user:
-                if ocr_user_valid[type] is True and type != "nick":
-                    print("Type ", str(type))
-                    dbconn.add_ranking_data(userbdid, tr_enum[type], ocr_user[type])
-            query.answer("Datos guardados")
-            query.edit_message_text(text=f"Datos Guardados")
-        except:
-            print("Error desconocido")
-        finally:
-            dbconn.close()
-    else:
-        print("Callback no programado ", str(callback_type))
-
-    # print(str(ocr_user))
-    # print(str(ocr_user_valid))
-
-    # query.message.reply_text(str(query.data))
-    # print(query.message.reply_markup)
-    # query.edit_message_text(text=f"Selected option: {query.data}")
-
-    return ConversationHandler.END
-
+# def register_val(update: Update, context: CallbackContext) -> None:
+#     """Updates the form and stores the data, based on user actions"""
+#
+#     query = update.callback_query
+#
+#     ocr_user_valid = context.user_data[CONS.CONTEXT_VAR_OCRUSER_VALID]
+#     ocr_user = context.user_data[CONS.CONTEXT_VAR_OCRUSER]
+#     userbdid = context.user_data[CONS.CONTEXT_VAR_USERDBID]
+#
+#     # print(query.message)
+#
+#     # Check callback type
+#     callback_type = query.data
+#     if callback_type.isnumeric():
+#         # If numeric callback Store data in context and Update form
+#
+#         type_rank = list(ocr_user_valid.keys())[int(callback_type)]
+#         ocr_user_valid[type_rank] = not ocr_user_valid[type_rank]
+#         keyboard = getKeyboardRegisterValidation(ocr_user, ocr_user_valid)
+#
+#         # TODO Traducir i
+#         query.edit_message_reply_markup(InlineKeyboardMarkup(keyboard))
+#
+#         query.answer(str(type_rank))
+#     elif callback_type == "finish":
+#         # If callback is finish Store each data DB and notify user
+#         try:
+#             dbconn = DBHelper()
+#             for type in ocr_user:
+#                 if ocr_user_valid[type] is True and type != "nick":
+#                     print("Type ", str(type))
+#                     dbconn.add_ranking_data(userbdid, tr_enum[type], ocr_user[type])
+#             query.answer("Datos guardados")
+#             query.edit_message_text(text=f"Datos Guardados")
+#         except:
+#             print("Error desconocido")
+#         finally:
+#             dbconn.close()
+#     else:
+#         print("Callback no programado ", str(callback_type))
+#
+#     # print(str(ocr_user))
+#     # print(str(ocr_user_valid))
+#
+#     # query.message.reply_text(str(query.data))
+#     # print(query.message.reply_markup)
+#     # query.edit_message_text(text=f"Selected option: {query.data}")
+#
+#     return ConversationHandler.END
+#
 
 # def screenshot_handler(update: Update, context: CallbackContext) -> None:
 #     """ Function comment"""
@@ -589,8 +589,9 @@ def authgroups(update: Update, context: CallbackContext):
     """Verificar si un grupo esta en la BD y si no se añade yse devuelve el groupid"""
     # TODO: Verificar si un grupo esta en la BD y si no se añade y se devuelve el groupid
 
-    group_id = update.message.chat_id
-    print("authgroup", update.message.chat_id)
+    group_tgid = update.message.chat_id
+    group_name = update.message.chat.title
+    print(group_tgid, group_name)
 
     if CONS.CONTEXT_VAR_GROUPDBID in context.user_data.keys():
         return context.user_data[CONS.CONTEXT_VAR_GROUPDBID]
@@ -598,41 +599,62 @@ def authgroups(update: Update, context: CallbackContext):
         try:
             # Buscar grupo en la BD y conseguir userdbid
             dbconn = DBHelper()
-            index = dbconn.get_user_tgid(user.id)
+            index = dbconn.get_group_tgid(group_tgid)
             # print("Len Index", len(index))
             if len(index) >= 1:
-                context.user_data[CONS.CONTEXT_VAR_USERDBID] = index[0][0]
-                context.user_data[CONS.CONTEXT_VAR_USERDBNICK] = index[0][1]
-                return context.user_data[CONS.CONTEXT_VAR_USERDBID]
+                context.user_data[CONS.CONTEXT_VAR_GROUPDBID] = index[0][0]
+                return context.user_data[CONS.CONTEXT_VAR_GROUPDBID]
             else:
-                return None
+                dbconn = DBHelper()
+                group_id = dbconn.add_group(group_name, group_tgid)
+                context.user_data[CONS.CONTEXT_VAR_GROUPDBID] = group_id
+                return group_id
+
         except Exception as e:
             print(e)
         finally:
             dbconn.close()
 
-    pass
+def add_user_groups(group_id, user_tgid) -> None:
+    """Add user to a telegroup in db"""
+    try:
+        dbconn = DBHelper()
+        dbconn.add_user_telegroup(group_id, user_tgid)
+
+    except Exception as e:
+        print(e)
+    finally:
+        dbconn.close()
+
+
 def groups_new_chat_members_handler(update: Update, context: CallbackContext):
-
-    # TODO: Obtener telegroup DBID
-
-    authgroups(update, context)
-    print(update.message)
-    chat_id = update.message.chat_id
+    """"""
+    # Obtener telegroup DBID
+    group_id = authgroups(update, context)
+    print(group_id, update.message)
     new_users = update.message.new_chat_members
     print(new_users)
 
-    # TODO: Insertar usuario en el grupo asociado a la BD
-    pass
+    # Insertar usuario en el grupo asociado a la BD
+    for new_user in new_users:
+        print("new_user.id", new_user.id)
+        add_user_groups(group_id, new_user.id)
 
 def groups_left_chat_member_handler(update: Update, context: CallbackContext):
-
-    print(update.message)
-    authgroups(update, context)
-    chat_id = update.message.chat_id
+    """"""
+    # Obtener telegroup DBID
+    group_id = authgroups(update, context)
     left_user = update.message.left_chat_member
+    print(group_id, update.message)
     print(left_user)
-    pass
+    try:
+        dbconn = DBHelper()
+        dbconn.delete_user_telegroup(group_id, left_user.id)
+    except Exception as e:
+        print(e)
+    finally:
+        if dbconn:
+            dbconn.close()
 
 def main():
     """Start the bot."""
@@ -662,7 +684,7 @@ def main():
     dp.add_handler(MessageHandler(Filters.status_update.new_chat_members, groups_new_chat_members_handler))
 
     # Registramos cuando el usuario pulsa un boton del formulario de registro
-    updater.dispatcher.add_handler(CallbackQueryHandler(register_val))
+    # updater.dispatcher.add_handler(CallbackQueryHandler(register_val))
 
     # on noncommand i.e message - echo the message on Telegram
     # dp.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))

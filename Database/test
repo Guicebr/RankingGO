@@ -46,4 +46,8 @@ SELECT MAX(amount)
          FROM ranking
          WHERE type = 1 AND personid = 1;
 
+-1001329014844 Prueba Grupo Bot
 
+from Database import dbhelper
+dbconn = dbhelper.DBHelper()
+dbconn.add_group("Prueba Grupo Bot", -1001329014844)

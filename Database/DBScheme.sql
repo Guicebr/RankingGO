@@ -20,10 +20,11 @@ CREATE INDEX idx_tgid ON users(tgid);
 
 CREATE TABLE telegroups (
      id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-     tgid INT NOT NULL UNIQUE,
+     tgid BIGINT NOT NULL UNIQUE,
      lang VARCHAR(10),
      name VARCHAR(255)
 );
+
 CREATE INDEX idx_tgid ON telegroups(tgid);
 
 CREATE TABLE group_user (

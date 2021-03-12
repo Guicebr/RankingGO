@@ -247,6 +247,84 @@ class DBHelper:
                 print("MySQL cursor is closed")
         pass
 
+    def add_group(self, group_name, group_tgid):
+
+        stmt = 'insert into telegroups(name, tgid) values ("%s",%s)'
+        args = (group_name, group_tgid)
+
+        try:
+            self.cursor = self.conn.cursor()
+            # print(stmt % args)
+            self.cursor.execute(stmt % args)
+            self.conn.commit()
+
+            return self.cursor.lastrowid
+
+        except MySQLdb.Error as e:
+            print("Error %s" % str(e))
+
+        finally:
+            if self.conn:
+                self.cursor.close()
+                print("MySQL cursor is closed")
+
+    def get_group_tgid(self, group_tgid):
+        stmt = 'select id,name from telegroups where tgid=%s'
+        args = (group_tgid,)
+
+        try:
+            self.cursor = self.conn.cursor()
+            self.cursor.execute(stmt % args)
+            self.conn.commit()
+            a = self.cursor.fetchall()
+            return a
+
+        except MySQLdb.Error as e:
+            print("Error %s" % str(e))
+
+        finally:
+            if self.conn:
+                self.cursor.close()
+                print("MySQL cursor is closed")
+
+    def add_user_telegroup(self, group_id, user_tgid):
+        """"""
+        stmt = 'insert into group_user(groupid, usertgid) values (%s, %s)'
+        args = (group_id, user_tgid)
+
+        try:
+            self.cursor = self.conn.cursor()
+            # print(stmt % args)
+            self.cursor.execute(stmt % args)
+            self.conn.commit()
+
+        except MySQLdb.Error as e:
+            print("Error %s" % str(e))
+
+        finally:
+            if self.conn:
+                self.cursor.close()
+                print("MySQL cursor is closed")
+
+    def delete_user_telegroup(self, group_id, user_tgid):
+        """"""
+        stmt = "delete from group_user where groupid=%s and usertgid=%s"
+        args = (group_id, user_tgid)
+
+        try:
+            self.cursor = self.conn.cursor()
+            # print(stmt % args)
+            self.cursor.execute(stmt % args)
+            self.conn.commit()
+
+        except MySQLdb.Error as e:
+            print("Error %s" % str(e))
+
+        finally:
+            if self.conn:
+                self.cursor.close()
+                print("MySQL cursor is closed")
+
     def close(self):
         if self.conn:
             self.cursor.close()
@@ -256,18 +334,7 @@ class DBHelper:
 
 
 
-    def add_item(self, item_text):
-        stmt = "INSERT INTO items (description) VALUES (?)"
-        args = (item_text,)
-        self.conn.execute(stmt, args)
-        self.conn.commit()
 
-    def delete_item(self, item_text):
-        stmt = "DELETE FROM items WHERE description = (?)"
-        args = (item_text,)
-        self.conn.execute(stmt, args)
-        self.conn.commit()
 
-    def get_items(self):
-        stmt = "SELECT description FROM items"
-        return [x[0] for x in self.conn.execute(stmt)]
+
+
