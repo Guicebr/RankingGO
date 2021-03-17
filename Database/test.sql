@@ -1,5 +1,6 @@
 insert into users(nick,tgid,lang) values("Wicisian",13922907,"es");
 insert into users(nick,tgid,lang) values("Bugimaemper0r",1441409608,"es");
+insert into users(nick,tgid,lang) values("PabloLuis94",525153728,"es");
 
 
 SELECT r.personid, u.nick, u.tgid, r.amount
@@ -51,3 +52,5 @@ SELECT MAX(amount)
 from Database import dbhelper
 dbconn = dbhelper.DBHelper()
 dbconn.add_group("Prueba Grupo Bot", -1001329014844)
+
+
