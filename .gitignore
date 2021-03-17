@@ -1,7 +1,7 @@
 venv/
-/Imagenes/
+Imagenes/
 example.log
-Logs/translate.log
+Logs/
 /Config/ExperienciaPorNivel.csv
 /Config/ExperienciaPorNIvel.ods
 out2.tiff
