@@ -34,10 +34,11 @@ from Modelo.TypeRanking import bool_to_icon
 from Modelo.TypeRanking import typeranking_enum as tr_enum
 from Plugins import common_func as c_func
 from Plugins import visionocr
+import groups
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO, filename='example.log')
+                    level=logging.INFO, filename='Logs/manin.log')
 
 logger = logging.getLogger(__name__)
 
@@ -584,78 +585,6 @@ def getchatdata(update: Update, context: CallbackContext):
         text=txt
     )
 
-
-def authgroups(update: Update, context: CallbackContext):
-    """Verificar si un grupo esta en la BD y si no se añade yse devuelve el groupid"""
-    # TODO: Verificar si un grupo esta en la BD y si no se añade y se devuelve el groupid
-
-    group_tgid = update.message.chat_id
-    group_name = update.message.chat.title
-    print(group_tgid, group_name)
-
-    if CONS.CONTEXT_VAR_GROUPDBID in context.user_data.keys():
-        return context.user_data[CONS.CONTEXT_VAR_GROUPDBID]
-    else:
-        try:
-            # Buscar grupo en la BD y conseguir userdbid
-            dbconn = DBHelper()
-            index = dbconn.get_group_tgid(group_tgid)
-            # print("Len Index", len(index))
-            if len(index) >= 1:
-                context.user_data[CONS.CONTEXT_VAR_GROUPDBID] = index[0][0]
-                return context.user_data[CONS.CONTEXT_VAR_GROUPDBID]
-            else:
-                dbconn = DBHelper()
-                group_id = dbconn.add_group(group_name, group_tgid)
-                context.user_data[CONS.CONTEXT_VAR_GROUPDBID] = group_id
-                return group_id
-
-        except Exception as e:
-            print(e)
-        finally:
-            dbconn.close()
-
-def add_user_groups(group_id, user_tgid) -> None:
-    """Add user to a telegroup in db"""
-    try:
-        dbconn = DBHelper()
-        dbconn.add_user_telegroup(group_id, user_tgid)
-
-    except Exception as e:
-        print(e)
-    finally:
-        dbconn.close()
-
-
-def groups_new_chat_members_handler(update: Update, context: CallbackContext):
-    """"""
-    # Obtener telegroup DBID
-    group_id = authgroups(update, context)
-    print(group_id, update.message)
-    new_users = update.message.new_chat_members
-    print(new_users)
-
-    # Insertar usuario en el grupo asociado a la BD
-    for new_user in new_users:
-        print("new_user.id", new_user.id)
-        add_user_groups(group_id, new_user.id)
-
-def groups_left_chat_member_handler(update: Update, context: CallbackContext):
-    """"""
-    # Obtener telegroup DBID
-    group_id = authgroups(update, context)
-    left_user = update.message.left_chat_member
-    print(group_id, update.message)
-    print(left_user)
-    try:
-        dbconn = DBHelper()
-        dbconn.delete_user_telegroup(group_id, left_user.id)
-    except Exception as e:
-        print(e)
-    finally:
-        if dbconn:
-            dbconn.close()
-
 def main():
     """Start the bot."""
     updater = Updater(BOT_TOKEN, use_context=True)
@@ -677,11 +606,11 @@ def main():
 
 
     # El bot se fue/echaron de un grupo o Usuario abandona el grupo en el que esta el bot.
-    dp.add_handler(MessageHandler(Filters.status_update.left_chat_member, groups_left_chat_member_handler))
-
+    dp.add_handler(MessageHandler(Filters.status_update.left_chat_member, groups.groups_left_chat_member_handler))
+    # TODO: Gestionar tambien si un usuario habla en el chat y no esta añadido en la BD
 
     # El bot se unio a un grupo/canal/supergrupo no privado o Usuario se une a un grupo en el que se encuentra el bot.
-    dp.add_handler(MessageHandler(Filters.status_update.new_chat_members, groups_new_chat_members_handler))
+    dp.add_handler(MessageHandler(Filters.status_update.new_chat_members, groups.groups_new_chat_members_handler))
 
     # Registramos cuando el usuario pulsa un boton del formulario de registro
     # updater.dispatcher.add_handler(CallbackQueryHandler(register_val))
