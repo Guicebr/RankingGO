@@ -1,7 +1,8 @@
-python-telegram-bot >= 13.0
+python-telegram-bot >= 13.4.1
 mysqlclient >= 2.0
-numpy >= 1.19
-opencv-python >= 4.4.0
-pytesseract >= 0.3.6pi
+numpy >= 1.20
+opencv-python >= 4.5.0
+pytesseract >= 0.3.6
 fuzzywuzzy >= 0.18
 python-Levenshtein-wheels >= 0.13
+Telethon >= 1.20
