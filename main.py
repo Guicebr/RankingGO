@@ -185,7 +185,7 @@ def nickval(update: Update, context: CallbackContext):
             else:
                 # Añadimos usuario a la BD y obtenemos su userdbid
                 print("AddUser DB")
-                userdbid = registeruser(ocr_user.nick, user.id)
+                userdbid = registeruser(ocr_user.nick, user.id, user.language_code)
 
             context.user_data[CONS.CONTEXT_VAR_USERDBID] = userdbid
             txt = 'Nick registrado' + bool_to_icon[1] + ': ' + str(nickctx)
@@ -340,7 +340,10 @@ def authuser(update: Update, context: CallbackContext):
     """ Return Id User in database and Save ID, NICK in Context"""
     user = update.message.from_user
 
-    if CONS.CONTEXT_VAR_USERDBID in context.user_data.keys() and CONS.CONTEXT_VAR_USERDBNICK in context.user_data.keys():
+    userdbid = CONS.CONTEXT_VAR_USERDBID in context.user_data.keys()
+    userdbnick = CONS.CONTEXT_VAR_USERDBNICK in context.user_data.keys()
+    userlang = CONS.CONTEXT_VAR_USERDBLANG in context.user_data.keys()
+    if userdbid and userdbnick and userlang:
         return context.user_data[CONS.CONTEXT_VAR_USERDBID]
     else:
         try:
@@ -349,8 +352,9 @@ def authuser(update: Update, context: CallbackContext):
             index = dbconn.get_user_tgid(user.id)
             # print("Len Index", len(index))
             if len(index) >= 1:
-                context.user_data[CONS.CONTEXT_VAR_USERDBID] = index[0][0]
-                context.user_data[CONS.CONTEXT_VAR_USERDBNICK] = index[0][1]
+                context.user_data[CONS.CONTEXT_VAR_USERDBID] = index[0]
+                context.user_data[CONS.CONTEXT_VAR_USERDBNICK] = index[1]
+                context.user_data[CONS.CONTEXT_VAR_USERDBLANG] = index[2]
                 return context.user_data[CONS.CONTEXT_VAR_USERDBID]
             else:
                 return None
@@ -360,11 +364,11 @@ def authuser(update: Update, context: CallbackContext):
             dbconn.close()
 
 
-def registeruser(nick, tgid):
+def registeruser(nick, tgid, lang):
     """Register User in database"""
     try:
         dbconn = DBHelper()
-        userdbid = dbconn.add_user(nick, tgid)
+        userdbid = dbconn.add_user(nick, tgid, lang)
 
         return userdbid
     except Exception as e:
@@ -604,19 +608,22 @@ def main():
     # command
     # dp.add_handler(CommandHandler("experience", experience))
 
+    # on noncommand i.e message - echo the message on Telegram
+    # dp.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
 
     # El bot se fue/echaron de un grupo o Usuario abandona el grupo en el que esta el bot.
     dp.add_handler(MessageHandler(Filters.status_update.left_chat_member, groups.groups_left_chat_member_handler))
-    # TODO: Gestionar tambien si un usuario habla en el chat y no esta añadido en la BD
 
     # El bot se unio a un grupo/canal/supergrupo no privado o Usuario se une a un grupo en el que se encuentra el bot.
     dp.add_handler(MessageHandler(Filters.status_update.new_chat_members, groups.groups_new_chat_members_handler))
 
+
+    # Un admin pide por el grupo info sobre los usuarios en el grupo, responde solo si eres admin
+    dp.add_handler(CommandHandler(command="group_info", filters=Filters.chat_type.groups, callback=groups.group_info))
     # Registramos cuando el usuario pulsa un boton del formulario de registro
     # updater.dispatcher.add_handler(CallbackQueryHandler(register_val))
 
-    # on noncommand i.e message - echo the message on Telegram
-    # dp.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
+
 
     # dp.add_handler(MessageHandler(Filters.photo & ~Filters.command, screenshot_handler))
 
@@ -659,8 +666,10 @@ def main():
 
         fallbacks=[CommandHandler("cancel", cancel)]
     )
-
     dp.add_handler(ranking_conv_handler)
+
+    # TODO: Gestionar tambien si un usuario habla en el chat y no esta añadido en la BD
+    # dp.add_handler(MessageHandler(Filters.group & Filters.text, groups.groups_talk_chat_member_handler))
 
     # Start the Bot, añadimos allowed_update para poder editar lo mensajes
     updater.start_polling(allowed_updates=[])

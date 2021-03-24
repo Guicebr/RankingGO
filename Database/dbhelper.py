@@ -25,9 +25,10 @@ class DBHelper:
         logging.info("MySQL connection open")
 
     # users
-    def add_user(self, nick, tgid):
-        stmt = 'insert into users(nick, tgid) values ("%s",%s)'
-        args = (nick, tgid)
+    def add_user(self, nick, tgid, lang):
+
+        stmt = 'insert into users(nick, tgid, lang) values ("%s",%s, %s)'
+        args = (nick, tgid, lang)
 
         try:
             self.cursor = self.conn.cursor()
@@ -80,14 +81,14 @@ class DBHelper:
                 logging.info("MySQL cursor is closed")
 
     def get_user_tgid(self, tgid):
-        stmt = 'select id,nick from users where tgid="%s"'
+        stmt = 'select id,nick,lang from users where tgid="%s"'
         args = (tgid, )
 
         try:
             self.cursor = self.conn.cursor()
             self.cursor.execute(stmt % args)
             self.conn.commit()
-            a = self.cursor.fetchall()
+            a = self.cursor.fetchone()
             return a
 
         except MySQLdb.Error as e:
@@ -290,7 +291,7 @@ class DBHelper:
 
     def add_user_telegroup(self, group_id, user_tgid):
         """"""
-        stmt = 'insert into group_user(groupid, usertgid) values (%s, %s)'
+        stmt = 'insert ignore into group_user(groupid, usertgid) values (%s, %s)'
         args = (group_id, user_tgid)
 
         try:
@@ -340,7 +341,7 @@ class DBHelper:
             self.cursor = self.conn.cursor()
             self.cursor.execute(stmt % args)
             self.conn.commit()
-            a = self.cursor.one()
+            a = self.cursor.fetchone()
             return a[0]
 
         except MySQLdb.Error as e:
@@ -354,13 +355,13 @@ class DBHelper:
     def group_usersvalidated_count(self, group_id):
 
         stmt = """SELECT count(id) 
-        FROM (users u
+        FROM users u
         INNER JOIN (
             SELECT usertgid
             FROM group_user
             WHERE groupid=%s
         ) AS t
-        ON u.tgid = t.usertgid);"""
+        ON u.tgid = t.usertgid"""
 
         args = (group_id,)
 

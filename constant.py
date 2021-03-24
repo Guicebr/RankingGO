@@ -1,6 +1,7 @@
 CONTEXT_VAR_USERDBID = "userdbid"
-CONTEXT_VAR_GROUPDBID = "groupdbid"
 CONTEXT_VAR_USERDBNICK = "userdbnick"
+CONTEXT_VAR_USERDBLANG = "userdblang"
+CONTEXT_VAR_GROUPDBID = "groupdbid"
 CONTEXT_VAR_TRTYPE = "tr_type"
 CONTEXT_VAR_AMOUNT = "amount"
 CONTEXT_VAR_TMPNICK = "nick" # Nick introducido por el usuario, que no esta validado aún
