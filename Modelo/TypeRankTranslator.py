@@ -3,8 +3,8 @@ import logging
 import numpy as np
 from fuzzywuzzy import fuzz
 
-BASE = "Config/lang/type_ranking_"
-DIR = "Config/lang"
+BASE = "Config/tr_lang/type_ranking_"
+DIR = "Config/tr_lang"
 
 # logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
 #                     level=logging.INFO, filename='../Logs/translate.log')
