@@ -2,7 +2,5 @@ venv/
 Imagenes/
 example.log
 Logs/
-/Config/ExperienciaPorNivel.csv
-/Config/ExperienciaPorNIvel.ods
+OLD/
 out2.tiff
-/OLD/run.py
