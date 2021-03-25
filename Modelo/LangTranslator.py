@@ -3,23 +3,25 @@ import logging
 import numpy as np
 from fuzzywuzzy import fuzz
 
-BASE = "Config/tr_lang/type_ranking_"
-DIR = "Config/tr_lang"
+BASE = "Config/lang/"
+DIR = "Config/lang"
 
 # logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
 #                     level=logging.INFO, filename='../Logs/translate.log')
 # logger = logging.getLogger(__name__)
 
 import xml.etree.cElementTree as ET
-class TypeRankTranslator:
+class LangTranslator:
     """Clase encargaada de almacenar los datos de los distintos XML, que contienen la información de
      los Tipos de Ranking en diferentes idiomas."""
 
     xml_translate_dict = dict() # Estructura que almacena los idiomas
     xml_lang_pool = []          # Array que almacena los idiomas disponibles
 
+    # xml_translate_dict = dict() -> xml_translate_dict[TIPOSTRING][LANG]
     ID = "id"
     TR = "tr"
+
 
     def __init__(self):
         files = os.listdir(DIR)

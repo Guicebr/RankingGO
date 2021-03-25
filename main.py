@@ -38,15 +38,18 @@ import groups
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO, filename='Logs/manin.log')
+                    level=logging.DEBUG, filename='Logs/manin.log')
+
+# logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+#                     level=logging.DEBUG, filename='Logs/manin.log')
 
 logger = logging.getLogger(__name__)
 
-""" logger.debug(‘Este mensaje es sólo para frikis programadores como nosotros ;)’)
-    logger.info(‘Este mensaje representa algo normal’)
-    logger.warning(‘Esto ya no es tan normal’)
-    logger.error(‘Deberías empezar a preocuparte’)
-    logger.critical(‘El bot está así X(’)"""
+logger.debug('Este mensaje es sólo para frikis programadores como nosotros')
+logger.info('Este mensaje representa algo normal')
+logger.warning('Esto ya no es tan normal')
+logger.error('Deberías empezar a preocuparte')
+logger.critical('El bot está así X')
 
 dbconn = DBHelper()
 
@@ -531,22 +534,8 @@ def show_ranking(update: Update, context: CallbackContext):
     update.message.reply_text(txt, parse_mode="Markdown")
     return ConversationHandler.END
 
-
-def pruebabot(update: Update, context: CallbackContext) -> None:
-    logger.info('He recibido un comando start')
-
-    chat_id = update.message.chat_id
-
-    print(update.message, chat_id, update.message.chat.type)
-
-    context.bot.send_message(
-        chat_id=chat_id,
-        text="Soy un Achicayna, que entre los primeros pobladores de Canarias era el equivalente a un plebeyo."
-    )
-
-
 def set_lang():
-    # TODO: establecer lenguaje en Contexto
+    # TODO:
     pass
 
 
@@ -564,34 +553,17 @@ def printcontextdata(update: Update, context: CallbackContext):
         text=str(context.user_data)
     )
 
-
-def getchatdata(update: Update, context: CallbackContext):
-    """klmcds"""
-    chat_id = update.message.chat_id
-    user = update.message.from_user
-    print(chat_id, user)
-
-    chat = context.bot.getChat(chat_id)
-    admins = context.bot.getChatAdministrators(chat_id)
-    count = context.bot.getChatMembersCount(chat_id)
-    member = context.bot.getChatMember(chat_id, user["id"])
-    # print(context.bot.getChat(chat_id))
-
-    txt = "%s \n %s" % (chat_id, user)
-    txt = "" + str(chat) + "\n"
-    txt += str(admins) + "\n"
-    txt += str(count) + "\n"
-    txt += str(member) + "\n"
-    print(txt)
-
-    context.bot.send_message(
-        chat_id=chat_id,
-        text=txt
-    )
-
 def main():
     """Start the bot."""
     updater = Updater(BOT_TOKEN, use_context=True)
+
+
+
+    logger.debug('This is a debug message')
+    logger.info('This is an info message')
+    logger.warning('This is a warning message')
+    logger.error('This is an error message')
+    logger.critical('This is a critical message')
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
@@ -600,26 +572,18 @@ def main():
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help_command))
     dp.add_handler(CommandHandler("userdata", printcontextdata))
-    dp.add_handler(CommandHandler("chatdata", getchatdata))
     # TODO: Set lang
     dp.add_handler(CommandHandler("lang", set_lang))
 
-    dp.add_handler(CommandHandler("pruebabot", pruebabot))
-    # command
-    # dp.add_handler(CommandHandler("experience", experience))
-
-    # on noncommand i.e message - echo the message on Telegram
-    # dp.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
-
+    # GRUPO
     # El bot se fue/echaron de un grupo o Usuario abandona el grupo en el que esta el bot.
     dp.add_handler(MessageHandler(Filters.status_update.left_chat_member, groups.groups_left_chat_member_handler))
-
     # El bot se unio a un grupo/canal/supergrupo no privado o Usuario se une a un grupo en el que se encuentra el bot.
     dp.add_handler(MessageHandler(Filters.status_update.new_chat_members, groups.groups_new_chat_members_handler))
 
-
     # Un admin pide por el grupo info sobre los usuarios en el grupo, responde solo si eres admin
     dp.add_handler(CommandHandler(command="group_info", filters=Filters.chat_type.groups, callback=groups.group_info))
+
     # Registramos cuando el usuario pulsa un boton del formulario de registro
     # updater.dispatcher.add_handler(CallbackQueryHandler(register_val))
 
@@ -669,7 +633,7 @@ def main():
     dp.add_handler(ranking_conv_handler)
 
     # TODO: Gestionar tambien si un usuario habla en el chat y no esta añadido en la BD
-    # dp.add_handler(MessageHandler(Filters.group & Filters.text, groups.groups_talk_chat_member_handler))
+    # dp.add_handler(MessageHandler(Filters.chat_type.groups & Filters.text, groups.groups_talk_chat_member_handler))
 
     # Start the Bot, añadimos allowed_update para poder editar lo mensajes
     updater.start_polling(allowed_updates=[])

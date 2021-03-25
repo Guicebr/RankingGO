@@ -18,10 +18,10 @@ from pytesseract import Output
 from functools import reduce
 from fuzzywuzzy import fuzz
 
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO, filename='example.log')
-
-logger = logging.getLogger(__name__)
+# logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+#                     level=logging.INFO, filename='example.log')
+#
+# logger = logging.getLogger(__name__)
 
 RATIO_NICK = 80
 RATIO_CHECK = 80
