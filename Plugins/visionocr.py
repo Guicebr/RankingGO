@@ -21,7 +21,7 @@ from fuzzywuzzy import fuzz
 # logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
 #                     level=logging.INFO, filename='example.log')
 #
-# logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 RATIO_NICK = 80
 RATIO_CHECK = 80
@@ -305,11 +305,14 @@ def ocrScreenshot_CheckTyp_Amount(photo_file, tr_type, amount, nick):
         else:
             rank_valid = ocrScreenshot_Type(filepath, tr_type)
 
+        logger.debug("TypeRank valid %s" % (rank_valid))
         if rank_valid:
             if tr_cat == "totalxp":
                 amount_valid = ocrScreenshot_Amount_EXP(filepath, amount)
             else:
                 amount_valid = ocrScreenshot_Amount(filepath, amount)
+
+            logger.debug("Amount valid %s" % (amount_valid))
             if amount_valid:
                 logger.info("TypeRanking %s Amount %s" % (str(tr_type), str(amount)))
                 return True
@@ -358,6 +361,7 @@ def ocrScreenshot_Amount_EXP(filepath, amount):
 
     validlv_exp = False
     validtotalexp = False
+    valid = False
 
     arrnums = ocrScreenshot_NumberFreq(filepath, gaussParam, psm, bitwise=False)
     LV_EXP = lv_translator.getLV_EXP(int(amount))
@@ -369,11 +373,14 @@ def ocrScreenshot_Amount_EXP(filepath, amount):
     for lv in LV_EXP:
         lvvalid = arraycmp_string(list(arrnums), str(lv[0]), RATIO_AMOUNT)
         expvalid = arraycmp_string(list(arrnums), str(lv[1]), RATIO_AMOUNT_EXP)
-        # print("lvvalid %d %s; expvalid %d %s" % (lv[0], str(lvvalid), lv[1], str(expvalid)))
+        logger.debug("lvvalid %d %s; expvalid %d %s" % (lv[0], str(lvvalid), lv[1], str(expvalid)))
         if lvvalid and expvalid:
             validlv_exp = True
 
-    valid = validlv_exp or validtotalexp
+    if validlv_exp or validtotalexp:
+        valid = True
+
+    logger.debug("ocrScreenshot_Amount_EXP Valid %s %s %s" % (validlv_exp, validtotalexp, valid))
     return valid
 
 def ocr_type(ocr_data, type):
@@ -480,7 +487,7 @@ def arraycmp_string(arr, s, ratioval):
 
     print("%s cmp %s == %s\n" % (arr[i_max], s, max_ratio))
     logger.info("%s cmp %s == %s\n", arr[i_max], s, max_ratio)
-    if max_ratio > ratioval:
+    if max_ratio >= ratioval:
         # logger.info("%s cmp %s == %s\n", arr[i_max], s, max_ratio)
         return True
     else:
