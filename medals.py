@@ -15,16 +15,14 @@ import constant as CONS
 # PROYECTO
 import users
 from Database.dbhelper import DBHelper
-from Modelo import TypeRankTranslator
 from Plugins import common_func as c_func
 from Plugins import visionocr
-
+from main import trtranslator
 logger = logging.getLogger(__name__)
 
-
-TRTYPESEL, TYPE_AMOUNT, PHOTO_VAL = range(3)
-translator = TypeRankTranslator.TypeRankTranslator()
 xml_lang_selector = "es"
+TRTYPESEL, TYPE_AMOUNT, PHOTO_VAL = range(3)
+
 
 def manual_up(update: Update, context: CallbackContext):
     """Start the update data proccess, ask user for category"""
@@ -44,9 +42,9 @@ def manual_up(update: Update, context: CallbackContext):
     # for i in tr_enum:
     #     keyboard.append([str(i)])
 
-    # print(translator.xml_translate_dict)
+    # print(trtranslator.xml_translate_dict)
     # print(lang)
-    for name in translator.getlist_TypeRank(lang):
+    for name in trtranslator.getlist_TypeRank(lang):
         keyboard.append([str(name)])
 
     # logger.info("Inicio Registro: %s\n ID: %s", user.first_name, user.id)
@@ -90,7 +88,7 @@ def manual_up_photoval(update: Update, context: CallbackContext):
     if data_valid:
         try:
             # tr_id = tr_enum[tr_type]
-            tr_id = translator.translate_HumantoSEL(lang, translator.ID, tr_type)
+            tr_id = trtranslator.translate_HumantoSEL(lang, trtranslator.ID, tr_type)
             print("tr_id", tr_id)
             dbconn = DBHelper()
             dbconn.add_ranking_data(userbdid, tr_id, amount)

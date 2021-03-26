@@ -52,7 +52,7 @@ logger = logging.getLogger(__name__)
 
 dbconn = DBHelper()
 
-translator = TypeRankTranslator.TypeRankTranslator()
+trtranslator = TypeRankTranslator.TypeRankTranslator()
 xml_lang_selector = "es"
 
 # Define a few command handlers. These usually take the two arguments update and
@@ -268,14 +268,12 @@ def main():
     # TODO: Set lang
     dp.add_handler(CommandHandler("lang", set_lang))
 
-    # GRUPO
-    # El bot se fue/echaron de un grupo o Usuario abandona el grupo en el que esta el bot.
-    dp.add_handler(MessageHandler(Filters.status_update.left_chat_member, groups.groups_left_chat_member_handler))
-    # El bot se unio a un grupo/canal/supergrupo no privado o Usuario se une a un grupo en el que se encuentra el bot.
-    dp.add_handler(MessageHandler(Filters.status_update.new_chat_members, groups.groups_new_chat_members_handler))
 
     # Un admin pide por el grupo info sobre los usuarios en el grupo, responde solo si eres admin
     dp.add_handler(CommandHandler(command="group_info", filters=Filters.chat_type.groups, callback=groups.group_info))
+
+
+
 
     # Registramos cuando el usuario pulsa un boton del formulario de registro
     # updater.dispatcher.add_handler(CallbackQueryHandler(register_val))
@@ -286,7 +284,7 @@ def main():
 
     # Add conversation handler with the states NICK, NICK_VAL
     conv_handler = ConversationHandler(
-        entry_points=[CommandHandler("registro", users.register)],
+        entry_points=[CommandHandler(command="registro", filters=Filters.chat_type.private, callback=users.register)],
 
         states={
             users.NICK: [MessageHandler(Filters.text & ~Filters.command, users.nick)],
@@ -298,7 +296,7 @@ def main():
 
     dp.add_handler(conv_handler)
     manual_up_conv_handler = ConversationHandler(
-        entry_points=[CommandHandler("manual_up", medals.manual_up)],
+        entry_points=[CommandHandler(command="manual_up", filters=Filters.chat_type.private, callback=medals.manual_up)],
 
         states={
             medals.TRTYPESEL: [MessageHandler(Filters.text & ~Filters.command, medals.manual_up_trtype)],
@@ -312,7 +310,7 @@ def main():
 
 
     ranking_conv_handler = ConversationHandler(
-        entry_points=[CommandHandler("ranking", ranking.get_ranking)],
+        entry_points=[CommandHandler(command="ranking", callback=ranking.get_ranking)],
 
         states={
             ranking.RANKINGTRSEL: [MessageHandler(Filters.text & ~Filters.command, ranking.get_ranking_trtype)],
@@ -322,6 +320,12 @@ def main():
         fallbacks=[CommandHandler("cancel", cancel)]
     )
     dp.add_handler(ranking_conv_handler)
+
+    # GRUPO
+    # El bot se fue/echaron de un grupo o Usuario abandona el grupo en el que esta el bot.
+    dp.add_handler(MessageHandler(Filters.status_update.left_chat_member, groups.groups_left_chat_member_handler))
+    # El bot se unio a un grupo/canal/supergrupo no privado o Usuario se une a un grupo en el que se encuentra el bot.
+    dp.add_handler(MessageHandler(Filters.status_update.new_chat_members, groups.groups_new_chat_members_handler))
 
     # TODO: Gestionar tambien si un usuario habla en el chat y no esta añadido en la BD
     # dp.add_handler(MessageHandler(Filters.chat_type.groups & Filters.text, groups.groups_talk_chat_member_handler))

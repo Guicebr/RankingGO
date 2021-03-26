@@ -14,14 +14,13 @@ import constant as CONS
 # PROYECTO
 import users
 from Database.dbhelper import DBHelper
-from Modelo import TypeRankTranslator
+from main import trtranslator
 
 logger = logging.getLogger(__name__)
 
 RANKINGTRSEL, RANKINGTOPSEL = range(2)
 RANKINGTOPS = [10, 50, 100]
 
-translator = TypeRankTranslator.TypeRankTranslator()
 xml_lang_selector = "es"
 
 def get_ranking(update: Update, context: CallbackContext):
@@ -49,7 +48,7 @@ def get_ranking(update: Update, context: CallbackContext):
         print(tr_avalible)
         for tr_id in tr_avalible:
             tr_id = str(tr_id[0])
-            name = translator.translate_DBidtoHUMAN(xml_lang_selector, tr_id)
+            name = trtranslator.translate_DBidtoHUMAN(xml_lang_selector, tr_id)
             keyboard.append([name])
 
         update.message.reply_text(text, reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True))
@@ -93,7 +92,7 @@ def show_ranking(update: Update, context: CallbackContext):
         print(e)
     try:
         dbconn = DBHelper()
-        tr_id = translator.translate_HumantoSEL(xml_lang_selector, translator.ID, tr)
+        tr_id = trtranslator.translate_HumantoSEL(xml_lang_selector, trtranslator.ID, tr)
         data = dbconn.get_ranking(tr_id, num_elem)
 
         # print(str(data))
