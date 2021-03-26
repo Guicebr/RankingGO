@@ -12,7 +12,7 @@ from Database.dbhelper import DBHelper
 
 # logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
 #                     level=logging.INFO, filename='example.log')
-# logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 
 def authgroups(update: Update, context: CallbackContext):
@@ -100,7 +100,7 @@ def groups_left_chat_member_handler(update: Update, context: CallbackContext) ->
         dbconn = DBHelper()
         dbconn.delete_user_telegroup(group_id, left_user.id)
     except Exception as e:
-        logger.debug(e)
+        logger.error(e)
     finally:
         if dbconn:
             dbconn.close()

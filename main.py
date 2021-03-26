@@ -55,13 +55,6 @@ dbconn = DBHelper()
 translator = TypeRankTranslator.TypeRankTranslator()
 xml_lang_selector = "es"
 
-
-RANKINGTRSEL, RANKINGTOPSEL = range(2)
-RANKINGTOPS = [10, 50, 100]
-
-
-# DEBUG = 1
-
 # Define a few command handlers. These usually take the two arguments update and
 # context. Error handlers also receive the raised TelegramError object in error.
 def start(update: Update, context: CallbackContext) -> None:
@@ -242,81 +235,6 @@ def cancel(update: Update, context: CallbackContext):
 
     return ConversationHandler.END
 
-def get_ranking(update: Update, context: CallbackContext):
-    """Mostrar categorías disponibles, y el usuario selecciona una"""
-    user = update.message.from_user
-    lang = xml_lang_selector
-
-    # TODO: Argumento 0 -> Indique tipoderanking, se comprueba si esta en la lista de disponible
-    # TODO: Argumento 1 -> Numero de elementos, tiene que ser una de los establecido 10, 50, 100
-
-    # Verificamos que el usuario este registrado
-    if users.authuser(update, context) is None:
-        text = "Usuario no registrado, ejecute el comando /registro primero"
-        update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
-        return ConversationHandler.END
-
-    text = "Por favor selecciona la categoría: "
-    keyboard = []
-
-    # Imprimir solo los tiposderanking que tengan algún dato en la BD
-    tr_avalible = dbconn.get_types_ranking()
-
-    print(tr_avalible)
-    for tr_id in tr_avalible:
-        tr_id = str(tr_id[0])
-        name = translator.translate_DBidtoHUMAN(xml_lang_selector, tr_id)
-        keyboard.append([name])
-
-    update.message.reply_text(text, reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True))
-
-    return RANKINGTRSEL
-
-
-def get_ranking_trtype(update: Update, context: CallbackContext):
-    """Obtenemos la categoría que ha seleccionado el usuario y pedimos el número de elementos a buscar"""
-    context.user_data[CONS.CONTEXT_VAR_TRTYPE] = update.message.text
-    keyboard = []
-
-    for ranks in RANKINGTOPS:
-        name = "TOP " + str(ranks)
-        keyboard.append([str(name)])
-
-    text = """Selecciona el la cantidad de elementos que quieres mostrar de la categoría %s: 
-           """ % (context.user_data[CONS.CONTEXT_VAR_TRTYPE])
-
-    update.message.reply_text(text, reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True))
-
-    return RANKINGTOPSEL
-
-
-def show_ranking(update: Update, context: CallbackContext):
-    """Tenemos la categoría y el número de elementos a mostrar, se hace una petición a la BD con
-     la categoria y el número de elemtos buscados"""
-
-    tr = context.user_data[CONS.CONTEXT_VAR_TRTYPE]
-    try:
-        if len(update.message.text) > 0:
-            num_elem = int(update.message.text.split(" ")[1])
-
-    except Exception as e:
-        num_elem = 100
-        logger.warning("Error %s con el valor: %s\n", e, update.message.text)
-        print(e)
-
-    tr_id = translator.translate_HumantoSEL(xml_lang_selector, translator.ID, tr)
-    data = dbconn.get_ranking(tr_id, num_elem)
-
-    # print(str(data))
-    head = "Ranking " + str(tr) + "\n"
-    txt = head
-    for useri in range(len(data)):
-        mention = "%s. %s [%s](tg://user?id=%s)\n" % (useri + 1, data[useri][2], data[useri][0], data[useri][1])
-        txt += mention
-
-    update.message.reply_text(txt, parse_mode="Markdown")
-    return ConversationHandler.END
-
 def set_lang():
     # TODO:
     pass
@@ -339,14 +257,6 @@ def printcontextdata(update: Update, context: CallbackContext):
 def main():
     """Start the bot."""
     updater = Updater(BOT_TOKEN, use_context=True)
-
-
-
-    logger.debug('This is a debug message')
-    logger.info('This is an info message')
-    logger.warning('This is a warning message')
-    logger.error('This is an error message')
-    logger.critical('This is a critical message')
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
@@ -402,11 +312,11 @@ def main():
 
 
     ranking_conv_handler = ConversationHandler(
-        entry_points=[CommandHandler("ranking", get_ranking)],
+        entry_points=[CommandHandler("ranking", ranking.get_ranking)],
 
         states={
-            RANKINGTRSEL: [MessageHandler(Filters.text & ~Filters.command, get_ranking_trtype)],
-            RANKINGTOPSEL: [MessageHandler(Filters.text & ~Filters.command, show_ranking)]
+            ranking.RANKINGTRSEL: [MessageHandler(Filters.text & ~Filters.command, ranking.get_ranking_trtype)],
+            ranking.RANKINGTOPSEL: [MessageHandler(Filters.text & ~Filters.command, ranking.show_ranking)]
         },
 
         fallbacks=[CommandHandler("cancel", cancel)]
@@ -419,6 +329,7 @@ def main():
     # Start the Bot, añadimos allowed_update para poder editar lo mensajes
     updater.start_polling(allowed_updates=[])
 
+    logger.info("BOT EN MARCHA")
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
     # start_polling() is non-blocking and will stop the bot gracefully.
