@@ -123,7 +123,7 @@ def manual_up_photoval(update: Update, context: CallbackContext):
 #             userdbid = int(result[0][0])
 #         else:
 #             txt = "Usuario no registrado ejecute el comando registro"
-#             update.message.reply_text(txt)
+#             update.message.reply_text(txt)desde el main
 #     except:
 #         print("Error desconocido")
 #     finally:
@@ -139,6 +139,56 @@ def manual_up_photoval(update: Update, context: CallbackContext):
 #     # Get data from OCR and save in context
 #     # ocr_user = visionocr.ocr_register(photo_file, nickctx)
 #     pass
+
+# def register_val(update: Update, context: CallbackContext) -> None:
+#     """Updates the form and stores the data, based on user actions"""
+#
+#     query = update.callback_query
+#
+#     ocr_user_valid = context.user_data[CONS.CONTEXT_VAR_OCRUSER_VALID]
+#     ocr_user = context.user_data[CONS.CONTEXT_VAR_OCRUSER]
+#     userbdid = context.user_data[CONS.CONTEXT_VAR_USERDBID]
+#
+#     # print(query.message)
+#
+#     # Check callback type
+#     callback_type = query.data
+#     if callback_type.isnumeric():
+#         # If numeric callback Store data in context and Update form
+#
+#         type_rank = list(ocr_user_valid.keys())[int(callback_type)]
+#         ocr_user_valid[type_rank] = not ocr_user_valid[type_rank]
+#         keyboard = getKeyboardRegisterValidation(ocr_user, ocr_user_valid)
+#
+#         # TODO Traducir i
+#         query.edit_message_reply_markup(InlineKeyboardMarkup(keyboard))
+#
+#         query.answer(str(type_rank))
+#     elif callback_type == "finish":
+#         # If callback is finish Store each data DB and notify user
+#         try:
+#             dbconn = DBHelper()
+#             for type in ocr_user:
+#                 if ocr_user_valid[type] is True and type != "nick":
+#                     print("Type ", str(type))
+#                     dbconn.add_ranking_data(userbdid, tr_enum[type], ocr_user[type])
+#             query.answer("Datos guardados")
+#             query.edit_message_text(text=f"Datos Guardados")
+#         except:
+#             print("Error desconocido")
+#         finally:
+#             dbconn.close()
+#     else:
+#         print("Callback no programado ", str(callback_type))
+#
+#     # print(str(ocr_user))
+#     # print(str(ocr_user_valid))
+#
+#     # query.message.reply_text(str(query.data))
+#     # print(query.message.reply_markup)
+#     # query.edit_message_text(text=f"Selected option: {query.data}")
+#
+#     return ConversationHandler.END
 
 # def obtener_datos_de_captura_registro(update: Update, context: CallbackContext):
 #     # Initialize vars
@@ -169,14 +219,14 @@ def manual_up_photoval(update: Update, context: CallbackContext):
 #
 #     update.message.reply_text(txt, reply_markup=reply_markup)
 
-def getKeyboardRegisterValidation(ocr_user, ocr_user_valid):
-    keyboard = []
-    for type_rank in ocr_user:
-        if ocr_user[type_rank] is not None:
-            value = str(type_rank) + ": " + str(ocr_user[type_rank]) + bool_to_icon[int(ocr_user_valid[type_rank])]
-            cb_data = list(ocr_user.keys()).index(type_rank)
-
-            keyboard.append([InlineKeyboardButton(str(value), callback_data=str(cb_data))])
-    keyboard.append([InlineKeyboardButton("Finish", callback_data='finish')])
-
-    return keyboard
+# def getKeyboardRegisterValidation(ocr_user, ocr_user_valid):
+#     keyboard = []
+#     for type_rank in ocr_user:
+#         if ocr_user[type_rank] is not None:
+#             value = str(type_rank) + ": " + str(ocr_user[type_rank]) + bool_to_icon[int(ocr_user_valid[type_rank])]
+#             cb_data = list(ocr_user.keys()).index(type_rank)
+#
+#             keyboard.append([InlineKeyboardButton(str(value), callback_data=str(cb_data))])
+#     keyboard.append([InlineKeyboardButton("Finish", callback_data='finish')])
+#
+#     return keyboard
