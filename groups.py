@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+""" modulo users
+"""
 import logging
 import constant as CONS
 

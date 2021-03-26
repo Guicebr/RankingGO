@@ -15,26 +15,25 @@ bot.
 
 # import collections
 # import telegram
+
+# GENERAL
 import logging
-from time import sleep
-import constant as CONS
 
 
-from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram import Update
-
+# TELEGRAM
+from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext, ConversationHandler, \
     CallbackQueryHandler
-
+# PROYECTO
+import users, medals, ranking, groups
 from CREDENTIALS import BOT_TOKEN
 from Database.dbhelper import DBHelper
 from Modelo import TypeRankTranslator
-# from Plugins.visionocr import *
 from Modelo.TypeRanking import bool_to_icon
 from Modelo.TypeRanking import typeranking_enum as tr_enum
 from Plugins import common_func as c_func
 from Plugins import visionocr
-import groups
+import constant as CONS
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -45,18 +44,17 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 logger = logging.getLogger(__name__)
 
-logger.debug('Este mensaje es sólo para frikis programadores como nosotros')
-logger.info('Este mensaje representa algo normal')
-logger.warning('Esto ya no es tan normal')
-logger.error('Deberías empezar a preocuparte')
-logger.critical('El bot está así X')
+# logger.debug('Este mensaje es sólo para frikis programadores como nosotros')
+# logger.info('Este mensaje representa algo normal')
+# logger.warning('Esto ya no es tan normal')
+# logger.error('Deberías empezar a preocuparte')
+# logger.critical('El bot está así X')
 
 dbconn = DBHelper()
 
 translator = TypeRankTranslator.TypeRankTranslator()
 xml_lang_selector = "es"
 
-REGISTER_VAL, NICK, NICK_VAL = range(3)
 TRTYPESEL, TYPE_AMOUNT, PHOTO_VAL = range(3)
 RANKINGTRSEL, RANKINGTOPSEL = range(2)
 RANKINGTOPS = [10, 50, 100]
@@ -70,7 +68,7 @@ def start(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
     user = update.message.from_user
 
-    authuser(update, context)
+    users.authuser(update, context)
     reply_keyboard = [['/registro', '/cancel', '/experience']]
     text = 'Hi! My name is RankingGo Bot. ' \
            'Send /register to register in my database.\n\n' \
@@ -104,100 +102,6 @@ def experience(update: Update, context: CallbackContext):
     update.message.reply_text("Tu experiencia es " + context.args[0])
 
 
-def register(update: Update, context: CallbackContext):
-    """Start the register proccess, ask user for nick"""
-
-    chat_id = update.message.chat_id
-    chat_type = update.message.chat.type
-
-    if chat_type != "private":
-        message = update.message.reply_text(
-            text="Para registarte hablame por privado con el comando /registro",
-            reply_markup=ReplyKeyboardRemove())
-        print(message)
-        sleep(3)
-        context.bot.deleteMessage(message.chat.id, message.message_id)
-        # context.bot.deleteMessage(message.reply_to_message.chat.id, message.reply_to_message.message_id)
-
-        return ConversationHandler.END
-
-    if authuser(update, context) > 0:
-        text = "%s ya estás registrad@" % context.user_data[CONS.CONTEXT_VAR_USERDBNICK]
-        message = update.message.reply_text(
-            text=text,
-            reply_markup=ReplyKeyboardRemove())
-        return ConversationHandler.END
-
-    # context.bot.send_message(
-    #     chat_id=chat_id,
-    #     text="Soy un Achicayna, que entre los primeros pobladores de Canarias era el equivalente a un plebeyo."
-    # )
-
-    user = update.message.from_user
-
-    text = 'Send me your Nickname in PokemonGO.'
-    logger.info("Inicio Registro: %s\n"
-                "ID: %s", user.first_name, user.id)
-    update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
-
-    return NICK
-
-
-def nick(update: Update, context: CallbackContext):
-    """Save users nick in context data and ask the user to send you a photo."""
-    user = update.message.from_user
-    logger.info("Nombre %s: Nick %s", user.first_name, update.message.text)
-    context.user_data[CONS.CONTEXT_VAR_TMPNICK] = update.message.text
-
-    text = "Is " + update.message.text + " your nickname?\n Send me a photo at your profile account to verify"
-    update.message.reply_text(text)
-
-    return NICK_VAL
-
-
-def nickval(update: Update, context: CallbackContext):
-    """Receive photo from user, save/get User from DB, and create ValidationForm. """
-    # Initialize vars
-    keyboard = []
-    userdbid = 0
-
-    user = update.message.from_user
-    nickctx = str(context.user_data[CONS.CONTEXT_VAR_TMPNICK])
-    photo_file = update.message.photo[-1].get_file()
-
-    # Get data from OCR and save in context
-    ocr_user = visionocr.ocr_register(photo_file, nickctx)
-    # print("ocr_return nickval ", str(ocr_user))
-    context.user_data[CONS.CONTEXT_VAR_OCRUSER] = ocr_user
-
-    # ocr_user[nick]
-
-    # Check validity of user nick
-    if ocr_user.nick is None:
-        # If invalid nick, notify user and cancel register
-        text = "Nick no válido" + bool_to_icon[0] + ", vuelva a intentarlo con el comando /registro"
-        update.message.reply_text(text)
-        return ConversationHandler.END
-    else:
-        # If nick is valid, check if it exists in the database and get/save to obtain userid
-        try:
-            # Buscar usuario en la BD y conseguir userdbid
-            user_id = authuser(update, context)
-            if user_id is not None:
-                userdbid = user_id
-            else:
-                # Añadimos usuario a la BD y obtenemos su userdbid
-                print("AddUser DB")
-                userdbid = registeruser(ocr_user.nick, user.id, user.language_code)
-
-            context.user_data[CONS.CONTEXT_VAR_USERDBID] = userdbid
-            txt = 'Nick registrado' + bool_to_icon[1] + ': ' + str(nickctx)
-            update.message.reply_text(txt)
-
-            return ConversationHandler.END
-
-        except Exception as e:
-            print(e)
 
 
 # def obtener_datos_de_captura_registro(update: Update, context: CallbackContext):
@@ -339,54 +243,13 @@ def cancel(update: Update, context: CallbackContext):
     return ConversationHandler.END
 
 
-def authuser(update: Update, context: CallbackContext):
-    """ Return Id User in database and Save ID, NICK in Context"""
-    user = update.message.from_user
-
-    userdbid = CONS.CONTEXT_VAR_USERDBID in context.user_data.keys()
-    userdbnick = CONS.CONTEXT_VAR_USERDBNICK in context.user_data.keys()
-    userlang = CONS.CONTEXT_VAR_USERDBLANG in context.user_data.keys()
-    if userdbid and userdbnick and userlang:
-        return context.user_data[CONS.CONTEXT_VAR_USERDBID]
-    else:
-        try:
-            # Buscar usuario en la BD y conseguir userdbid
-            dbconn = DBHelper()
-            index = dbconn.get_user_tgid(user.id)
-            # print("Len Index", len(index))
-            if len(index) >= 1:
-                context.user_data[CONS.CONTEXT_VAR_USERDBID] = index[0]
-                context.user_data[CONS.CONTEXT_VAR_USERDBNICK] = index[1]
-                context.user_data[CONS.CONTEXT_VAR_USERDBLANG] = index[2]
-                return context.user_data[CONS.CONTEXT_VAR_USERDBID]
-            else:
-                return None
-        except Exception as e:
-            print(e)
-        finally:
-            dbconn.close()
-
-
-def registeruser(nick, tgid, lang):
-    """Register User in database"""
-    try:
-        dbconn = DBHelper()
-        userdbid = dbconn.add_user(nick, tgid, lang)
-
-        return userdbid
-    except Exception as e:
-        print(e)
-    finally:
-        dbconn.close()
-
-
 def manual_up(update: Update, context: CallbackContext):
     """Start the update data proccess, ask user for category"""
     user = update.message.from_user
     lang = xml_lang_selector
 
     # Verificamos que el usuario este registrado
-    if authuser(update, context) is None:
+    if users.authuser(update, context) is None:
         text = "Usuario no registrado, ejecute el comando /registro primero"
         update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
@@ -468,7 +331,7 @@ def get_ranking(update: Update, context: CallbackContext):
     # TODO: Argumento 1 -> Numero de elementos, tiene que ser una de los establecido 10, 50, 100
 
     # Verificamos que el usuario este registrado
-    if authuser(update, context) is None:
+    if users.authuser(update, context) is None:
         text = "Usuario no registrado, ejecute el comando /registro primero"
         update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
@@ -591,21 +454,23 @@ def main():
 
     # dp.add_handler(MessageHandler(Filters.photo & ~Filters.command, screenshot_handler))
 
-    # Add conversation handler with the states NICK, NICK_VAL, REGISTER_VAL
+    # Add conversation handler with the states NICK, NICK_VAL
     conv_handler = ConversationHandler(
-        entry_points=[CommandHandler("registro", register)],
+        entry_points=[CommandHandler("registro", users.register)],
 
         states={
-            NICK: [MessageHandler(Filters.text & ~Filters.command, nick)],
-            NICK_VAL: [MessageHandler(Filters.photo & ~Filters.command, nickval)],
-            # REGISTER_VAL: [CallbackQueryHandler(register_val)]
+            users.NICK: [MessageHandler(Filters.text & ~Filters.command, users.nick)],
+            users.NICK_VAL: [MessageHandler(Filters.photo & ~Filters.command, users.nickval)],
         },
 
         fallbacks=[CommandHandler("cancel", cancel)]
     )
 
-    dp.add_handler(conv_handler)
 
+
+
+
+    dp.add_handler(conv_handler)
     manual_up_conv_handler = ConversationHandler(
         entry_points=[CommandHandler("manual_up", manual_up)],
 
@@ -617,8 +482,8 @@ def main():
 
         fallbacks=[CommandHandler("cancel", cancel)]
     )
-
     dp.add_handler(manual_up_conv_handler)
+
 
     ranking_conv_handler = ConversationHandler(
         entry_points=[CommandHandler("ranking", get_ranking)],
