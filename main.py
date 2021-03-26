@@ -21,7 +21,7 @@ import logging
 
 
 # TELEGRAM
-from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext, ConversationHandler, \
     CallbackQueryHandler
 # PROYECTO
@@ -97,47 +97,7 @@ def experience(update: Update, context: CallbackContext):
 
 
 
-# def obtener_datos_de_captura_registro(update: Update, context: CallbackContext):
-#     # Initialize vars
-#     keyboard = []
-#     userdbid = authuser(update, context)
-#     ocr_user = None
-#
-#     # Save data in user context and prepare validation form
-#     # El nick ya ha sido registrado,vamos a pedir confirmación del resto de valores
-#     # Creamos un diccionario de los datos-OCR y eliminamos el nick porque ya lo tenemos
-#     ocr_user = ocr_user.getDict()
-#     ocr_user.pop("nick")
-#
-#     # Creamos un dicionario ordenado de los datos-OCR y un otro diccionario, para almacenar la validez de cada dato
-#     context.user_data[CONS.CONTEXT_VAR_OCRUSER] = collections.OrderedDict(ocr_user)
-#     context.user_data[CONS.CONTEXT_VAR_OCRUSER_VALID] = {k: True for k in context.user_data[CONS.CONTEXT_VAR_OCRUSER]}
-#
-#     ocr_user = context.user_data[CONS.CONTEXT_VAR_OCRUSER]
-#     ocr_user_valid = context.user_data[CONS.CONTEXT_VAR_OCRUSER_VALID]
-#
-#     # Validation by the user of each data obtained through OCR
-#     # Creamos un teclado con los diferentes datos que hemos obtenido al hacer OCR
-#     txt = 'Verifica los siguientes datos por favor:'
-#     print(ocr_user)
-#
-#     keyboard = getKeyboardRegisterValidation(ocr_user, ocr_user_valid)
-#     reply_markup = InlineKeyboardMarkup(keyboard)
-#
-#     update.message.reply_text(txt, reply_markup=reply_markup)
 
-
-def getKeyboardRegisterValidation(ocr_user, ocr_user_valid):
-    keyboard = []
-    for type_rank in ocr_user:
-        if ocr_user[type_rank] is not None:
-            value = str(type_rank) + ": " + str(ocr_user[type_rank]) + bool_to_icon[int(ocr_user_valid[type_rank])]
-            cb_data = list(ocr_user.keys()).index(type_rank)
-
-            keyboard.append([InlineKeyboardButton(str(value), callback_data=str(cb_data))])
-    keyboard.append([InlineKeyboardButton("Finish", callback_data='finish')])
-
-    return keyboard
 
 
 # def register_val(update: Update, context: CallbackContext) -> None:
@@ -191,39 +151,7 @@ def getKeyboardRegisterValidation(ocr_user, ocr_user_valid):
 #     return ConversationHandler.END
 #
 
-# def screenshot_handler(update: Update, context: CallbackContext) -> None:
-#     """ Function comment"""
-#     # TODO: Sustituir por authuser()
-#     userbdid = 0
-#     user = update.message.from_user
-#     photo_file = update.message.photo[-1].get_file()
-#
-#     # Verificar si el usuario esta registrado -> userbdid
-#     try:
-#         # Buscar usuario en la BD y conseguir userdbid
-#         dbconn = DBHelper()
-#         result = dbconn.get_user_tgid(user.id)
-#         # print("Len Index", len(index))
-#         if len(result) >= 1:
-#             userdbid = int(result[0][0])
-#         else:
-#             txt = "Usuario no registrado ejecute el comando registro"
-#             update.message.reply_text(txt)
-#     except:
-#         print("Error desconocido")
-#     finally:
-#         print(userdbid)
-#         dbconn.close()
-#
-#     # TODO: Obtener tipo_ranking y cantidad
-#     ocr_data = visionocr.ocr_screenshot(photo_file)
-#
-#     # TODO: Validar?
-#     # TODO: Salvar datos y Notificar al usuario
-#
-#     # Get data from OCR and save in context
-#     # ocr_user = visionocr.ocr_register(photo_file, nickctx)
-#     pass
+
 
 
 def cancel(update: Update, context: CallbackContext):
