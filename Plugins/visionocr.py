@@ -279,7 +279,7 @@ def ocrRegister_Distance(ocr_data):
 #     pass
 
 def ocrScreenshot_CheckTyp_Amount(photo_file, tr_type, amount, nick):
-    filepath = os.path.expanduser('~') + str(photo_file.file_id)
+    filepath = os.path.expanduser('~') + "/" + str(photo_file.file_id)
     # print(filepath)
     photo_file.download(filepath)
 
