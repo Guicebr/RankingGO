@@ -12,7 +12,6 @@ from Modelo.TypeRanking import typeranking as tr
 from Modelo.TypeRanking import datapattern as data_p
 from Modelo.UserData import UserData
 
-
 from pytesseract import pytesseract
 from pytesseract import Output
 from functools import reduce
@@ -32,35 +31,41 @@ xml_lang_selector = "es"
 translator = TypeRankTranslator.TypeRankTranslator()
 lv_translator = LevelsTranslator.LevelsTranslator()
 
+
 def trasform_image(filepath, bitwise, blur, threshold_type, tparam1, tparam2, showimg):
     # config = {"bitwise": False, "blur": 3, "threshold_type": 0,
     #           "tparam1": 7, "tparam2": 7, "showimg": 0}
+    try:
+        img = cv.imread(filepath, 0)
+        start_time = time()
+        if bitwise:
+            img = cv.bitwise_not(img)
+        img = cv.medianBlur(img, blur)
 
-    img = cv.imread(filepath, 0)
-    start_time = time()
-    if bitwise:
-        img = cv.bitwise_not(img)
-    img = cv.medianBlur(img, blur)
+        if threshold_type == 0:
+            # print("threshold_type %s" % ("ADAPTIVE_THRESH_GAUSSIAN_C"))
+            img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY,
+                                       tparam1, tparam2)
+        else:
+            # print("threshold_type %s" % ("ADAPTIVE_THRESH_MEAN_C"))
+            img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_MEAN_C, cv.THRESH_BINARY,
+                                       tparam1, tparam2)
 
-    if threshold_type == 0:
-        # print("threshold_type %s" % ("ADAPTIVE_THRESH_GAUSSIAN_C"))
-        img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY,
-                                   tparam1, tparam2)
-    else:
-        # print("threshold_type %s" % ("ADAPTIVE_THRESH_MEAN_C"))
-        img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_MEAN_C, cv.THRESH_BINARY,
-                                   tparam1, tparam2)
+        img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+        cv.imwrite("out2.tiff", img)
+        img = cv.imread("out2.tiff", 0)
 
-    img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
-    cv.imwrite("out2.tiff", img)
-    img = cv.imread("out2.tiff", 0)
+        if showimg:
+            cv.imshow('img', cv.resize(img, (480, 720)))
+            cv.waitKey(0)
+        elapsed_time = time() - start_time
+        # print("gauss1=%d gauss2=%d time: %.5f seconds" % (tparam1, tparam2, elapsed_time))
+        return img
+    except Exception as e:
+        logger.error(e)
+        raise
 
-    if showimg:
-        cv.imshow('img', cv.resize(img, (480, 720)))
-        cv.waitKey(0)
-    elapsed_time = time() - start_time
-    # print("gauss1=%d gauss2=%d time: %.5f seconds" % (tparam1, tparam2, elapsed_time))
-    return img
+
 # ocr_register v1
 # def ocr_register2(photo_file, nick):
 #     user = UserData()
@@ -100,7 +105,7 @@ def ocr_register(photo_file, nick):
     logger.info("OCR Start - Register")
     user = UserData()
 
-    filepath = os.path.expanduser('~') + '/Fotos_RankingPOGO' + str(photo_file.file_id)
+    filepath = os.path.expanduser('~') + '/' + str(photo_file.file_id)
     photo_file.download(filepath)
     # print(filepath)
 
@@ -112,7 +117,7 @@ def ocr_register(photo_file, nick):
     return user
 
 
-def ocrRegister_Nick (filepath, nick):
+def ocrRegister_Nick(filepath, nick):
     """Recibe la direccion a una imagen que se usa para validar el nick y
     devuelve el nick si se puede encontrar en la imagen, sino devuelve None"""
 
@@ -142,7 +147,8 @@ def ocr_Experience(filepath):
     config = {"bitwise": False, "blur": 3, "threshold_type": 0,
               "tparam1": 7, "tparam2": 7, "psm": aux, "showimg": 0}
 
-    img = trasform_image(filepath, bitwise=config["bitwise"], blur=config["blur"], threshold_type=config["threshold_type"],
+    img = trasform_image(filepath, bitwise=config["bitwise"], blur=config["blur"],
+                         threshold_type=config["threshold_type"],
                          tparam1=config["tparam1"], tparam2=config["tparam2"], showimg=config["showimg"])
 
     ocr_data = pytesseract.image_to_data(img, output_type=Output.DICT, config=config["psm"])
@@ -172,7 +178,8 @@ def ocr_Experience2(filepath):
     config = {"bitwise": False, "blur": 3, "threshold_type": 0,
               "tparam1": 7, "tparam2": 7, "psm": aux, "showimg": 0}
 
-    img = trasform_image(filepath, bitwise=config["bitwise"], blur=config["blur"], threshold_type=config["threshold_type"],
+    img = trasform_image(filepath, bitwise=config["bitwise"], blur=config["blur"],
+                         threshold_type=config["threshold_type"],
                          tparam1=config["tparam1"], tparam2=config["tparam2"], showimg=config["showimg"])
 
     ocr_data = pytesseract.image_to_data(img, output_type=Output.DICT, config=config["psm"])
@@ -187,7 +194,8 @@ def ocr_Experience2(filepath):
 
             # exp = str(np.max(arr_to_nums(ocr_pattern(img, data_p['totalxp']))))
             exp_dpattern = ocr_pattern(img, data_p['totalxp'])
-            print("ocr_pattern(img, data_p['totalxp']) %s -> %s" % (str(exp_dpattern), np.max(arr_to_nums(exp_dpattern))))
+            print(
+                "ocr_pattern(img, data_p['totalxp']) %s -> %s" % (str(exp_dpattern), np.max(arr_to_nums(exp_dpattern))))
             exp_num_psm = ocr_num_psm(11, img)
             print("ocr_num_psm(11, img) %s -> %s" % (str(exp_num_psm), np.max(arr_to_nums(exp_num_psm))))
             exp = 0
@@ -241,9 +249,6 @@ def ocrRegister_Distance(ocr_data):
         return None
 
     return distance
-
-
-
 
 
 # TODO: Modo auto
@@ -328,7 +333,8 @@ def ocrScreenshot_Type(filepath, tr_type):
     config = {"bitwise": False, "blur": 3, "threshold_type": 0,
               "tparam1": 11, "tparam2": 3, "showimg": 0, "psm": "--psm 3"}
 
-    img = trasform_image(filepath, bitwise=config["bitwise"], blur=config["blur"], threshold_type=config["threshold_type"],
+    img = trasform_image(filepath, bitwise=config["bitwise"], blur=config["blur"],
+                         threshold_type=config["threshold_type"],
                          tparam1=config["tparam1"], tparam2=config["tparam2"], showimg=config["showimg"])
 
     ocr_data = pytesseract.image_to_data(img, output_type=Output.DICT, config=config["psm"])
@@ -353,6 +359,7 @@ def ocrScreenshot_Amount(filepath, amount):
     arrnums = ocrScreenshot_NumberFreq(filepath, gaussParam, psm, bitwise=True)
     print(arrnums)
     return arraycmp_string(list(arrnums), str(amount), RATIO_AMOUNT)
+
 
 def ocrScreenshot_Amount_EXP(filepath, amount):
     """"""
@@ -382,6 +389,7 @@ def ocrScreenshot_Amount_EXP(filepath, amount):
 
     logger.debug("ocrScreenshot_Amount_EXP Valid %s %s %s" % (validlv_exp, validtotalexp, valid))
     return valid
+
 
 def ocr_type(ocr_data, type):
     logger.info("Ocr_Type %s start.", type)

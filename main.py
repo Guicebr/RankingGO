@@ -65,8 +65,8 @@ def start(update: Update, context: CallbackContext) -> None:
     reply_keyboard = [['/registro', '/cancel', '/experience']]
     text = 'Hi! My name is RankingGo Bot. ' \
            'Send /register to register in my database.\n\n' \
-           'Send /experience num to save your experience.\n\n' \
            'Send /cancel to stop talking to me.\n\n'
+
     update.message.reply_text(text, reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
 
 
@@ -77,7 +77,15 @@ def error(update: Update, context: CallbackContext):
 
 def help_command(update: Update, context: CallbackContext):
     """Send a message when the command /help is issued."""
-    text = 'Help!' \
+    text = 'Help en privado!' \
+           'Send /registro to register in my database.\n\n' \
+           'Send /experience num to save your experience.\n\n' \
+           'Send /cancel to stop talking to me.\n\n'
+    update.message.reply_text(text)
+
+def help_command_groups(update: Update, context: CallbackContext):
+    """Send a message when the command /help is issued."""
+    text = 'Help en grupo!' \
            'Send /registro to register in my database.\n\n' \
            'Send /experience num to save your experience.\n\n' \
            'Send /cancel to stop talking to me.\n\n'
@@ -88,13 +96,6 @@ def echo(update: Update, context: CallbackContext):
     """Echo the user message."""
     print(update.message)
     update.message.reply_text(update.message.text)
-
-
-
-#
-
-
-
 
 def cancel(update: Update, context: CallbackContext):
     """Cancel command."""
@@ -132,18 +133,15 @@ def main():
     dp = updater.dispatcher
 
     # on different commands - answer in Telegram
-    dp.add_handler(CommandHandler("start", start))
-    dp.add_handler(CommandHandler("help", help_command))
-    dp.add_handler(CommandHandler("userdata", printcontextdata))
-    # TODO: Set lang
-    dp.add_handler(CommandHandler("lang", set_lang))
+    dp.add_handler(CommandHandler(command="start", filters=Filters.chat_type.private, callback=start))
+    dp.add_handler(CommandHandler(command="help", filters=Filters.chat_type.private, callback=help_command))
+    # dp.add_handler(CommandHandler(command="help", filters=Filters.chat_type.groups, callback=help_command_groups))
 
+    # dp.add_handler(CommandHandler("userdata", printcontextdata))
+    # dp.add_handler(CommandHandler("lang", set_lang))
 
     # Un admin pide por el grupo info sobre los usuarios en el grupo, responde solo si eres admin
     dp.add_handler(CommandHandler(command="group_info", filters=Filters.chat_type.groups, callback=groups.group_info))
-
-
-
 
     # Registramos cuando el usuario pulsa un boton del formulario de registro
     # updater.dispatcher.add_handler(CallbackQueryHandler(register_val))
@@ -180,7 +178,7 @@ def main():
 
 
     ranking_conv_handler = ConversationHandler(
-        entry_points=[CommandHandler(command="ranking", callback=ranking.get_ranking)],
+        entry_points=[CommandHandler(command="ranking", filters=Filters.chat_type.private, callback=ranking.get_ranking)],
 
         states={
             ranking.RANKINGTRSEL: [MessageHandler(Filters.text & ~Filters.command, ranking.get_ranking_trtype)],

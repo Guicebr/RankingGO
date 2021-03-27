@@ -38,17 +38,12 @@ def register(update: Update, context: CallbackContext):
 
         return ConversationHandler.END
 
-    if authuser(update, context) > 0:
+    if authuser(update, context) is not None:
         text = "%s ya estás registrad@" % context.user_data[CONS.CONTEXT_VAR_USERDBNICK]
         message = update.message.reply_text(
             text=text,
             reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
-
-    # context.bot.send_message(
-    #     chat_id=chat_id,
-    #     text="Soy un Achicayna, que entre los primeros pobladores de Canarias era el equivalente a un plebeyo."
-    # )
 
     user = update.message.from_user
 

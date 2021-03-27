@@ -17,12 +17,10 @@ import constant as CONS
 from Database.dbhelper import DBHelper
 from Plugins import common_func as c_func
 from Plugins import visionocr
-from main import trtranslator
-from Modelo.TypeRanking import bool_to_icon
-
+from Modelo import TypeRankTranslator
 logger = logging.getLogger(__name__)
 
-
+trtranslator = TypeRankTranslator.TypeRankTranslator()
 xml_lang_selector = "es"
 TRTYPESEL, TYPE_AMOUNT, PHOTO_VAL = range(3)
 

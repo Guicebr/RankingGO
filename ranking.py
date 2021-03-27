@@ -14,8 +14,9 @@ import constant as CONS
 # PROYECTO
 import users
 from Database.dbhelper import DBHelper
-from main import trtranslator
+from Modelo import TypeRankTranslator
 
+trtranslator = TypeRankTranslator.TypeRankTranslator()
 logger = logging.getLogger(__name__)
 
 RANKINGTRSEL, RANKINGTOPSEL = range(2)
