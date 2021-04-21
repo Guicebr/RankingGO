@@ -1,29 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# This program is dedicated to the public domain under the CC0 license.
+"""
+Ranking Pokemon Go Medals Bot.
+
 
 """
-Simple Bot to reply to Telegram messages.
-First, a few handler functions are defined. Then, those functions are passed to
-the Dispatcher and registered at their respective places.
-Then, the bot is started and runs until we press Ctrl-C on the command line.
-Usage:
-Basic Echobot example, repeats messages.
-Press Ctrl-C on the command line or send a signal to the process to stop the
-bot.
-"""
-
-# import collections
-# import telegram
-
 # GENERAL
 import logging
-
 
 # TELEGRAM
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext, ConversationHandler, \
     CallbackQueryHandler
+
 # PROYECTO
 import users, medals, ranking, groups
 from CREDENTIALS import BOT_TOKEN
@@ -38,10 +27,6 @@ import constant as CONS
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO, filename='Logs/manin.log')
-
-# logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-#                     level=logging.DEBUG, filename='Logs/manin.log')
-
 logger = logging.getLogger(__name__)
 
 # logger.debug('Este mensaje es sólo para frikis programadores como nosotros')
@@ -73,28 +58,25 @@ def start(update: Update, context: CallbackContext) -> None:
 def error(update: Update, context: CallbackContext):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, context.error)
+    logger.error('Update "%s" caused error "%s"', update, context.error)
 
 
 def help_command(update: Update, context: CallbackContext):
     """Send a message when the command /help is issued."""
-    text = 'Help en privado!' \
+    text = 'Help!' \
            'Send /registro to register in my database.\n\n' \
-           'Send /experience num to save your experience.\n\n' \
+           'Send /manualup to increase value of any of your medals.\n\n' \
            'Send /cancel to stop talking to me.\n\n'
     update.message.reply_text(text)
 
 def help_command_groups(update: Update, context: CallbackContext):
     """Send a message when the command /help is issued."""
-    text = 'Help en grupo!' \
-           'Send /registro to register in my database.\n\n' \
-           'Send /experience num to save your experience.\n\n' \
-           'Send /cancel to stop talking to me.\n\n'
+    text = 'Use the command /ranking to see group rankings'
     update.message.reply_text(text)
 
 
 def echo(update: Update, context: CallbackContext):
     """Echo the user message."""
-    print(update.message)
     update.message.reply_text(update.message.text)
 
 def cancel(update: Update, context: CallbackContext):
@@ -112,12 +94,11 @@ def set_lang():
 
 
 def printcontextdata(update: Update, context: CallbackContext):
-    print(context.user_data)
 
-    print(update.message.from_user)
     chat_id = update.message.chat_id
 
-    # print(update.getChat(chat_id))
+    print(context.user_data)
+    print(update.message.from_user)
     print(context.bot.getChat(chat_id))
 
     context.bot.send_message(
@@ -135,7 +116,7 @@ def main():
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler(command="start", filters=Filters.chat_type.private, callback=start))
     dp.add_handler(CommandHandler(command="help", filters=Filters.chat_type.private, callback=help_command))
-    # dp.add_handler(CommandHandler(command="help", filters=Filters.chat_type.groups, callback=help_command_groups))
+    dp.add_handler(CommandHandler(command="help", filters=Filters.chat_type.groups, callback=help_command_groups))
 
     # dp.add_handler(CommandHandler("userdata", printcontextdata))
     # dp.add_handler(CommandHandler("lang", set_lang))
@@ -146,10 +127,10 @@ def main():
     # Registramos cuando el usuario pulsa un boton del formulario de registro
     # updater.dispatcher.add_handler(CallbackQueryHandler(register_val))
 
-
-
     # dp.add_handler(MessageHandler(Filters.photo & ~Filters.command, screenshot_handler))
 
+
+    # COMANDO REGISTRO
     # Add conversation handler with the states NICK, NICK_VAL
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler(command="registro", filters=Filters.chat_type.private, callback=users.register)],
@@ -162,6 +143,7 @@ def main():
         fallbacks=[CommandHandler("cancel", cancel)]
     )
 
+    # COMANDO MANUAL_UP
     dp.add_handler(conv_handler)
     manual_up_conv_handler = ConversationHandler(
         entry_points=[CommandHandler(command="manual_up", filters=Filters.chat_type.private, callback=medals.manual_up)],
@@ -177,6 +159,7 @@ def main():
     dp.add_handler(manual_up_conv_handler)
 
 
+    # COMANDO RANKING
     ranking_conv_handler = ConversationHandler(
         entry_points=[CommandHandler(command="ranking", filters=Filters.chat_type.private, callback=ranking.get_ranking)],
 
@@ -189,7 +172,7 @@ def main():
     )
     dp.add_handler(ranking_conv_handler)
 
-    # GRUPO
+    # Users in Group Management
     # El bot se fue/echaron de un grupo o Usuario abandona el grupo en el que esta el bot.
     dp.add_handler(MessageHandler(Filters.status_update.left_chat_member, groups.groups_left_chat_member_handler))
     # El bot se unio a un grupo/canal/supergrupo no privado o Usuario se une a un grupo en el que se encuentra el bot.

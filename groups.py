@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-""" modulo users
+""" Modulo Groups
+Gestiona los grupos y los miembros dentro de ellos
 """
 import logging
 import constant as CONS
@@ -10,8 +11,7 @@ from telegram import Update
 from telegram.ext import Updater, CallbackContext
 from Database.dbhelper import DBHelper
 
-# logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-#                     level=logging.INFO, filename='example.log')
+
 logger = logging.getLogger(__name__)
 
 
@@ -52,7 +52,7 @@ def add_user_groups(group_id, user_tgid) -> None:
     try:
         dbconn = DBHelper()
         dbconn.add_user_telegroup(group_id, user_tgid)
-        # logger.info("Add user %s to group %s", user_tgid, group_id)
+        logger.info("Add user %s to group %s", user_tgid, group_id)
 
     except Exception as e:
         logger.debug(e)
@@ -62,7 +62,7 @@ def add_user_groups(group_id, user_tgid) -> None:
 
 
 def groups_new_chat_members_handler(update: Update, context: CallbackContext) -> None:
-    """"""
+    """Cuando se une un usuario al grupo, el bot lo añade a la db """
     # Obtener telegroup DBID
     group_id = authgroups(update, context)
     new_users = update.message.new_chat_members
@@ -76,20 +76,21 @@ def groups_new_chat_members_handler(update: Update, context: CallbackContext) ->
         add_user_groups(group_id, new_user.id)
 
 def groups_talk_chat_member_handler(update: Update, context: CallbackContext) -> None:
+    """Añadir usuario cuando habla por el grupo"""
 
     # Obtener telegroup DBID
     group_id = authgroups(update, context)
-    new_users = [update.message.from_user]
+    talk_users = [update.message.from_user]
     group_name = update.message.chat.title
 
-    print([group_id, group_name, new_users])
+    print([group_id, group_name, talk_users])
     # Insertar usuario en el grupo asociado a la BD
-    for new_user in new_users:
+    for new_user in talk_users:
         logger.info("New user in group %s %s %s", group_name, new_user.name, new_user.id)
         add_user_groups(group_id, new_user.id)
 
 def groups_left_chat_member_handler(update: Update, context: CallbackContext) -> None:
-    """"""
+    """Eliminar un usuario de la BD cuando se sale del grupo"""
     # Obtener telegroup DBID
     group_id = authgroups(update, context)
     left_user = update.message.left_chat_member
@@ -107,7 +108,7 @@ def groups_left_chat_member_handler(update: Update, context: CallbackContext) ->
 
 
 def group_info(update: Update, context: CallbackContext) -> None:
-    """"""
+    """Obtener información sobre los usuarios en un grupo y enviarla por privado"""
     # TODO: Comment
     # Comando group_info, solo admins del grupo
 
@@ -139,7 +140,7 @@ def group_info(update: Update, context: CallbackContext) -> None:
         context.bot.deleteMessage(group_tgid, update.message.message_id)
 
     except Exception as e:
-        logger.debug(e)
+        logger.error(e)
     finally:
         if dbconn:
             dbconn.close()

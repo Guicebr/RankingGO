@@ -36,19 +36,15 @@ def manual_up(update: Update, context: CallbackContext):
         update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
 
+    logger.info("Inicio ManualUp")
     text = "Por favor selecciona la categoría: "
     keyboard = []
-    # TODO Almacenar en un fichero temporal las categorias de la BD
 
-    # for i in tr_enum:
-    #     keyboard.append([str(i)])
+    # Almacenar en un fichero temporal las categorias de la BD
 
-    # print(trtranslator.xml_translate_dict)
-    # print(lang)
     for name in trtranslator.getlist_TypeRank(lang):
         keyboard.append([str(name)])
 
-    # logger.info("Inicio Registro: %s\n ID: %s", user.first_name, user.id)
     update.message.reply_text(text, reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True))
 
     return TRTYPESEL
@@ -80,6 +76,8 @@ def manual_up_photoval(update: Update, context: CallbackContext):
     userbdid = context.user_data[CONS.CONTEXT_VAR_USERDBID]
     nick = context.user_data[CONS.CONTEXT_VAR_USERDBNICK]
 
+    logger.info("Validando TipoRanking %s y Cantidad %s", tr_type, amount)
+
     lang = xml_lang_selector
 
     photo_file = update.message.photo[-1].get_file()
@@ -97,10 +95,11 @@ def manual_up_photoval(update: Update, context: CallbackContext):
             update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
             return ConversationHandler.END
         except Exception as e:
-            print(e)
+            logger.error(e)
             return ConversationHandler.END
     else:
         text = "Datos no válidos"
+        logger.info("TipoRanking %s y Cantidad %s no válidos", tr_type, amount)
         update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
 

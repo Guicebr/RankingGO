@@ -144,9 +144,11 @@ def registeruser(nick, tgid, lang):
     try:
         dbconn = DBHelper()
         userdbid = dbconn.add_user(nick, tgid, lang)
+        logger.info("Usuario registrado con Nick %s, TGID: %s", nick, tgid)
 
         return userdbid
     except Exception as e:
-        print(e)
+        logger.error(e)
     finally:
-        dbconn.close()
+        if dbconn:
+            dbconn.close()
