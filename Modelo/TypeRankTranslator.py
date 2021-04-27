@@ -103,3 +103,6 @@ class TypeRankTranslator:
         seldict = self.xml_translate_dict[lang]["id"]
         #print(seldict)
         return seldict[type_rank_id]
+
+tr = TypeRankTranslator()
+print(tr)
