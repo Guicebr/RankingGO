@@ -8,7 +8,7 @@ DIR = "Config/tr_lang"
 
 # logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
 #                     level=logging.INFO, filename='../Logs/translate.log')
-# logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 import xml.etree.cElementTree as ET
 class TypeRankTranslator:

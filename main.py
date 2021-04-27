@@ -17,7 +17,7 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, Callb
 import users, medals, ranking, groups
 from CREDENTIALS import BOT_TOKEN
 from Database.dbhelper import DBHelper
-from Modelo import TypeRankTranslator
+from Modelo import TypeRankTranslator, LangTranslator
 from Modelo.TypeRanking import bool_to_icon
 from Modelo.TypeRanking import typeranking_enum as tr_enum
 from Plugins import common_func as c_func
@@ -38,6 +38,8 @@ logger = logging.getLogger(__name__)
 dbconn = DBHelper()
 
 trtranslator = TypeRankTranslator.TypeRankTranslator()
+langtranslator = LangTranslator.LangTranslator()
+
 xml_lang_selector = "es"
 
 # Define a few command handlers. These usually take the two arguments update and

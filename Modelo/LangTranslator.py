@@ -5,22 +5,20 @@ from fuzzywuzzy import fuzz
 
 BASE = "Config/lang/"
 DIR = "Config/lang"
+LANGS = ["es", "en"]
 
-# logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-#                     level=logging.INFO, filename='../Logs/translate.log')
-# logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 import xml.etree.cElementTree as ET
+
 class LangTranslator:
     """Clase encargaada de almacenar los datos de los distintos XML, que contienen la información de
      los Tipos de Ranking en diferentes idiomas."""
 
     xml_translate_dict = dict() # Estructura que almacena los idiomas
-    xml_lang_pool = []          # Array que almacena los idiomas disponibles
+    xml_lang_pool = LANGS       # Array que almacena los idiomas disponibles
 
     # xml_translate_dict = dict() -> xml_translate_dict[TIPOSTRING][LANG]
-    ID = "id"
-    TR = "tr"
 
 
     def __init__(self):
@@ -28,18 +26,6 @@ class LangTranslator:
         self.xml_lang_pool = self.getLangfromFiles(files)
         self.xml_translate_dict = self.parseXMLtoDict()
 
-    def getLangfromFiles(self, arrfiles):
-        """Lee un array con nombres de ficheros con la forma 'type_ranking_es.xml' y devuelve un array con los
-         diferentes idiomas de los ficheros"""
-
-        arrlang = []
-        for file in arrfiles:
-            # Formato -> type_ranking_es.xml
-            lang = file.split("_")[2]
-            lang = lang.split(".")[0]
-            arrlang.append(lang)
-
-        return arrlang
 
     def parseXMLtoDict(self):
         """Crea un diccionario que almacena los ditintos idiomas, cada uno con su Id y TipoRanking

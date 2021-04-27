@@ -1,8 +1,8 @@
 from Database import dbhelper
 import xml.etree.cElementTree as ET
 
-BASE = "Config/lang/type_ranking_"
-DIR = "Config/lang"
+BASE = "Config/tr_lang/type_ranking_"
+DIR = "Config/tr_lang"
 LANG = "en"
 
 dbconn = dbhelper.DBHelper()
