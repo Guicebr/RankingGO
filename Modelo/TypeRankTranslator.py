@@ -1,8 +1,8 @@
 import os
 import logging
-import numpy as np
-from fuzzywuzzy import fuzz
+import Modelo.Translator as Translator
 
+PROJECT_DIR = "/home/guillermocs/PycharmProjects/RankingGO/"
 BASE = "Config/tr_lang/type_ranking_"
 DIR = "Config/tr_lang"
 
@@ -22,7 +22,7 @@ class TypeRankTranslator:
     TR = "tr"
 
     def __init__(self):
-        files = os.listdir(DIR)
+        files = os.listdir(PROJECT_DIR+DIR)
         self.xml_lang_pool = self.getLangfromFiles(files)
         self.xml_translate_dict = self.parseXMLtoDict()
 
@@ -50,28 +50,18 @@ class TypeRankTranslator:
             rootdict[lang] = dict_lang_i
 
             # Obtenemos el nombre sel fichero con el directorio y el idioma
-            file = BASE + str(lang) + ".xml"
-            tree = ET.ElementTree(file=file)
+            file = PROJECT_DIR + BASE + str(lang) + ".xml"
 
-            # Obtenemos la raiz
+            tree = ET.parse(file)
             root = tree.getroot()
 
-            # Recorremos el árbol
-            typerranks = list(root)
-            for typerank in typerranks:
-                list_typerank = list(typerank)
-                #print(list_typerank)
+            # Creeamos un diccionario y almacenamos los datos
+            list_typerank = Translator.XmlListConfig(root)
 
-                # Creeamos un diccionario y almacenamos los datos
-                dict_typerank_i = dict()
-                for typerank_i in list_typerank:
-                    dict_typerank_i[typerank_i.tag] = typerank_i.text
-                    #print("%s=%s" % (typerank_i.tag, typerank_i.text))
-                # print(dict_typerank_i)
-
+            for typerank_i in list_typerank:
                 # Almacenamos en nuestro diccionario final las ids y los trs
-                dict_lang_i[self.ID][dict_typerank_i["id"]] = dict_typerank_i["text"]
-                dict_lang_i[self.TR][dict_typerank_i["name"]] = dict_typerank_i["text"]
+                dict_lang_i[self.ID][typerank_i["id"]] = typerank_i["text"]
+                dict_lang_i[self.TR][typerank_i["name"]] = typerank_i["text"]
 
         return rootdict
 
@@ -79,7 +69,7 @@ class TypeRankTranslator:
         "Devuelve el id o el tipo_ranking del nombre pasado como parametro(type_rank)"
 
         seldict = self.xml_translate_dict[lang][type_selector]
-        print(seldict)
+        # print(seldict)
         for key, value in seldict.items():
             if value == type_rank:
                 return key
@@ -104,5 +94,6 @@ class TypeRankTranslator:
         #print(seldict)
         return seldict[type_rank_id]
 
-tr = TypeRankTranslator()
-print(tr)
+
+
+

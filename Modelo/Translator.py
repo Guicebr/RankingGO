@@ -1,19 +1,21 @@
-import os
 import logging
-import numpy as np
-from fuzzywuzzy import fuzz
 
-BASE = "Config/tr_lang/type_ranking_"
-DIR = "Config/tr_lang"
+'''
+   Example usage:
 
-# logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-#                     level=logging.INFO, filename='../Logs/translate.log')
+   # >>> tree = ElementTree.parse('your_file.xml')
+   # >>> root = tree.getroot()
+   # >>> xmldict = XmlDictConfig(root)
+   #
+   # Or, if you want to use an XML string:
+   #
+   # >>> root = ElementTree.XML(xml_string)
+   # >>> xmldict = XmlDictConfig(root)
+
+   And then use xmldict for what it is... a dict.
+   '''
+
 logger = logging.getLogger(__name__)
-
-import xml.etree.cElementTree as ET
-
-
-from xml.etree import cElementTree as ElementTree
 
 class XmlListConfig(list):
     def __init__(self, aList):
@@ -32,20 +34,8 @@ class XmlListConfig(list):
 
 
 class XmlDictConfig(dict):
-    '''
-    Example usage:
+    """ Hola metodo"""
 
-    # >>> tree = ElementTree.parse('your_file.xml')
-    # >>> root = tree.getroot()
-    # >>> xmldict = XmlDictConfig(root)
-    #
-    # Or, if you want to use an XML string:
-    #
-    # >>> root = ElementTree.XML(xml_string)
-    # >>> xmldict = XmlDictConfig(root)
-
-    And then use xmldict for what it is... a dict.
-    '''
     def __init__(self, parent_element):
         if parent_element.items():
             self.update(dict(parent_element.items()))
@@ -77,14 +67,3 @@ class XmlDictConfig(dict):
             else:
                 self.update({element.tag: element.text})
 
-file = "/home/guillermocs/PycharmProjects/RankingGO/Config/tr_lang/type_ranking_en.xml"
-tree = ElementTree.parse(file)
-root = tree.getroot()
-xmllist = XmlListConfig(root)
-print(xmllist)
-
-file = "/home/guillermocs/PycharmProjects/RankingGO/Config/XP_Level.xml"
-tree = ElementTree.parse(file)
-root = tree.getroot()
-xmllist = XmlListConfig(root)
-print(xmllist)
