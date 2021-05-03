@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<langdict>
+    <words>
+        <name>START_STRING</name>
+        <es>!Hola¡ Soy RankingGoBot.
+            Escribe /registro para registrarte en mi base de datos.
+            Envía /cancel para dejar de hablar conmigo.</es>
+        <en>Hi! My name is RankingGo Bot.
+            Send /register to register in my database.
+            Send /cancel to stop talking to me.</en>
+    </words>
+    <words>
+        <name>HELP_PRIVATE_STRING</name>
+        <es>Ayuda en Privado:
+            Escribe /registro para registrarte en mi base de datos.
+            Escribe /manualup para actualizar el valor de tus medallas.
+            Escribe /ranking para ver el ranking global de cada medalla.</es>
+        <en>Help in Private:
+           Send /registro to register in my database.
+           Send /manualup to increase value of any of your medals.
+           Send /ranking to show global ranking medals.
+        </en>
+    </words>
+    <words>
+        <name>HELP_GROUPS_STRING</name>
+        <es>Ayuda en Grupos:
+        Escribe /ranking para ver el ranking global de cada medalla.</es>
+        <en>Help in Groups:
+        Send /ranking to show global ranking medals.</en>
+    </words>
+</langdict>

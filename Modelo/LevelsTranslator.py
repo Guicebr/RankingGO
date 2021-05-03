@@ -2,7 +2,6 @@ from typing import List
 import logging
 import Modelo.Translator as Translator
 
-PROJECT_DIR = "/home/guillermocs/PycharmProjects/RankingGO/"
 DIR = "Config/"
 FILE = "XP_Level.xml"
 

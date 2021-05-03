@@ -50,10 +50,8 @@ def start(update: Update, context: CallbackContext) -> None:
 
     users.authuser(update, context)
     reply_keyboard = [['/registro', '/cancel', '/experience']]
-    text = 'Hi! My name is RankingGo Bot. ' \
-           'Send /register to register in my database.\n\n' \
-           'Send /cancel to stop talking to me.\n\n'
 
+    text = langtranslator.getWordLang('START_STRING', xml_lang_selector)
     update.message.reply_text(text, reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
 
 
@@ -65,15 +63,12 @@ def error(update: Update, context: CallbackContext):
 
 def help_command(update: Update, context: CallbackContext):
     """Send a message when the command /help is issued."""
-    text = 'Help!' \
-           'Send /registro to register in my database.\n\n' \
-           'Send /manualup to increase value of any of your medals.\n\n' \
-           'Send /cancel to stop talking to me.\n\n'
+    text = langtranslator.getWordLang('HELP_PRIVATE_STRING', xml_lang_selector)
     update.message.reply_text(text)
 
 def help_command_groups(update: Update, context: CallbackContext):
     """Send a message when the command /help is issued."""
-    text = 'Use the command /ranking to see group rankings'
+    text = langtranslator.getWordLang('HELP_GROUPS_STRING', xml_lang_selector)
     update.message.reply_text(text)
 
 

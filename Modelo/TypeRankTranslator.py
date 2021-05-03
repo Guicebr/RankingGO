@@ -2,7 +2,6 @@ import os
 import logging
 import Modelo.Translator as Translator
 
-PROJECT_DIR = "/home/guillermocs/PycharmProjects/RankingGO/"
 BASE = "Config/tr_lang/type_ranking_"
 DIR = "Config/tr_lang"
 
@@ -22,7 +21,7 @@ class TypeRankTranslator:
     TR = "tr"
 
     def __init__(self):
-        files = os.listdir(PROJECT_DIR+DIR)
+        files = os.listdir(DIR)
         self.xml_lang_pool = self.getLangfromFiles(files)
         self.xml_translate_dict = self.parseXMLtoDict()
 
@@ -50,7 +49,7 @@ class TypeRankTranslator:
             rootdict[lang] = dict_lang_i
 
             # Obtenemos el nombre sel fichero con el directorio y el idioma
-            file = PROJECT_DIR + BASE + str(lang) + ".xml"
+            file = BASE + str(lang) + ".xml"
 
             tree = ET.parse(file)
             root = tree.getroot()

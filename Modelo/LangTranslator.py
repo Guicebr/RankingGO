@@ -4,11 +4,13 @@ import numpy as np
 from fuzzywuzzy import fuzz
 
 BASE = "Config/lang/"
-DIR = "Config/lang"
+DIR = "Config/lang/langtranslator.xml"
 LANGS = ["es", "en"]
+DEFAULT_LANG = "es"
 
 logger = logging.getLogger(__name__)
 
+import Modelo.Translator as Translator
 import xml.etree.cElementTree as ET
 
 class LangTranslator:
@@ -18,76 +20,42 @@ class LangTranslator:
     xml_translate_dict = dict() # Estructura que almacena los idiomas
     xml_lang_pool = LANGS       # Array que almacena los idiomas disponibles
 
-    # xml_translate_dict = dict() -> xml_translate_dict[TIPOSTRING][LANG]
-
-
     def __init__(self):
-        files = os.listdir(DIR)
-        self.xml_lang_pool = self.getLangfromFiles(files)
-        self.xml_translate_dict = self.parseXMLtoDict()
+        self.xml_translate_dict = self.parseXMLtoDict
 
-
+    @property
     def parseXMLtoDict(self):
         """Crea un diccionario que almacena los ditintos idiomas, cada uno con su Id y TipoRanking
         almacenando el nombre"""
         rootdict = dict()
 
-        for lang in self.xml_lang_pool:
-            #Creamos un nuevo diccionario y lo añadimos al diccionario root, con otros dos diccionarios 'id' y 'tr'
-            dict_lang_i = {self.ID: dict(), self.TR: dict()}
-            rootdict[lang] = dict_lang_i
+        # Obtenemos el nombre sel fichero con el directorio y el idioma
 
-            # Obtenemos el nombre sel fichero con el directorio y el idioma
-            file = BASE + str(lang) + ".xml"
-            tree = ET.ElementTree(file=file)
+        tree = ET.parse(DIR)
+        root = tree.getroot()
 
-            # Obtenemos la raiz
-            root = tree.getroot()
+        # Creeamos un diccionario y almacenamos los datos
+        list_words = Translator.XmlListConfig(root)
 
-            # Recorremos el árbol
-            typerranks = list(root)
-            for typerank in typerranks:
-                list_typerank = list(typerank)
-                #print(list_typerank)
+        # print(list_words)
+        # for typerank_i in list_typerank:
+        #     # Almacenamos en nuestro diccionario final las ids y los trs
+        #     dict_lang_i[self.ID][typerank_i["id"]] = typerank_i["text"]
+        #     dict_lang_i[self.TR][typerank_i["name"]] = typerank_i["text"]
 
-                # Creeamos un diccionario y almacenamos los datos
-                dict_typerank_i = dict()
-                for typerank_i in list_typerank:
-                    dict_typerank_i[typerank_i.tag] = typerank_i.text
-                    #print("%s=%s" % (typerank_i.tag, typerank_i.text))
-                # print(dict_typerank_i)
-
-                # Almacenamos en nuestro diccionario final las ids y los trs
-                dict_lang_i[self.ID][dict_typerank_i["id"]] = dict_typerank_i["text"]
-                dict_lang_i[self.TR][dict_typerank_i["name"]] = dict_typerank_i["text"]
+        for word in list_words:
+            rootdict[word['name']] = dict()
+            # print(word)
+            for key in word.keys():
+                rootdict[word['name']][key] = word[key]
 
         return rootdict
 
-    def translate_HumantoSEL(self, lang, type_selector, type_rank):
-        "Devuelve el id o el tipo_ranking del nombre pasado como parametro(type_rank)"
+    def getWordLang(self, name, lang):
+        try:
+            return self.xml_translate_dict[name][lang]
+        except KeyError:
+            return self.xml_translate_dict[name][DEFAULT_LANG]
 
-        seldict = self.xml_translate_dict[lang][type_selector]
-        print(seldict)
-        for key, value in seldict.items():
-            if value == type_rank:
-                return key
 
-    def getlist_TypeRank(self, lang):
-        """Devuelve una lista de todas las categorías disponibles, para el idioma pasado"""
-        arr_type = []
-        for id, name in self.xml_translate_dict[lang]["id"].items():
-            arr_type.append(str(name))
 
-        return arr_type
-
-    def translate_DBtoHUMAN(self, lang, type_rank):
-        "Devuelve el id o el tipo_ranking del nombre pasado como parametro(type_rank)"
-        seldict = self.xml_translate_dict[lang]["tr"]
-        #print(seldict)
-        return seldict[type_rank]
-
-    def translate_DBidtoHUMAN(self, lang, type_rank_id):
-        "Devuelve el id o el tipo_ranking del nombre pasado como parametro(type_rank)"
-        seldict = self.xml_translate_dict[lang]["id"]
-        #print(seldict)
-        return seldict[type_rank_id]
