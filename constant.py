@@ -7,3 +7,4 @@ CONTEXT_VAR_AMOUNT = "amount"
 CONTEXT_VAR_TMPNICK = "nick" # Nick introducido por el usuario, que no esta validado aún
 CONTEXT_VAR_OCRUSER_VALID = "ocr_user_valid"
 CONTEXT_VAR_OCRUSER = "ocr_user"
+DEFAULT_LANG = "es"

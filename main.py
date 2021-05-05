@@ -24,6 +24,8 @@ from Plugins import common_func as c_func
 from Plugins import visionocr
 import constant as CONS
 
+
+
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO, filename='Logs/manin.log')
@@ -47,7 +49,7 @@ xml_lang_selector = "es"
 def start(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
     user = update.message.from_user
-
+    context.user_data[CONS.CONTEXT_VAR_USERDBLANG] = xml_lang_selector
     users.authuser(update, context)
     reply_keyboard = [['/registro', '/cancel', '/experience']]
 
@@ -80,8 +82,9 @@ def cancel(update: Update, context: CallbackContext):
     """Cancel command."""
     user = update.message.from_user
     logger.info("UserData %s canceled the conversation.", user.first_name)
-    update.message.reply_text('Bye! I hope we can talk again some day.',
-                              reply_markup=ReplyKeyboardRemove())
+
+    text = langtranslator.getWordLang('END_CONVERSATION_STRING', context.user_data[CONS.CONTEXT_VAR_USERDBLANG])
+    update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
 
     return ConversationHandler.END
 
@@ -93,7 +96,6 @@ def set_lang():
 def printcontextdata(update: Update, context: CallbackContext):
 
     chat_id = update.message.chat_id
-
     print(context.user_data)
     print(update.message.from_user)
     print(context.bot.getChat(chat_id))
@@ -110,12 +112,11 @@ def main():
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
 
-    # on different commands - answer in Telegram
     dp.add_handler(CommandHandler(command="start", filters=Filters.chat_type.private, callback=start))
     dp.add_handler(CommandHandler(command="help", filters=Filters.chat_type.private, callback=help_command))
     dp.add_handler(CommandHandler(command="help", filters=Filters.chat_type.groups, callback=help_command_groups))
 
-    # dp.add_handler(CommandHandler("userdata", printcontextdata))
+    # dp.add_handler(CommandHandler("userdata", filters=Filters.user("@Wicisian"), callback=printcontextdata))
     # dp.add_handler(CommandHandler("lang", set_lang))
 
     # Un admin pide por el grupo info sobre los usuarios en el grupo, responde solo si eres admin

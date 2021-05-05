@@ -12,10 +12,13 @@ from telegram import ReplyKeyboardRemove, Update
 from telegram.ext import CallbackContext, ConversationHandler
 
 # PROYECTO
+
 from Modelo.TypeRanking import bool_to_icon
 from Plugins import visionocr
+from Plugins import common_func as c_func
 import constant as CONS
 from Database.dbhelper import DBHelper
+from main import langtranslator
 
 NICK, NICK_VAL = range(2)
 
@@ -27,41 +30,41 @@ def register(update: Update, context: CallbackContext):
     chat_id = update.message.chat_id
     chat_type = update.message.chat.type
 
-    if chat_type != "private":
-        message = update.message.reply_text(
-            text="Para registarte hablame por privado con el comando /registro",
-            reply_markup=ReplyKeyboardRemove())
-        print(message)
-        sleep(3)
-        context.bot.deleteMessage(message.chat.id, message.message_id)
-        # context.bot.deleteMessage(message.reply_to_message.chat.id, message.reply_to_message.message_id)
+    user = update.message.from_user
+    lang = CONS.DEFAULT_LANG
 
+    if chat_type != "private":
+        text = langtranslator.getWordLang("TELL_REGISTER_IN_PRIVATE", lang)
+        message = update.message.reply_text(text=text, reply_markup=ReplyKeyboardRemove())
+        # print(message)
+        c_func.delay()
+        context.bot.deleteMessage(message.chat.id, message.message_id)
         return ConversationHandler.END
 
     if authuser(update, context) is not None:
-        text = "%s ya estás registrad@" % context.user_data[CONS.CONTEXT_VAR_USERDBNICK]
-        message = update.message.reply_text(
-            text=text,
-            reply_markup=ReplyKeyboardRemove())
+        lang = context.user_data[CONS.CONTEXT_VAR_USERDBLANG]
+        text = langtranslator.getWordLang("ALREADY_REGISTERED", lang) % context.user_data[CONS.CONTEXT_VAR_USERDBNICK]
+        message = update.message.reply_text(text=text, reply_markup=ReplyKeyboardRemove())
+        c_func.delay()
+        context.bot.deleteMessage(message.chat.id, message.message_id)
         return ConversationHandler.END
 
-    user = update.message.from_user
-
-    text = 'Send me your Nickname in PokemonGO.'
-    logger.info("Inicio Registro: %s\n"
+    text = langtranslator.getWordLang("REGISTER_ASK_NICK", lang)
+    logger.info("Begin Register: %s\n"
                 "ID: %s", user.first_name, user.id)
     update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
 
     return NICK
 
-
 def nick(update: Update, context: CallbackContext):
     """Save users nick in context data and ask the user to send you a photo."""
     user = update.message.from_user
-    logger.info("Nombre %s: Nick %s", user.first_name, update.message.text)
+    logger.info("Name %s: Nick %s", user.first_name, update.message.text)
     context.user_data[CONS.CONTEXT_VAR_TMPNICK] = update.message.text
+    lang = CONS.DEFAULT_LANG
 
-    text = "Is " + update.message.text + " your nickname?\n Send me a photo at your profile account to verify"
+    text = "Is %s your nickname?\n Send me a photo at your profile account to verify"
+    text = langtranslator("REGISTER_CHECK_NICK", lang) % update.message.text
     update.message.reply_text(text)
 
     return NICK_VAL

@@ -2,30 +2,44 @@
 <langdict>
     <words>
         <name>START_STRING</name>
-        <es>!Hola¡ Soy RankingGoBot.
-            Escribe /registro para registrarte en mi base de datos.
-            Envía /cancel para dejar de hablar conmigo.</es>
-        <en>Hi! My name is RankingGo Bot.
-            Send /register to register in my database.
-            Send /cancel to stop talking to me.</en>
+        <es>!Hola¡ Soy RankingGoBot. Escribe /registro para registrarte en mi base de datos. Envía /cancel para dejar de hablar conmigo.</es>
+        <en>Hi! My name is RankingGo Bot. Send /register to register in my database. Send /cancel to stop talking to me.</en>
     </words>
     <words>
         <name>HELP_PRIVATE_STRING</name>
-        <es>Ayuda en Privado:
-            Escribe /registro para registrarte en mi base de datos.
-            Escribe /manualup para actualizar el valor de tus medallas.
-            Escribe /ranking para ver el ranking global de cada medalla.</es>
-        <en>Help in Private:
-           Send /registro to register in my database.
-           Send /manualup to increase value of any of your medals.
-           Send /ranking to show global ranking medals.
+        <es>Ayuda en Privado: Escribe /registro para registrarte en mi base de datos. Escribe /manualup para actualizar el valor de tus medallas. Escribe /ranking para ver el ranking global de cada medalla.</es>
+        <en>Help in Private: Send /registro to register in my database. Send /manualup to increase value of any of your medals. Send /ranking to show global ranking medals.
         </en>
     </words>
     <words>
         <name>HELP_GROUPS_STRING</name>
-        <es>Ayuda en Grupos:
-        Escribe /ranking para ver el ranking global de cada medalla.</es>
-        <en>Help in Groups:
-        Send /ranking to show global ranking medals.</en>
+        <es>Ayuda en Grupos: Escribe /ranking para ver el ranking global de cada medalla.</es>
+        <en>Help in Groups: Send /ranking to show global ranking medals.</en>
     </words>
+    <words>
+        <name>END_CONVERSATION_STRING</name>
+        <es>¡Adios! Espero que podamos hablar de nuevo algún día</es>
+        <en>Bye! I hope we can talk again some day.</en>
+    </words>
+    <words>
+        <name>TELL_REGISTER_IN_PRIVATE</name>
+        <es>Para registarte hablame por privado con el comando / registro</es>
+        <en>To register talk to me privately with the command / register</en>
+    </words>
+    <words>
+        <name>ALREADY_REGISTERED</name>
+        <es>%s ya estás registrad@</es>
+        <en>%s were already registered</en>
+    </words>
+    <words>
+        <name>REGISTER_ASK_NICK</name>
+        <es>Envíame tu nick dentro del juego por favor.</es>
+        <en>Send me your Nickname in PokemonGO please.</en>
+    </words>
+    <words>
+        <name>REGISTER_CHECK_NICK</name>
+        <es>¿Es %s tu nick? Envíame una foto de tu perfil en Pokémon para poder verificarlo.</es>
+        <en>Is %s your nickname?\n Send me a photo at your profile account to verify.</en>
+    </words>
+
 </langdict>

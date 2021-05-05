@@ -17,3 +17,8 @@ langtranslator = LangTranslator()
 # text = langtranslator.getWordLang('START_STRING', 'pollo')
 text = langtranslator.getWordLang('HELP_PRIVATE_STRING', "en")
 print(langtranslator.xml_translate_dict.keys())
+
+
+a = dict()
+b = a["z"] | "es"
+print(b)
