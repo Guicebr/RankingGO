@@ -41,5 +41,64 @@
         <es>¿Es %s tu nick? Envíame una foto de tu perfil en Pokémon para poder verificarlo.</es>
         <en>Is %s your nickname?\n Send me a photo at your profile account to verify.</en>
     </words>
+    <words>
+        <name>REGISTER_INVALID_NICK</name>
+        <es>Nick no válido %s, vuelva a intentarlo con el comando /registro</es>
+        <en>Invalid Nick %s, try again with /registro command</en>
+    </words>
 
+    <words>
+        <name>REGISTER_VALID_NICK</name>
+        <es>Nick registrado %s: </es>
+        <en>Nick OK %s: </en>
+    </words>
+    <words>
+        <name>GROUPS_GROUP_INFO</name>
+        <es>GRUPO: %s
+            Usuarios en el grupo: %d
+            Almacenados en la BD: %d
+            Validados con el bot: %d</es>
+        <en>GROUP: %s
+            Users in group: %d
+            Saved in DB: %d
+            Registered Users: %d</en>
+    </words>
+    <words>
+        <name>USER_NOT_REGISTERED</name>
+        <es>Usuario no registrado, ejecute el comando /registro primero</es>
+        <en>Unregistered user, first execute /registro command</en>
+    </words>
+    <words>
+        <name>ASK_USER_CATEGORY</name>
+        <es>Por favor selecciona la categoría: </es>
+        <en>Please choose category: </en>
+    </words>
+
+    <words>
+        <name>ASK_USER_AMOUNT</name>
+        <es>Introduce la cantidad sin puntos ni comas, por favor.</es>
+        <en>Please enter the amount without points or commas</en>
+    </words>
+
+    <words>
+        <name>ASK_USER_VALIDATION_PHOTO</name>
+        <es>Enviame una captura de pantalla, para que pueda validarlo.</es>
+        <en>Send me an screenshot to validate data</en>
+    </words>
+
+    <words>
+        <name>PHOTOMEDAL_VALID_OK</name>
+        <es>Datos guardados %s %s</es>
+        <en>Saved data %s %s</en>
+    </words>
+    <words>
+        <name>PHOTOMEDAL_VALID_NOK</name>
+        <es>Datos introducidos: %s  %s no válidos, intentalo de nuevo con una nueva captura de pantalla</es>
+        <en>Data: %s  %s is invalid, try again with new screenshot</en>
+    </words>
+    <words>
+        <name>ASK_TOPNUM_RANKING</name>
+        <es>TOP %s: </es>
+        <en>TOP %s: </en>
+    </words>
 </langdict>

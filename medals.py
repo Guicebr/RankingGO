@@ -18,10 +18,15 @@ from Database.dbhelper import DBHelper
 from Plugins import common_func as c_func
 from Plugins import visionocr
 from Modelo import TypeRankTranslator
+from Modelo import LangTranslator
+
+
 logger = logging.getLogger(__name__)
 
 trtranslator = TypeRankTranslator.TypeRankTranslator()
-xml_lang_selector = "es"
+langtranslator = LangTranslator.LangTranslator()
+
+xml_lang_selector = CONS.DEFAULT_LANG
 TRTYPESEL, TYPE_AMOUNT, PHOTO_VAL = range(3)
 
 
@@ -32,12 +37,12 @@ def manual_up(update: Update, context: CallbackContext):
 
     # Verificamos que el usuario este registrado
     if users.authuser(update, context) is None:
-        text = "Usuario no registrado, ejecute el comando /registro primero"
+        text = langtranslator.getWordLang("USER_NOT_REGISTERED", lang)
         update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
 
     logger.info("Inicio ManualUp")
-    text = "Por favor selecciona la categoría: "
+    text = langtranslator.getWordLang("ASK_USER_CATEGORY", lang)
     keyboard = []
 
     # Almacenar en un fichero temporal las categorias de la BD
@@ -52,18 +57,18 @@ def manual_up(update: Update, context: CallbackContext):
 
 def manual_up_trtype(update: Update, context: CallbackContext):
     """Echo and finish Conversation"""
+    lang = xml_lang_selector
     context.user_data[CONS.CONTEXT_VAR_TRTYPE] = update.message.text
-    text = "Introduce la cantidad sin puntos ni comas, por favor."
+    text = langtranslator.getWordLang("ASK_USER_AMOUNT", lang)
     update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
 
     return TYPE_AMOUNT
 
-
 def manual_up_typeamount(update: Update, context: CallbackContext):
     """"""
     context.user_data[CONS.CONTEXT_VAR_AMOUNT] = update.message.text
-
-    text = "Enviame una captura de pantalla, para que pueda validarlo."
+    lang = xml_lang_selector
+    text = langtranslator.getWordLang("ASK_USER_VALIDATION_PHOTO", lang)
     update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
 
     return PHOTO_VAL
@@ -75,11 +80,9 @@ def manual_up_photoval(update: Update, context: CallbackContext):
     amount = c_func.string_cleaner_for_num(amount)
     userbdid = context.user_data[CONS.CONTEXT_VAR_USERDBID]
     nick = context.user_data[CONS.CONTEXT_VAR_USERDBNICK]
-
-    logger.info("Validando TipoRanking %s y Cantidad %s", tr_type, amount)
-
     lang = xml_lang_selector
 
+    logger.info("Validando TipoRanking %s y Cantidad %s", tr_type, amount)
     photo_file = update.message.photo[-1].get_file()
     print(photo_file)
     data_valid = visionocr.ocrScreenshot_CheckTyp_Amount(photo_file, tr_type, amount, nick)
@@ -88,18 +91,18 @@ def manual_up_photoval(update: Update, context: CallbackContext):
         try:
             # tr_id = tr_enum[tr_type]
             tr_id = trtranslator.translate_HumantoSEL(lang, trtranslator.ID, tr_type)
-            print("tr_id", tr_id)
+            # print("tr_id", tr_id)
             dbconn = DBHelper()
             dbconn.add_ranking_data(userbdid, tr_id, amount)
-            text = "Datos guardados %s %s" % (str(tr_type), str(amount))
+            text = langtranslator.getWordLang("PHOTOMEDAL_VALID_OK", lang) % (str(tr_type), str(amount))
             update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
             return ConversationHandler.END
         except Exception as e:
             logger.error(e)
             return ConversationHandler.END
     else:
-        text = "Datos no válidos"
-        logger.info("TipoRanking %s y Cantidad %s no válidos", tr_type, amount)
+        text = langtranslator.getWordLang("PHOTOMEDAL_VALID_NOK", lang) % (tr_type, amount)
+        logger.info("TipoRanking %s o Cantidad %s no válidos", tr_type, amount)
         update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
 

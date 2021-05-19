@@ -18,11 +18,12 @@ from Plugins import visionocr
 from Plugins import common_func as c_func
 import constant as CONS
 from Database.dbhelper import DBHelper
-from main import langtranslator
+from Modelo import LangTranslator
 
 NICK, NICK_VAL = range(2)
 
 logger = logging.getLogger(__name__)
+langtranslator = LangTranslator.LangTranslator()
 
 def register(update: Update, context: CallbackContext):
     """Start the register proccess, ask user for nick"""
@@ -63,7 +64,6 @@ def nick(update: Update, context: CallbackContext):
     context.user_data[CONS.CONTEXT_VAR_TMPNICK] = update.message.text
     lang = CONS.DEFAULT_LANG
 
-    text = "Is %s your nickname?\n Send me a photo at your profile account to verify"
     text = langtranslator("REGISTER_CHECK_NICK", lang) % update.message.text
     update.message.reply_text(text)
 
@@ -90,7 +90,7 @@ def nickval(update: Update, context: CallbackContext):
     # Check validity of user nick
     if ocr_user.nick is None:
         # If invalid nick, notify user and cancel register
-        text = "Nick no válido" + bool_to_icon[0] + ", vuelva a intentarlo con el comando /registro"
+        text = langtranslator.getWordLang("REGISTER_INVALID_NICK") % bool_to_icon[0]
         update.message.reply_text(text)
         return ConversationHandler.END
     else:
@@ -106,8 +106,8 @@ def nickval(update: Update, context: CallbackContext):
                 userdbid = registeruser(ocr_user.nick, user.id, user.language_code)
 
             context.user_data[CONS.CONTEXT_VAR_USERDBID] = userdbid
-            txt = 'Nick registrado' + bool_to_icon[1] + ': ' + str(nickctx)
-            update.message.reply_text(txt)
+            text = langtranslator.getWordLang("REGISTER_VALID_NICK") % (bool_to_icon[1], str(nickctx))
+            update.message.reply_text(text)
 
             return ConversationHandler.END
 

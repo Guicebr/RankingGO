@@ -10,9 +10,10 @@ import constant as CONS
 from telegram import Update
 from telegram.ext import Updater, CallbackContext
 from Database.dbhelper import DBHelper
-
+from Modelo import LangTranslator
 
 logger = logging.getLogger(__name__)
+langtranslator = LangTranslator.LangTranslator()
 
 
 def authgroups(update: Update, context: CallbackContext):
@@ -115,6 +116,8 @@ def group_info(update: Update, context: CallbackContext) -> None:
     group_tgid = update.message.chat_id
     user_id = update.message.from_user.id
     user = context.bot.get_chat_member(group_tgid, user_id)
+    lang = CONS.DEFAULT_LANG #userlang
+
     if user.status not in ['creator', "administrator"]:
         return None
 
@@ -130,10 +133,12 @@ def group_info(update: Update, context: CallbackContext) -> None:
         logger.info("%s, %s -> %s", user.user.name, group_name, "group_info")
 
         # Preparar mensaje. Reponder en privado
-        txt = ("GRUPO: %s\n"
-               "Usuarios en el grupo: %d\n"
-               "Almacenados en la BD: %d\n"
-               "Validados con el bot: %d") % (group_name, chat_users, usersdb, usersvalidated)
+        # txt = ("GRUPO: %s\n"
+        #        "Usuarios en el grupo: %d\n"
+        #        "Almacenados en la BD: %d\n"
+        #        "Validados con el bot: %d") % (group_name, chat_users, usersdb, usersvalidated)
+
+        txt = langtranslator.getWordLang("GROUPS_GROUP_INFO", lang) % (group_name, chat_users, usersdb, usersvalidated)
         context.bot.sendMessage(chat_id=user_id, text=txt)
 
         # Borra el mensaje del comando. Se necesita permisos de administrador

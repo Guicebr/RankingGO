@@ -15,14 +15,16 @@ import constant as CONS
 import users
 from Database.dbhelper import DBHelper
 from Modelo import TypeRankTranslator
+from Modelo import LangTranslator
 
+langtranslator = LangTranslator.LangTranslator()
 trtranslator = TypeRankTranslator.TypeRankTranslator()
 logger = logging.getLogger(__name__)
 
 RANKINGTRSEL, RANKINGTOPSEL = range(2)
 RANKINGTOPS = [10, 50, 100]
 
-xml_lang_selector = "es"
+xml_lang_selector = CONS.DEFAULT_LANG
 
 def get_ranking(update: Update, context: CallbackContext):
     """Mostrar categorías disponibles, y el usuario selecciona una"""
@@ -34,11 +36,11 @@ def get_ranking(update: Update, context: CallbackContext):
 
     # Verificamos que el usuario este registrado
     if users.authuser(update, context) is None:
-        text = "Usuario no registrado, ejecute el comando /registro primero"
+        text = langtranslator.getWordLang("USER_NOT_REGISTERED", lang)
         update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
 
-    text = "Por favor selecciona la categoría: "
+    text = langtranslator.getWordLang("ASK_USER_CATEGORY", lang)
     keyboard = []
 
     try:
@@ -46,7 +48,7 @@ def get_ranking(update: Update, context: CallbackContext):
         # Imprimir solo los tiposderanking que tengan algún dato en la BD
         tr_avalible = dbconn.get_types_ranking()
 
-        print(tr_avalible)
+        # print(tr_avalible)
         for tr_id in tr_avalible:
             tr_id = str(tr_id[0])
             name = trtranslator.translate_DBidtoHUMAN(xml_lang_selector, tr_id)
@@ -65,13 +67,12 @@ def get_ranking_trtype(update: Update, context: CallbackContext):
     """Obtenemos la categoría que ha seleccionado el usuario y pedimos el número de elementos a buscar"""
     context.user_data[CONS.CONTEXT_VAR_TRTYPE] = update.message.text
     keyboard = []
-
+    lang = xml_lang_selector
     for ranks in RANKINGTOPS:
         name = "TOP " + str(ranks)
         keyboard.append([str(name)])
 
-    text = """Selecciona el la cantidad de elementos que quieres mostrar de la categoría %s: 
-           """ % (context.user_data[CONS.CONTEXT_VAR_TRTYPE])
+    text = langtranslator.getWordLang("ASK_TOPNUM_RANKING", lang) % (context.user_data[CONS.CONTEXT_VAR_TRTYPE])
 
     update.message.reply_text(text, reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True))
 
@@ -83,6 +84,8 @@ def show_ranking(update: Update, context: CallbackContext):
      la categoria y el número de elemtos buscados"""
 
     tr = context.user_data[CONS.CONTEXT_VAR_TRTYPE]
+    lang = xml_lang_selector
+
     try:
         if len(update.message.text) > 0:
             num_elem = int(update.message.text.split(" ")[1])
@@ -93,7 +96,7 @@ def show_ranking(update: Update, context: CallbackContext):
         print(e)
     try:
         dbconn = DBHelper()
-        tr_id = trtranslator.translate_HumantoSEL(xml_lang_selector, trtranslator.ID, tr)
+        tr_id = trtranslator.translate_HumantoSEL(lang, trtranslator.ID, tr)
         data = dbconn.get_ranking(tr_id, num_elem)
 
         # print(str(data))
