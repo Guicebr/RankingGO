@@ -124,10 +124,7 @@ def set_lang( update: Update, context: CallbackContext):
 
 def lang_selected (update: Update, context: CallbackContext) -> None:
     """ """
-    user = update.message.from_user
-    users.authuser(update, context)
-    userid = context.user_data[CONS.CONTEXT_VAR_USERDBID]
-    lang = context.user_data[CONS.CONTEXT_VAR_USERDBLANG] or user.language_code
+    userdbid = context.user_data[CONS.CONTEXT_VAR_USERDBID]
 
     query = update.callback_query
     # Check callback type
@@ -137,7 +134,7 @@ def lang_selected (update: Update, context: CallbackContext) -> None:
         try:
             lang = callback_text
             dbconn = DBHelper()
-            dbconn.update_user_lang(userid, lang)
+            dbconn.update_user_lang(userdbid, lang)
             text = langtranslator.getWordLang("USER_LANG_UPDATED", lang) % lang
 
             # Comunicamos al usuario en el nuevo idioma
