@@ -129,15 +129,18 @@ def lang_selected (update: Update, context: CallbackContext) -> None:
     query = update.callback_query
     # Check callback type
     callback_text = query.data
+    print(callback_text)
+
     if callback_text in langtranslator.xml_lang_pool:
         # Actualizamos el idioma del usuario
         try:
             lang = callback_text
             dbconn = DBHelper()
             dbconn.update_user_lang(userdbid, lang)
-            text = langtranslator.getWordLang("USER_LANG_UPDATED", lang)
+            context.user_data[CONS.CONTEXT_VAR_USERDBLANG] = lang
 
             # Comunicamos al usuario en el nuevo idioma
+            text = langtranslator.getWordLang("USER_LANG_UPDATED", lang)
             query.edit_message_text(text=text)
             return ConversationHandler.END
 
