@@ -26,14 +26,14 @@ logger = logging.getLogger(__name__)
 trtranslator = TypeRankTranslator.TypeRankTranslator()
 langtranslator = LangTranslator.LangTranslator()
 
-xml_lang_selector = CONS.DEFAULT_LANG
 TRTYPESEL, TYPE_AMOUNT, PHOTO_VAL = range(3)
-
 
 def manual_up(update: Update, context: CallbackContext):
     """Start the update data proccess, ask user for category"""
+
     user = update.message.from_user
-    lang = xml_lang_selector
+    users.authuser(update, context)
+    lang = context.user_data[CONS.CONTEXT_VAR_USERDBLANG] or user.language_code
 
     # Verificamos que el usuario este registrado
     if users.authuser(update, context) is None:
@@ -57,7 +57,10 @@ def manual_up(update: Update, context: CallbackContext):
 
 def manual_up_trtype(update: Update, context: CallbackContext):
     """Echo and finish Conversation"""
-    lang = xml_lang_selector
+
+    user = update.message.from_user
+    users.authuser(update, context)
+    lang = context.user_data[CONS.CONTEXT_VAR_USERDBLANG] or user.language_code
     context.user_data[CONS.CONTEXT_VAR_TRTYPE] = update.message.text
     text = langtranslator.getWordLang("ASK_USER_AMOUNT", lang)
     update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
@@ -66,8 +69,11 @@ def manual_up_trtype(update: Update, context: CallbackContext):
 
 def manual_up_typeamount(update: Update, context: CallbackContext):
     """"""
+
+    user = update.message.from_user
+    users.authuser(update, context)
+    lang = context.user_data[CONS.CONTEXT_VAR_USERDBLANG] or user.language_code
     context.user_data[CONS.CONTEXT_VAR_AMOUNT] = update.message.text
-    lang = xml_lang_selector
     text = langtranslator.getWordLang("ASK_USER_VALIDATION_PHOTO", lang)
     update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
 
@@ -75,12 +81,17 @@ def manual_up_typeamount(update: Update, context: CallbackContext):
 
 
 def manual_up_photoval(update: Update, context: CallbackContext):
+    """ """
+    user = update.message.from_user
+    users.authuser(update, context)
+    lang = context.user_data[CONS.CONTEXT_VAR_USERDBLANG] or user.language_code
+
+    context.user_data[CONS.CONTEXT_VAR_AMOUNT] = update.message.text
     tr_type = context.user_data[CONS.CONTEXT_VAR_TRTYPE]
     amount = context.user_data[CONS.CONTEXT_VAR_AMOUNT]
     amount = c_func.string_cleaner_for_num(amount)
     userbdid = context.user_data[CONS.CONTEXT_VAR_USERDBID]
     nick = context.user_data[CONS.CONTEXT_VAR_USERDBNICK]
-    lang = xml_lang_selector
 
     logger.info("Validando TipoRanking %s y Cantidad %s", tr_type, amount)
     photo_file = update.message.photo[-1].get_file()
