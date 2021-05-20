@@ -101,4 +101,14 @@
         <es>TOP %s: </es>
         <en>TOP %s: </en>
     </words>
+    <words>
+        <name>ASK_USER_LANG</name>
+        <es>Selecciona el nuevo idioma de la lista de disponibles: </es>
+        <en>Please select a new languaje from available list: </en>
+    </words>
+    <words>
+        <name>USER_LANG_UPDATED</name>
+        <es>Has actualizado tu lenguaje al %s</es>
+        <en>You have updated your language to %s</en>
+    </words>
 </langdict>

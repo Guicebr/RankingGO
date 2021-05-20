@@ -9,12 +9,16 @@ Ranking Pokemon Go Medals Bot.
 import logging
 
 # TELEGRAM
-from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
+from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext, ConversationHandler, \
     CallbackQueryHandler
 
 # PROYECTO
-import users, medals, ranking, groups
+import users
+import medals
+import ranking
+import groups
+
 from CREDENTIALS import BOT_TOKEN
 from Database.dbhelper import DBHelper
 from Modelo import TypeRankTranslator, LangTranslator
@@ -96,10 +100,59 @@ def cancel(update: Update, context: CallbackContext):
 
     return ConversationHandler.END
 
-def set_lang():
-    # TODO:
-    pass
+def set_lang( update: Update, context: CallbackContext):
+    """ """
+    user = update.message.from_user
+    users.authuser(update, context)
+    lang = context.user_data[CONS.CONTEXT_VAR_USERDBLANG] or user.language_code
+    keyboard = []
 
+    # Comprobamos si el usuario esta registrado
+    if users.authuser(update, context) is None:
+        text = langtranslator.getWordLang("USER_NOT_REGISTERED", lang)
+        update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
+        return None
+
+    # TODO: Cargamos lista de idiomas disponibles en un keyboard
+    for lang in langtranslator.xml_lang_pool:
+        keyboard.append([InlineKeyboardButton(str(lang), callback_data=str(lang))])
+    keyboard.append([InlineKeyboardButton("Finish", callback_data='finish')])
+
+    # Usuario selecciona un idioma
+    text = langtranslator.getWordLang('ASK_USER_LANG', lang)
+    update.message.reply_text(text, reply_markup=InlineKeyboardMarkup(keyboard))
+
+def lang_selected (update: Update, context: CallbackContext) -> None:
+    """ """
+    user = update.message.from_user
+    users.authuser(update, context)
+    userid = context.user_data[CONS.CONTEXT_VAR_USERDBID]
+    lang = context.user_data[CONS.CONTEXT_VAR_USERDBLANG] or user.language_code
+
+    query = update.callback_query
+    # Check callback type
+    callback_text = query.data
+    if callback_text in langtranslator.xml_lang_pool:
+        # Actualizamos el idioma del usuario
+        try:
+            lang = callback_text
+            dbconn = DBHelper()
+            dbconn.update_user_lang(userid, lang)
+            text = langtranslator.getWordLang("USER_LANG_UPDATED", lang) % lang
+
+            # Comunicamos al usuario en el nuevo idioma
+            query.answer(text)
+            query.edit_message_text(text=text)
+            return ConversationHandler.END
+
+        except Exception as e:
+            logger.error(e)
+        finally:
+            if dbconn:
+                dbconn.close()
+
+    elif callback_text == "finish":
+        return ConversationHandler.END
 
 def printcontextdata(update: Update, context: CallbackContext):
 
@@ -123,15 +176,18 @@ def main():
     dp.add_handler(CommandHandler(command="start", filters=Filters.chat_type.private, callback=start))
     dp.add_handler(CommandHandler(command="help", filters=Filters.chat_type.private, callback=help_command))
     dp.add_handler(CommandHandler(command="help", filters=Filters.chat_type.groups, callback=help_command_groups))
+    dp.add_handler(CommandHandler(command="lang", filters=Filters.chat_type.private, callback=set_lang))
 
     # dp.add_handler(CommandHandler("userdata", filters=Filters.user("@Wicisian"), callback=printcontextdata))
-    # dp.add_handler(CommandHandler("lang", set_lang))
-
     # Un admin pide por el grupo info sobre los usuarios en el grupo, responde solo si eres admin
     dp.add_handler(CommandHandler(command="group_info", filters=Filters.chat_type.groups, callback=groups.group_info))
 
     # Registramos cuando el usuario pulsa un boton del formulario de registro
     # updater.dispatcher.add_handler(CallbackQueryHandler(register_val))
+
+    # Registramos cuando el usuario selecciona un idioma
+    updater.dispatcher.add_handler(CallbackQueryHandler(lang_selected))
+
 
     # dp.add_handler(MessageHandler(Filters.photo & ~Filters.command, screenshot_handler))
 
