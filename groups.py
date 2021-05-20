@@ -6,6 +6,7 @@ Gestiona los grupos y los miembros dentro de ellos
 """
 import logging
 import constant as CONS
+import users
 
 from telegram import Update
 from telegram.ext import Updater, CallbackContext
@@ -113,12 +114,18 @@ def group_info(update: Update, context: CallbackContext) -> None:
     # TODO: Comment
     # Comando group_info, solo admins del grupo
 
+    user = update.message.from_user
     group_tgid = update.message.chat_id
-    user_id = update.message.from_user.id
-    user = context.bot.get_chat_member(group_tgid, user_id)
+    user_id = user.id
+
+    users.authuser(update, context)
+    lang = context.user_data[CONS.CONTEXT_VAR_USERDBLANG] or user.language_code
+
+    chatmember = context.bot.get_chat_member(group_tgid, user_id)
+
     lang = CONS.DEFAULT_LANG #userlang
 
-    if user.status not in ['creator', "administrator"]:
+    if chatmember.status not in ['creator', "administrator"]:
         return None
 
     group_id = authgroups(update, context)
@@ -130,7 +137,7 @@ def group_info(update: Update, context: CallbackContext) -> None:
         usersdb = int(dbconn.group_users_count(group_id))
         usersvalidated = int(dbconn.group_usersvalidated_count(group_id))
 
-        logger.info("%s, %s -> %s", user.user.name, group_name, "group_info")
+        logger.info("%s, %s -> %s", chatmember.user.name, group_name, "group_info")
 
         # Preparar mensaje. Reponder en privado
         # txt = ("GRUPO: %s\n"
