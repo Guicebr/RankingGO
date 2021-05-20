@@ -38,11 +38,8 @@ logger = logging.getLogger(__name__)
 # logger.critical('El bot está así X')
 
 dbconn = DBHelper()
-
 trtranslator = TypeRankTranslator.TypeRankTranslator()
 langtranslator = LangTranslator.LangTranslator()
-
-xml_lang_selector = CONS.DEFAULT_LANG
 
 # Define a few command handlers. These usually take the two arguments update and
 # context. Error handlers also receive the raised TelegramError object in error.
