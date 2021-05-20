@@ -24,6 +24,7 @@ NICK, NICK_VAL = range(2)
 
 logger = logging.getLogger(__name__)
 langtranslator = LangTranslator.LangTranslator()
+# xml_lang_selector = CONS.DEFAULT_LANG
 
 def register(update: Update, context: CallbackContext):
     """Start the register proccess, ask user for nick"""
@@ -32,7 +33,8 @@ def register(update: Update, context: CallbackContext):
     chat_type = update.message.chat.type
 
     user = update.message.from_user
-    lang = CONS.DEFAULT_LANG
+    authuser(update, context)
+    lang = context.user_data[CONS.CONTEXT_VAR_USERDBLANG] or user.language_code
 
     if chat_type != "private":
         text = langtranslator.getWordLang("TELL_REGISTER_IN_PRIVATE", lang)
@@ -43,7 +45,6 @@ def register(update: Update, context: CallbackContext):
         return ConversationHandler.END
 
     if authuser(update, context) is not None:
-        lang = context.user_data[CONS.CONTEXT_VAR_USERDBLANG]
         text = langtranslator.getWordLang("ALREADY_REGISTERED", lang) % context.user_data[CONS.CONTEXT_VAR_USERDBNICK]
         message = update.message.reply_text(text=text, reply_markup=ReplyKeyboardRemove())
         c_func.delay()
@@ -60,10 +61,11 @@ def register(update: Update, context: CallbackContext):
 def nick(update: Update, context: CallbackContext):
     """Save users nick in context data and ask the user to send you a photo."""
     user = update.message.from_user
+    authuser(update, context)
+    lang = context.user_data[CONS.CONTEXT_VAR_USERDBLANG] or user.language_code
+
     logger.info("Name %s: Nick %s", user.first_name, update.message.text)
     context.user_data[CONS.CONTEXT_VAR_TMPNICK] = update.message.text
-    lang = CONS.DEFAULT_LANG
-
     text = langtranslator("REGISTER_CHECK_NICK", lang) % update.message.text
     update.message.reply_text(text)
 
@@ -72,11 +74,12 @@ def nick(update: Update, context: CallbackContext):
 
 def nickval(update: Update, context: CallbackContext):
     """Receive photo from user, save/get User from DB, and create ValidationForm. """
-    # Initialize vars
-    keyboard = []
-    userdbid = 0
 
+    userdbid = 0
     user = update.message.from_user
+    authuser(update, context)
+    lang = context.user_data[CONS.CONTEXT_VAR_USERDBLANG] or user.language_code
+
     nickctx = str(context.user_data[CONS.CONTEXT_VAR_TMPNICK])
     photo_file = update.message.photo[-1].get_file()
 
@@ -90,7 +93,7 @@ def nickval(update: Update, context: CallbackContext):
     # Check validity of user nick
     if ocr_user.nick is None:
         # If invalid nick, notify user and cancel register
-        text = langtranslator.getWordLang("REGISTER_INVALID_NICK") % bool_to_icon[0]
+        text = langtranslator.getWordLang("REGISTER_INVALID_NICK", lang) % bool_to_icon[0]
         update.message.reply_text(text)
         return ConversationHandler.END
     else:
@@ -106,7 +109,7 @@ def nickval(update: Update, context: CallbackContext):
                 userdbid = registeruser(ocr_user.nick, user.id, user.language_code)
 
             context.user_data[CONS.CONTEXT_VAR_USERDBID] = userdbid
-            text = langtranslator.getWordLang("REGISTER_VALID_NICK") % (bool_to_icon[1], str(nickctx))
+            text = langtranslator.getWordLang("REGISTER_VALID_NICK", lang) % (bool_to_icon[1], str(nickctx))
             update.message.reply_text(text)
 
             return ConversationHandler.END
@@ -116,8 +119,8 @@ def nickval(update: Update, context: CallbackContext):
 
 def authuser(update: Update, context: CallbackContext):
     """ Return Id User in database and Save ID, NICK in Context"""
-    user = update.message.from_user
 
+    user = update.message.from_user
     userdbid = CONS.CONTEXT_VAR_USERDBID in context.user_data.keys()
     userdbnick = CONS.CONTEXT_VAR_USERDBNICK in context.user_data.keys()
     userlang = CONS.CONTEXT_VAR_USERDBLANG in context.user_data.keys()
