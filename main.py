@@ -42,18 +42,19 @@ dbconn = DBHelper()
 trtranslator = TypeRankTranslator.TypeRankTranslator()
 langtranslator = LangTranslator.LangTranslator()
 
-xml_lang_selector = "es"
+xml_lang_selector = CONS.DEFAULT_LANG
 
 # Define a few command handlers. These usually take the two arguments update and
 # context. Error handlers also receive the raised TelegramError object in error.
 def start(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
-    user = update.message.from_user
-    context.user_data[CONS.CONTEXT_VAR_USERDBLANG] = xml_lang_selector
-    users.authuser(update, context)
-    reply_keyboard = [['/registro', '/cancel', '/experience']]
 
-    text = langtranslator.getWordLang('START_STRING', xml_lang_selector)
+    reply_keyboard = [['/registro', '/cancel']]
+    user = update.message.from_user
+    users.authuser(update, context)
+    lang = context.user_data[CONS.CONTEXT_VAR_USERDBLANG] or user.language_code
+
+    text = langtranslator.getWordLang('START_STRING', lang)
     update.message.reply_text(text, reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
 
 
@@ -65,12 +66,20 @@ def error(update: Update, context: CallbackContext):
 
 def help_command(update: Update, context: CallbackContext):
     """Send a message when the command /help is issued."""
-    text = langtranslator.getWordLang('HELP_PRIVATE_STRING', xml_lang_selector)
+    user = update.message.from_user
+    users.authuser(update, context)
+    lang = context.user_data[CONS.CONTEXT_VAR_USERDBLANG] or user.language_code
+
+    text = langtranslator.getWordLang('HELP_PRIVATE_STRING', lang)
     update.message.reply_text(text)
 
 def help_command_groups(update: Update, context: CallbackContext):
     """Send a message when the command /help is issued."""
-    text = langtranslator.getWordLang('HELP_GROUPS_STRING', xml_lang_selector)
+    user = update.message.from_user
+    users.authuser(update, context)
+    lang = context.user_data[CONS.CONTEXT_VAR_USERDBLANG] or user.language_code
+
+    text = langtranslator.getWordLang('HELP_GROUPS_STRING', lang)
     update.message.reply_text(text)
 
 
@@ -81,9 +90,11 @@ def echo(update: Update, context: CallbackContext):
 def cancel(update: Update, context: CallbackContext):
     """Cancel command."""
     user = update.message.from_user
-    logger.info("UserData %s canceled the conversation.", user.first_name)
+    users.authuser(update, context)
+    lang = context.user_data[CONS.CONTEXT_VAR_USERDBLANG] or user.language_code
 
-    text = langtranslator.getWordLang('END_CONVERSATION_STRING', context.user_data[CONS.CONTEXT_VAR_USERDBLANG])
+    logger.info("UserData %s canceled the conversation.", user.first_name)
+    text = langtranslator.getWordLang('END_CONVERSATION_STRING', lang)
     update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
 
     return ConversationHandler.END
