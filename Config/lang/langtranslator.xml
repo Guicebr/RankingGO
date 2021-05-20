@@ -117,7 +117,7 @@
     </words>
     <words>
         <name>USER_LANG_UPDATED</name>
-        <es>Has actualizado tu lenguaje al %s</es>
-        <en>You have updated your language to %s</en>
+        <es>Has actualizado tu lenguaje al Español</es>
+        <en>You have updated your language to English</en>
     </words>
 </langdict>

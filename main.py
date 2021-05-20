@@ -113,7 +113,7 @@ def set_lang( update: Update, context: CallbackContext):
         update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
         return None
 
-    # TODO: Cargamos lista de idiomas disponibles en un keyboard
+    # Cargamos lista de idiomas disponibles en un keyboard
     for lang in langtranslator.xml_lang_pool:
         keyboard.append([InlineKeyboardButton(str(lang), callback_data=str(lang))])
     keyboard.append([InlineKeyboardButton("Finish", callback_data='finish')])
@@ -135,10 +135,9 @@ def lang_selected (update: Update, context: CallbackContext) -> None:
             lang = callback_text
             dbconn = DBHelper()
             dbconn.update_user_lang(userdbid, lang)
-            text = langtranslator.getWordLang("USER_LANG_UPDATED", lang) % lang
+            text = langtranslator.getWordLang("USER_LANG_UPDATED", lang)
 
             # Comunicamos al usuario en el nuevo idioma
-            query.answer(text)
             query.edit_message_text(text=text)
             return ConversationHandler.END
 

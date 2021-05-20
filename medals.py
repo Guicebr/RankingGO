@@ -69,11 +69,11 @@ def manual_up_trtype(update: Update, context: CallbackContext):
 
 def manual_up_typeamount(update: Update, context: CallbackContext):
     """"""
-
     user = update.message.from_user
     users.authuser(update, context)
     lang = context.user_data[CONS.CONTEXT_VAR_USERDBLANG] or user.language_code
     context.user_data[CONS.CONTEXT_VAR_AMOUNT] = update.message.text
+
     text = langtranslator.getWordLang("ASK_USER_VALIDATION_PHOTO", lang)
     update.message.reply_text(text, reply_markup=ReplyKeyboardRemove())
 

@@ -168,6 +168,22 @@ class DBHelper:
                 self.cursor.close()
                 logging.info("MySQL cursor is closed")
 
+    def update_user_lang(self, userdbid, lang):
+        stmt = 'update users set lang="%s" where id = "%s"'
+        args = (lang, userdbid)
+        try:
+            self.cursor = self.conn.cursor()
+            self.cursor.execute(stmt % args)
+            self.conn.commit()
+
+        except MySQLdb.Error as e:
+            logging.error("Error %s" % str(e))
+
+        finally:
+            if self.conn:
+                self.cursor.close()
+                logging.info("MySQL cursor is closed")
+
     def add_ranking_types(self, id, name, description):
         """insert into tranking(id,name,description) values (30,"sightseer","PokéStops Unique Visited");"""
 
@@ -379,6 +395,8 @@ class DBHelper:
             if self.conn:
                 self.cursor.close()
                 logging.info("MySQL cursor is closed")
+
+
 
 
 

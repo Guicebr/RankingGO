@@ -24,12 +24,13 @@ logger = logging.getLogger(__name__)
 RANKINGTRSEL, RANKINGTOPSEL = range(2)
 RANKINGTOPS = [10, 50, 100]
 
-xml_lang_selector = CONS.DEFAULT_LANG
 
 def get_ranking(update: Update, context: CallbackContext):
     """Mostrar categorías disponibles, y el usuario selecciona una"""
+
     user = update.message.from_user
-    lang = xml_lang_selector
+    users.authuser(update, context)
+    lang = context.user_data[CONS.CONTEXT_VAR_USERDBLANG] or user.language_code
 
     # TODO: Argumento 0 -> Indique tipoderanking, se comprueba si esta en la lista de disponible
     # TODO: Argumento 1 -> Numero de elementos, tiene que ser una de los establecido 10, 50, 100
@@ -51,7 +52,7 @@ def get_ranking(update: Update, context: CallbackContext):
         # print(tr_avalible)
         for tr_id in tr_avalible:
             tr_id = str(tr_id[0])
-            name = trtranslator.translate_DBidtoHUMAN(xml_lang_selector, tr_id)
+            name = trtranslator.translate_DBidtoHUMAN(lang, tr_id)
             keyboard.append([name])
 
         update.message.reply_text(text, reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True))
@@ -67,7 +68,11 @@ def get_ranking_trtype(update: Update, context: CallbackContext):
     """Obtenemos la categoría que ha seleccionado el usuario y pedimos el número de elementos a buscar"""
     context.user_data[CONS.CONTEXT_VAR_TRTYPE] = update.message.text
     keyboard = []
-    lang = xml_lang_selector
+
+    user = update.message.from_user
+    users.authuser(update, context)
+    lang = context.user_data[CONS.CONTEXT_VAR_USERDBLANG] or user.language_code
+
     for ranks in RANKINGTOPS:
         name = "TOP " + str(ranks)
         keyboard.append([str(name)])
@@ -84,7 +89,9 @@ def show_ranking(update: Update, context: CallbackContext):
      la categoria y el número de elemtos buscados"""
 
     tr = context.user_data[CONS.CONTEXT_VAR_TRTYPE]
-    lang = xml_lang_selector
+    user = update.message.from_user
+    users.authuser(update, context)
+    lang = context.user_data[CONS.CONTEXT_VAR_USERDBLANG] or user.language_code
 
     try:
         if len(update.message.text) > 0:
